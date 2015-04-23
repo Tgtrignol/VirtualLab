@@ -6,7 +6,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LocalDebuggerCommandArguments>--config configs/oculus-keyboard-hydra.json</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>--config configs/sim.json</LocalDebuggerCommandArguments>
     <LocalDebuggerWorkingDirectory>..\..\Runtime</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>

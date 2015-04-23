@@ -1,7 +1,8 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-//#define SIMULATION_MODE
+//Turn this on in simulator mode
+#define SIMULATION_MODE
 
 #ifdef _DEBUG
 #define BULLET_DEBUG_DRAW
