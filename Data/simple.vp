@@ -1,0 +1,11 @@
+#version 410 compatibility
+
+layout(location = 0) in vec4 InVertex;
+layout(location = 2) in vec2 InTexCoord0;
+out vec2 textureCoord;
+
+void main()
+{
+	gl_Position = gl_ModelViewProjectionMatrix * InVertex;
+	textureCoord = vec2(InTexCoord0.s, 1.0 - InTexCoord0.t);
+}

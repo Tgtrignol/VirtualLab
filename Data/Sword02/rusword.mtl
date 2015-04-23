@@ -1,0 +1,49 @@
+# 
+# Wavefront material file
+# Converted by the DEEP Exploration  3.5.10.1242
+# Right Hemisphere, LTD
+# http://www.righthemisphere.com/
+# 
+
+newmtl hand
+Ka 0.502 0.502 0.502
+Kd 0.8824 0.8824 0.8824
+Ks 0 0 0
+illum 2
+Ns 19.6983
+map_Kd Hide1.jpg
+map_bump Line2.jpg
+bump Line2.jpg
+
+newmtl garda
+Ka 0.156863 0.156863 0.156863
+Kd 0.160784 0.160784 0.160784
+Ks 1 1 1
+illum 2
+Ns 1024
+map_Kd Reflectmed2.jpg
+
+newmtl end
+Ka 0.156863 0.156863 0.156863
+Kd 0.156863 0.156863 0.156863
+Ks 1 1 1
+illum 2
+Ns 1024
+map_Kd Reflectmed2.jpg
+
+newmtl sharik
+Ka 0.160784 0.160784 0.160784
+Kd 0.160784 0.160784 0.160784
+Ks 1 1 1
+illum 2
+Ns 1024
+d 0.4
+map_Kd Reflectmed.jpg
+
+newmtl blade
+Ka 0.752941 0.752941 0.752941
+Kd 0.752941 0.752941 0.752941
+Ks 1 1 1
+illum 2
+Ns 1024
+map_Kd Reflectmed.jpg

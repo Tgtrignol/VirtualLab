@@ -1,0 +1,23 @@
+#version 410
+
+uniform mat4 projection;
+uniform mat4 modelView;
+
+layout(location = 0) in vec4 InVertex;
+layout(location = 1) in vec3 InNormal;
+layout(location = 2) in vec2 InTexCoord0;
+
+out vec4 fragVert;
+out vec3 fragNormal;
+out vec2 fragTexCoord;
+
+void main()
+{
+	// Pass some variables to the fragment shader
+	fragVert = InVertex;
+	fragNormal = InNormal;
+	fragTexCoord = vec2(InTexCoord0.s, 1.0 - InTexCoord0.t);
+	
+	// Apply all matrix transformations to vert
+	gl_Position = projection  * modelView  * InVertex;
+}
