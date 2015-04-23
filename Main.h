@@ -2,7 +2,7 @@
 #define MAIN_H
 
 //Turn this on in simulator mode if sim.config is selected
-#define SIMULATION_MODE
+//#define SIMULATION_MODE
 
 #ifdef _DEBUG
 #define BULLET_DEBUG_DRAW
