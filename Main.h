@@ -1,7 +1,7 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-//Turn this on in simulator mode
+//Turn this on in simulator mode if sim.config is selected
 #define SIMULATION_MODE
 
 #ifdef _DEBUG
