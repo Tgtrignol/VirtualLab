@@ -7,7 +7,7 @@ class NoPostProcessing : public PostProcessing{
 public:
 	GLuint pixelShader = 0;
 	GLuint framebufferID = 0;
-	GLuint colorTextureID;
+	GLuint colorTextureID = 0;
 	GLuint depthRenderBufferID = 0;
 
 	NoPostProcessing();
