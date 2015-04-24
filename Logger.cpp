@@ -2,8 +2,12 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <Windows.h>
+#include <ctime>
+#include <sstream>
 
 FILE *pFile = 0;
+time_t timev;
+struct tm *currentTime;
 
 void Logger::initLogger()
 {
@@ -19,10 +23,18 @@ void Logger::logToFile(const char* format, ...)
 	if (pFile == 0)
 		return;
 
+	time(&timev);
+	currentTime = localtime(&timev);
+
+	char *stringFormat = new char[12 + strlen(format)];
+	sprintf(stringFormat, "%02i:%02i:%02i: %s\n", currentTime->tm_hour, currentTime->tm_min, currentTime->tm_sec, format);
+
 	va_list argptr;
-	va_start(argptr, format);
-	vfprintf(pFile, format, argptr);
+	va_start(argptr, stringFormat);
+	vfprintf(pFile, stringFormat, argptr);
 	va_end(argptr);
+
+	delete stringFormat;
 }
 
 void Logger::logToFile(std::string stringFormat, ...)
@@ -30,11 +42,11 @@ void Logger::logToFile(std::string stringFormat, ...)
 	if (pFile == 0)
 		return;
 
-	const char* format = stringFormat.c_str();
+	const char *format = stringFormat.c_str();
 
 	va_list argptr;
 	va_start(argptr, format);
-	vfprintf(pFile, format, argptr);
+	logToFile(format, argptr);
 	va_end(argptr);
 }
 

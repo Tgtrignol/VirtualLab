@@ -23,7 +23,6 @@ public:
 	
 	void latePreFrame();
 	
-	
 	void stop();
 };
 

@@ -12,6 +12,8 @@
 #include <ctime>
 #include <cmath>
 
+#include "DSLReader.h"
+
 GameManager* GameManager::getInstance()
 {
 	static GameManager* pGameManager = new GameManager();
@@ -22,7 +24,8 @@ void GameManager::init()
 {
 	scene = new Scene();
 	renderManager = new RenderManager();
-	Logger::initLogger();
+	Logger::initLogger(); 
+	DSLReader().readProcedureLocationFromFile();
 }
 
 void GameManager::draw(const glm::mat4 &projectionMatrix, const glm::mat4 &modelViewMatrix)
