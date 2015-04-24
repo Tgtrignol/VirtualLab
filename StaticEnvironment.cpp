@@ -7,6 +7,10 @@
 #include <btBulletCollisionCommon.h>
 #include <btBulletDynamicsCommon.h>
 
+//////////////////////////////
+//EXAMPLE ONLY, REMOVE LATER//
+//////////////////////////////
+
 void StaticEnvironment::init()
 {
 	// test:

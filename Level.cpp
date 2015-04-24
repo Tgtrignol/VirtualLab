@@ -119,10 +119,10 @@ void Level::update()
 	}
 	else if (leftHydraCollisionInformation.m_state == CollisionState::COLLISION)
 	{
-		if ((!leftHydraCollisionInformation.m_damageCalculated) && leftHydraCollisionInformation.m_hitMob != 0)
+		if ((!leftHydraCollisionInformation.m_informationUsed))
 		{
 			//Action because of hydra here.
-			leftHydraCollisionInformation.m_damageCalculated = true;
+			leftHydraCollisionInformation.m_informationUsed = true;
 		}
 	}
 
@@ -132,10 +132,10 @@ void Level::update()
 	}
 	else if (rightHydraCollisionInformation.m_state == CollisionState::COLLISION)
 	{
-		if ((!rightHydraCollisionInformation.m_damageCalculated) && rightHydraCollisionInformation.m_hitMob != 0)
+		if ((!rightHydraCollisionInformation.m_informationUsed))
 		{
 			//Action because of hydra here.
-			rightHydraCollisionInformation.m_damageCalculated = true;
+			rightHydraCollisionInformation.m_informationUsed = true;
 		}
 	}
 

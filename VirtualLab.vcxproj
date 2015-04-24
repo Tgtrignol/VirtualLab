@@ -13,9 +13,15 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="debug.h" />
+    <ClInclude Include="DSLReader.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="GameManager.h" />
-    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="HUD.h" />
+    <ClInclude Include="KeyPoint.h" />
+    <ClInclude Include="Notes.h" />
+    <ClInclude Include="ProcedureInformation.h" />
+    <ClInclude Include="ProcedureManager.h" />
+    <ClInclude Include="ProcedureObject.h" />
     <ClInclude Include="GaussianBlur.h" />
     <ClInclude Include="Hydra.h" />
     <ClInclude Include="Level.h" />
@@ -26,14 +32,19 @@
     <ClInclude Include="RenderManager.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="StaticEnvironment.h" />
+    <ClInclude Include="StaticLabEnvironment.h" />
     <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="debug.cpp" />
+    <ClCompile Include="DSLReader.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="Notes.cpp" />
+    <ClCompile Include="ProcedureManager.cpp" />
+    <ClCompile Include="ProcedureObject.cpp" />
     <ClCompile Include="GaussianBlur.cpp" />
     <ClCompile Include="Hydra.cpp" />
     <ClCompile Include="Level.cpp" />
@@ -44,6 +55,7 @@
     <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="StaticEnvironment.cpp" />
+    <ClCompile Include="StaticLabEnvironment.cpp" />
     <ClCompile Include="stb_image.c" />
   </ItemGroup>
   <ItemGroup>

@@ -1,9 +1,13 @@
 #pragma once
-#include "GameObject.h"
+#include "ProcedureObject.h"
 
 class ObjModel;
 
-class StaticEnvironment : public GameObject
+//////////////////////////////
+//EXAMPLE ONLY, REMOVE LATER//
+//////////////////////////////
+
+class StaticEnvironment : public ProcedureObject
 {
 public:
 	unsigned int shaderID;
