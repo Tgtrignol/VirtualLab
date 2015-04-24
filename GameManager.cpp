@@ -1,6 +1,7 @@
 #include "GameManager.h"
 #include "Scene.h"
 #include "RenderManager.h"
+#include "Logger.h"
 
 #include <glm\matrix.hpp>
 #include <glm\gtc\type_ptr.hpp>
@@ -21,6 +22,7 @@ void GameManager::init()
 {
 	scene = new Scene();
 	renderManager = new RenderManager();
+	Logger::initLogger();
 }
 
 void GameManager::draw(const glm::mat4 &projectionMatrix, const glm::mat4 &modelViewMatrix)
@@ -48,4 +50,5 @@ void GameManager::stop()
 {
 	delete scene;
 	delete renderManager;
+	Logger::destroyLogger();
 }
