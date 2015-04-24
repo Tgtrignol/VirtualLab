@@ -24,7 +24,7 @@
     <ClInclude Include="ProcedureObject.h" />
     <ClInclude Include="GaussianBlur.h" />
     <ClInclude Include="Hydra.h" />
-    <ClInclude Include="Level.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="NoPostProcessing.h" />
     <ClInclude Include="ObjModel.h" />
@@ -47,7 +47,7 @@
     <ClCompile Include="ProcedureObject.cpp" />
     <ClCompile Include="GaussianBlur.cpp" />
     <ClCompile Include="Hydra.cpp" />
-    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="NoPostProcessing.cpp" />
     <ClCompile Include="ObjModel.cpp" />

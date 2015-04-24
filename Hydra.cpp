@@ -9,7 +9,7 @@
 #include "Shader.h"
 #include <glm/gtc/type_ptr.hpp>
 #include "GameManager.h"
-#include "Level.h"
+#include "Scene.h"
 #include <glm/gtc/matrix_transform.hpp>
 
 void Hydra::init()
@@ -139,8 +139,8 @@ void Hydra::update()
 	{
 		if ((!initRigidbodies) && hydraEnabled)
 		{
-			GameManager::getInstance()->level->world->addRigidBody(rightModel->rigidBody);
-			GameManager::getInstance()->level->world->addRigidBody(leftModel->rigidBody);
+			GameManager::getInstance()->scene->world->addRigidBody(rightModel->rigidBody);
+			GameManager::getInstance()->scene->world->addRigidBody(leftModel->rigidBody);
 			initRigidbodies = true;
 		}
 

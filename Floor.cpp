@@ -47,7 +47,7 @@ void Floor::initTexture()
 			imgData);
 
 		//glTexImage2D(GL_TEXTURE_2D,
-		//	0,					//level
+		//	0,					//Scene
 		//	GL_RGBA,			//internal format
 		//	width,				//width
 		//	height,				//height

@@ -1,5 +1,5 @@
 #include "GameManager.h"
-#include "Level.h"
+#include "Scene.h"
 #include "RenderManager.h"
 
 #include <glm\matrix.hpp>
@@ -19,7 +19,7 @@ GameManager* GameManager::getInstance()
 
 void GameManager::init()
 {
-	level = new Level();
+	scene = new Scene();
 	renderManager = new RenderManager();
 }
 
@@ -34,7 +34,7 @@ void GameManager::preFrame(double frameTime, double totalTime)
 	fpTimeUntillUpdate -= (frameTime / 1000.0f);
 
 	if (fpTimeUntillUpdate <= 0) {
-		level->update(frameTime, totalTime);
+		scene->update(frameTime, totalTime);
 		fpTimeUntillUpdate += GLOBAL_UPDATE_RATE;
 	}
 }
@@ -46,6 +46,6 @@ void GameManager::latePreFrame()
 
 void GameManager::stop()
 {
-	delete level;
+	delete scene;
 	delete renderManager;
 }

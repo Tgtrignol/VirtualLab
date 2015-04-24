@@ -440,7 +440,7 @@ unsigned int textureCreate(std::string filename)
 	unsigned char* imgData = stbi_load(filename.c_str(), &width, &height, &bpp, 4);
 
 	glTexImage2D(GL_TEXTURE_2D,
-		0,					//level
+		0,					//Scene
 		GL_RGBA,			//internal format
 		width,				//width
 		height,				//height

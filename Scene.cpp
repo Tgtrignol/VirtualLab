@@ -1,4 +1,4 @@
-#include "Level.h"
+#include "Scene.h"
 #include "RenderManager.h"
 #include "Floor.h"
 #include <GL/glew.h>
@@ -30,13 +30,13 @@ bool contactProcessedCallback(btManifoldPoint& cp, void* body0, void* body1)
 	btRigidBody *rBody0 = (btRigidBody*)body0;
 	btRigidBody *rBody1 = (btRigidBody*)body1;
 
-	if (!GameManager::getInstance()->level->hydra->initRigidbodies)
+	if (!GameManager::getInstance()->scene->hydra->initRigidbodies)
 		return false;
 
 	return false;
 }
 
-Level::Level()
+Scene::Scene()
 {
 	head = new PositionalDevice();
 	WKey = new DigitalDevice();
@@ -85,7 +85,7 @@ Level::Level()
 	gContactProcessedCallback = &contactProcessedCallback;
 }
 
-Level::~Level()
+Scene::~Scene()
 {
 	delete head;
 	delete WKey;
@@ -107,7 +107,7 @@ Level::~Level()
 	delete f;
 }
 
-void Level::update()
+void Scene::update()
 {
 	GLint64 timer;
 	glGetInteger64v(GL_TIMESTAMP, &timer);
@@ -185,13 +185,13 @@ void Level::update()
 	hydra->update();
 }
 
-void Level::update(double frameTime, double totalTime)
+void Scene::update(double frameTime, double totalTime)
 {
 	world->stepSimulation(btScalar(frameTime / 1000.0));
 	update();
 }
 
-void Level::draw(DrawMode drawMode)
+void Scene::draw(DrawMode drawMode)
 {
 	float InitialModelView[16];
 	glGetFloatv(GL_MODELVIEW_MATRIX, &InitialModelView[0]);

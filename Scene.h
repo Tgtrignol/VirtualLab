@@ -1,5 +1,5 @@
-#ifndef LEVEL_H
-#define LEVEL_H
+#ifndef Scene_H
+#define Scene_H
 
 #include <vector>
 #include <VrLib\Device.h>
@@ -40,7 +40,7 @@ enum DrawMode
 	Simulation
 };
 
-class Level{
+class Scene{
 private:
 	btBroadphaseInterface* broadphase;
 	btDefaultCollisionConfiguration* collisionConfiguration;
@@ -69,8 +69,8 @@ public:
 	Hydra *hydra;
 	btDiscreteDynamicsWorld* world;
 
-	Level();
-	~Level();
+	Scene();
+	~Scene();
 	void draw(DrawMode drawMode);
 	void update();
 	void update(double frameTime, double totalTime);
