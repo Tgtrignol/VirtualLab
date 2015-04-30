@@ -4,8 +4,8 @@
 //Turn this on in simulator mode if sim.config is selected
 //#define SIMULATION_MODE
 
-#ifdef _DEBUG
 #define BULLET_DEBUG_DRAW
+#ifdef _DEBUG
 
 #pragma comment(lib, "Libs/Bullet3Common_vs2010_debug.lib")
 #pragma comment(lib, "Libs/Bullet3Collision_vs2010_debug.lib")
