@@ -19,7 +19,7 @@ std::vector<std::string> DSLReader::readProcedureLocationFromFile()
 		}
 		myfile.close();
 	}
-	else Logger::logToFile("Unable to open %s", PROCEDURE_LOCATION_FILE_LOCATION);
+	//else Logger::logToFile("Unable to open %s", "test");
 
 	Logger::logToFile("~DSLReader::readProcedureLocationFromFile()");
 	return std::vector<std::string>();

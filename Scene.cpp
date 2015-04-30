@@ -68,8 +68,8 @@ Scene::Scene()
 
 	f = new Floor();
 
-	lab = new StaticLabEnvironment();
-	lab->init();
+	//lab = new StaticLabEnvironment();
+	//lab->init();
 
 	broadphase = new btDbvtBroadphase();
 	collisionConfiguration = new btDefaultCollisionConfiguration();
@@ -218,7 +218,7 @@ void Scene::draw(DrawMode drawMode)
 
 	glPushMatrix();
 	//f->draw();
-	lab->draw();
+	//lab->draw();
 	glPopMatrix();
 
 	glDisable(GL_MULTISAMPLE_ARB);

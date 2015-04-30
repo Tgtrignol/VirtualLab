@@ -156,7 +156,7 @@ void Hydra::update()
 
 		if (res.hasHit()){
 			float yCoord = res.m_hitPointWorld.y();
-			printf("%f",yCoord);
+			printf("Distance: %f",yCoord);
 		}
 
 		// Rotation of the camera. 
