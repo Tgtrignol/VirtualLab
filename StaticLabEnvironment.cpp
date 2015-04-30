@@ -2,9 +2,9 @@
 
 void StaticLabEnvironment::draw()
 {
-	//glPushMatrix();
-	//Labmodel->draw(NULL);
-	//glPopMatrix();
+	glPushMatrix();
+	Labmodel->draw(NULL);
+	glPopMatrix();
 }
 
 void StaticLabEnvironment::init()
