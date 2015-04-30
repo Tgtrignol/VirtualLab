@@ -145,9 +145,21 @@ void Hydra::update()
 		}
 
 		glm::mat4 hydraMatrix = hydraRightPosition.getData();
-		hydraRightPositionVector = hydraMatrix * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
-		hydraRightOrientation = glm::normalize((hydraMatrix * glm::vec4(0.0f, 0.0f, -1.0f, 1.0f)) - hydraRightPositionVector);
+		hydraRightPositionVector = hydraMatrix * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f); // The origin of the razer hydra.
+		hydraRightOrientation = glm::normalize((hydraMatrix * glm::vec4(0.0f, 0.0f, -1.0f, 1.0f)) - hydraRightPositionVector); // Where the razer hydra point to.
 
+		btVector3 btFrom(hydraRightPositionVector.x, hydraRightPositionVector.y, hydraRightPositionVector.z);
+		btVector3 btTo(hydraRightOrientation.x, hydraRightOrientation.y, hydraRightOrientation.z);
+		btCollisionWorld::ClosestRayResultCallback res(btFrom, btTo);
+
+		GameManager::getInstance()->level->world->rayTest(btFrom, btTo, res); // m_btWorld is btDiscreteDynamicsWorld
+
+		if (res.hasHit()){
+			float yCoord = res.m_hitPointWorld.y();
+			printf("%f",yCoord);
+		}
+
+		// Rotation of the camera. 
 		glm::vec2 joystickData = hydraRightJoystick.getData();
 		if (!((joystickData[0] <= -900) && (joystickData[1] <= -900)))
 		{
