@@ -302,7 +302,7 @@ extern "C" {
 	extern int   stbi_zlib_decode_noheader_buffer(char *obuffer, int olen, const char *ibuffer, int ilen);
 
 
-	// define faster low-level operations (typically SIMD support)
+	// define faster low-Scene operations (typically SIMD support)
 #ifdef STBI_SIMD
 	typedef void(*stbi_idct_8x8)(stbi_uc *out, int out_stride, short data[64], unsigned short *dequantize);
 	// compute an integer IDCT on "input"

@@ -2,7 +2,7 @@
 #include "RenderManager.h"
 #include "Camera.h"
 #include "Shader.h"
-#include "Level.h"
+#include "Scene.h"
 #include "PostProcessing.h"
 #include "GaussianBlur.h"
 #include "NoPostProcessing.h"

@@ -13,12 +13,19 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="debug.h" />
+    <ClInclude Include="DSLReader.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="GameManager.h" />
-    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="HUD.h" />
+    <ClInclude Include="KeyPoint.h" />
+    <ClInclude Include="Logger.h" />
+    <ClInclude Include="Notes.h" />
+    <ClInclude Include="ProcedureInformation.h" />
+    <ClInclude Include="ProcedureManager.h" />
+    <ClInclude Include="ProcedureObject.h" />
     <ClInclude Include="GaussianBlur.h" />
     <ClInclude Include="Hydra.h" />
-    <ClInclude Include="Level.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="NoPostProcessing.h" />
     <ClInclude Include="ObjModel.h" />
@@ -26,17 +33,23 @@
     <ClInclude Include="RenderManager.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="StaticEnvironment.h" />
+    <ClInclude Include="StaticLabEnvironment.h" />
     <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="debug.cpp" />
+    <ClCompile Include="DSLReader.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="Notes.cpp" />
+    <ClCompile Include="ProcedureManager.cpp" />
+    <ClCompile Include="ProcedureObject.cpp" />
     <ClCompile Include="GaussianBlur.cpp" />
     <ClCompile Include="Hydra.cpp" />
-    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="NoPostProcessing.cpp" />
     <ClCompile Include="ObjModel.cpp" />
@@ -44,6 +57,7 @@
     <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="StaticEnvironment.cpp" />
+    <ClCompile Include="StaticLabEnvironment.cpp" />
     <ClCompile Include="stb_image.c" />
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +105,7 @@
     <Import Project="..\VrLib.props" />
     <Import Project="..\CaveBuildProperties.props" />
     <Import Project="..\Glew.props" />
+    <Import Project="..\CaveLib.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -98,6 +113,7 @@
     <Import Project="..\VrLib.props" />
     <Import Project="..\CaveBuildProperties.props" />
     <Import Project="..\Glew.props" />
+    <Import Project="..\CaveLib.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

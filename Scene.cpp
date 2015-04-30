@@ -1,4 +1,4 @@
-#include "Level.h"
+#include "Scene.h"
 #include "RenderManager.h"
 #include "Floor.h"
 #include <GL/glew.h>
@@ -9,6 +9,7 @@
 #include "Main.h"
 #include "stb_image.h"
 #include "Camera.h"
+#include "StaticLabEnvironment.h"
 
 #include <iostream>
 #include <VrLib\Application.h>
@@ -30,13 +31,13 @@ bool contactProcessedCallback(btManifoldPoint& cp, void* body0, void* body1)
 	btRigidBody *rBody0 = (btRigidBody*)body0;
 	btRigidBody *rBody1 = (btRigidBody*)body1;
 
-	if (!GameManager::getInstance()->level->hydra->initRigidbodies)
+	if (!GameManager::getInstance()->scene->hydra->initRigidbodies)
 		return false;
 
 	return false;
 }
 
-Level::Level()
+Scene::Scene()
 {
 	head = new PositionalDevice();
 	WKey = new DigitalDevice();
@@ -67,6 +68,9 @@ Level::Level()
 
 	f = new Floor();
 
+	lab = new StaticLabEnvironment();
+	lab->init();
+
 	broadphase = new btDbvtBroadphase();
 	collisionConfiguration = new btDefaultCollisionConfiguration();
 	dispatcher = new btCollisionDispatcher(collisionConfiguration);
@@ -85,7 +89,7 @@ Level::Level()
 	gContactProcessedCallback = &contactProcessedCallback;
 }
 
-Level::~Level()
+Scene::~Scene()
 {
 	delete head;
 	delete WKey;
@@ -107,7 +111,7 @@ Level::~Level()
 	delete f;
 }
 
-void Level::update()
+void Scene::update()
 {
 	GLint64 timer;
 	glGetInteger64v(GL_TIMESTAMP, &timer);
@@ -119,10 +123,10 @@ void Level::update()
 	}
 	else if (leftHydraCollisionInformation.m_state == CollisionState::COLLISION)
 	{
-		if ((!leftHydraCollisionInformation.m_damageCalculated) && leftHydraCollisionInformation.m_hitMob != 0)
+		if ((!leftHydraCollisionInformation.m_informationUsed))
 		{
 			//Action because of hydra here.
-			leftHydraCollisionInformation.m_damageCalculated = true;
+			leftHydraCollisionInformation.m_informationUsed = true;
 		}
 	}
 
@@ -132,10 +136,10 @@ void Level::update()
 	}
 	else if (rightHydraCollisionInformation.m_state == CollisionState::COLLISION)
 	{
-		if ((!rightHydraCollisionInformation.m_damageCalculated) && rightHydraCollisionInformation.m_hitMob != 0)
+		if ((!rightHydraCollisionInformation.m_informationUsed))
 		{
 			//Action because of hydra here.
-			rightHydraCollisionInformation.m_damageCalculated = true;
+			rightHydraCollisionInformation.m_informationUsed = true;
 		}
 	}
 
@@ -185,13 +189,13 @@ void Level::update()
 	hydra->update();
 }
 
-void Level::update(double frameTime, double totalTime)
+void Scene::update(double frameTime, double totalTime)
 {
 	world->stepSimulation(btScalar(frameTime / 1000.0));
 	update();
 }
 
-void Level::draw(DrawMode drawMode)
+void Scene::draw(DrawMode drawMode)
 {
 	float InitialModelView[16];
 	glGetFloatv(GL_MODELVIEW_MATRIX, &InitialModelView[0]);
@@ -213,7 +217,8 @@ void Level::draw(DrawMode drawMode)
 	hydra->draw(InitialModelView);
 
 	glPushMatrix();
-	f->draw();
+	//f->draw();
+	lab->draw();
 	glPopMatrix();
 
 	glDisable(GL_MULTISAMPLE_ARB);

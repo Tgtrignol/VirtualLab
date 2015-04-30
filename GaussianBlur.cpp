@@ -2,7 +2,7 @@
 #include "GaussianBlur.h"
 #include "Shader.h"
 #include "RenderManager.h"
-#include "Level.h"
+#include "Scene.h"
 #include "GameManager.h"
 
 #include <Windows.h>
@@ -53,9 +53,9 @@ void GaussianBlur::drawToFBO(int oldFbo, int viewport[4])
 	glViewport(0, 0, viewport[2], viewport[3]);
 
 	if (viewport[0] == 0)
-		GameManager::getInstance()->level->draw(DrawMode::LeftEye);
+		GameManager::getInstance()->scene->draw(DrawMode::LeftEye);
 	else
-		GameManager::getInstance()->level->draw(DrawMode::RightEye);
+		GameManager::getInstance()->scene->draw(DrawMode::RightEye);
 
 	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, oldFbo);
 	glViewport(viewport[0], viewport[1], viewport[2], viewport[3]);

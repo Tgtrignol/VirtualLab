@@ -6,13 +6,13 @@
 #include <VrLib\Application.h>
 
 class RenderManager;
-class Level;
+class Scene;
 
 class GameManager : public Application
 {
 public:
 	RenderManager *renderManager;
-	Level *level;
+	Scene *scene;
 	float fpTime = 0;
 	float fpTimeUntillUpdate = 0;
 
@@ -22,7 +22,6 @@ public:
 	void preFrame(double frameTime, double totalTime);
 	
 	void latePreFrame();
-	
 	
 	void stop();
 };

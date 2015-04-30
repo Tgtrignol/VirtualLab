@@ -1,5 +1,5 @@
-#ifndef LEVEL_H
-#define LEVEL_H
+#ifndef Scene_H
+#define Scene_H
 
 #include <vector>
 #include <VrLib\Device.h>
@@ -11,13 +11,10 @@ class btCollisionDispatcher;
 class btSequentialImpulseConstraintSolver;
 class btDiscreteDynamicsWorld;
 class PositionalDevice;
-class DigitalDevice;
-class Skybox;
-class Terrain;
-class Mob;
 class btRigidBody;
 class Hydra;
 class CameraCharacter;
+class StaticLabEnvironment;
 
 enum CollisionState
 {
@@ -27,12 +24,11 @@ enum CollisionState
 
 struct CollisionInformation
 {
-	CollisionInformation(CollisionState state, long collisionTime, Mob* hitMob) : m_state(state), m_collisionTime(collisionTime), m_hitMob(hitMob) {}
+	CollisionInformation(CollisionState state, long collisionTime) : m_state(state), m_collisionTime(collisionTime) { }
 	CollisionInformation(){}
 	CollisionState m_state = CollisionState::NO_COLLISION;
 	long m_collisionTime = LONG_MAX;
-	bool m_damageCalculated = false;
-	Mob *m_hitMob;
+	bool m_informationUsed = false;
 };
 
 extern CollisionInformation leftHydraCollisionInformation;
@@ -45,7 +41,7 @@ enum DrawMode
 	Simulation
 };
 
-class Level{
+class Scene{
 private:
 	btBroadphaseInterface* broadphase;
 	btDefaultCollisionConfiguration* collisionConfiguration;
@@ -72,10 +68,11 @@ private:
 public:
 	Floor *f;
 	Hydra *hydra;
+	StaticLabEnvironment *lab;
 	btDiscreteDynamicsWorld* world;
 
-	Level();
-	~Level();
+	Scene();
+	~Scene();
 	void draw(DrawMode drawMode);
 	void update();
 	void update(double frameTime, double totalTime);

@@ -3,9 +3,13 @@
 #include "ObjModel.h"
 #include "Shader.h"
 #include "GameManager.h"
-#include "Level.h"
+#include "Scene.h"
 #include <btBulletCollisionCommon.h>
 #include <btBulletDynamicsCommon.h>
+
+//////////////////////////////
+//EXAMPLE ONLY, REMOVE LATER//
+//////////////////////////////
 
 void StaticEnvironment::init()
 {
