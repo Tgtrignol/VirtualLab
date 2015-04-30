@@ -152,7 +152,7 @@ void Hydra::update()
 		btVector3 btTo(hydraRightOrientation.x, hydraRightOrientation.y, hydraRightOrientation.z);
 		btCollisionWorld::ClosestRayResultCallback res(btFrom, btTo);
 
-		GameManager::getInstance()->level->world->rayTest(btFrom, btTo, res); // m_btWorld is btDiscreteDynamicsWorld
+		GameManager::getInstance()->scene->world->rayTest(btFrom, btTo, res); // m_btWorld is btDiscreteDynamicsWorld
 
 		if (res.hasHit()){
 			float yCoord = res.m_hitPointWorld.y();
