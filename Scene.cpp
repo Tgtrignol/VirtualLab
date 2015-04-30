@@ -9,6 +9,7 @@
 #include "Main.h"
 #include "stb_image.h"
 #include "Camera.h"
+#include "StaticLabEnvironment.h"
 
 #include <iostream>
 #include <VrLib\Application.h>
@@ -66,6 +67,9 @@ Scene::Scene()
 	hydra->init();
 
 	f = new Floor();
+
+	lab = new StaticLabEnvironment();
+	lab->init();
 
 	broadphase = new btDbvtBroadphase();
 	collisionConfiguration = new btDefaultCollisionConfiguration();
@@ -213,7 +217,8 @@ void Scene::draw(DrawMode drawMode)
 	hydra->draw(InitialModelView);
 
 	glPushMatrix();
-	f->draw();
+	//f->draw();
+	lab->draw();
 	glPopMatrix();
 
 	glDisable(GL_MULTISAMPLE_ARB);

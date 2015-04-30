@@ -14,6 +14,7 @@ class PositionalDevice;
 class btRigidBody;
 class Hydra;
 class CameraCharacter;
+class StaticLabEnvironment;
 
 enum CollisionState
 {
@@ -67,6 +68,7 @@ private:
 public:
 	Floor *f;
 	Hydra *hydra;
+	StaticLabEnvironment *lab;
 	btDiscreteDynamicsWorld* world;
 
 	Scene();
