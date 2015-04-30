@@ -1,6 +1,7 @@
 #include "GameManager.h"
 #include "Scene.h"
 #include "RenderManager.h"
+#include "Logger.h"
 
 #include <glm\matrix.hpp>
 #include <glm\gtc\type_ptr.hpp>
@@ -10,6 +11,8 @@
 #include <iostream>
 #include <ctime>
 #include <cmath>
+
+#include "DSLReader.h"
 
 GameManager* GameManager::getInstance()
 {
@@ -21,6 +24,8 @@ void GameManager::init()
 {
 	scene = new Scene();
 	renderManager = new RenderManager();
+	Logger::initLogger(); 
+	DSLReader().readProcedureLocationFromFile();
 }
 
 void GameManager::draw(const glm::mat4 &projectionMatrix, const glm::mat4 &modelViewMatrix)
@@ -48,4 +53,5 @@ void GameManager::stop()
 {
 	delete scene;
 	delete renderManager;
+	Logger::destroyLogger();
 }
