@@ -25,7 +25,7 @@ void GameManager::init()
 	scene = new Scene();
 	renderManager = new RenderManager();
 	Logger::initLogger(); 
-	DSLReader().readProcedureLocationFromFile();
+	DSLReader().readProcedureLocationFromFile();//test
 }
 
 void GameManager::draw(const glm::mat4 &projectionMatrix, const glm::mat4 &modelViewMatrix)
