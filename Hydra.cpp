@@ -156,8 +156,12 @@ void Hydra::update()
 
 		if (res.hasHit()){
 			float yCoord = res.m_hitPointWorld.y();
-			printf("Distance: %f",yCoord);
+			GameManager::getInstance()->scene->righternSelectedProcedureObject = (ProcedureObject *)res.m_collisionObject->getUserPointer();
+
+			printf("yCoord: %f",yCoord);
 		}
+
+
 
 		// Rotation of the camera. 
 		glm::vec2 joystickData = hydraRightJoystick.getData();
@@ -205,6 +209,19 @@ void Hydra::update()
 		glm::mat4 hydraMatrix = hydraLeftPosition.getData();
 		hydraLeftPositionVector = hydraMatrix * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 		hydraLeftOrientation = glm::normalize((hydraMatrix * glm::vec4(0.0f, 0.0f, -1.0f, 1.0f)) - hydraLeftPositionVector);
+
+		btVector3 btFrom(hydraLeftPositionVector.x, hydraLeftPositionVector.y, hydraLeftPositionVector.z);
+		btVector3 btTo(hydraLeftOrientation.x, hydraLeftOrientation.y, hydraLeftOrientation.z);
+		btCollisionWorld::ClosestRayResultCallback res(btFrom, btTo);
+
+		GameManager::getInstance()->scene->world->rayTest(btFrom, btTo, res); // m_btWorld is btDiscreteDynamicsWorld
+
+		if (res.hasHit()){
+			float yCoord = res.m_hitPointWorld.y();
+			GameManager::getInstance()->scene->lefternSelectedProcedureObject = (ProcedureObject *)res.m_collisionObject->getUserPointer();
+
+			printf("yCoord: %f", yCoord);
+		}
 
 		glm::vec2 joystickData = hydraLeftJoystick.getData();
 		if (!((joystickData[0] <= -900) && (joystickData[1] <= -900)))
