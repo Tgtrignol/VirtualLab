@@ -15,6 +15,7 @@ class btRigidBody;
 class Hydra;
 class CameraCharacter;
 class StaticLabEnvironment;
+class ProcedureObject;
 
 enum CollisionState
 {
@@ -70,6 +71,8 @@ public:
 	Hydra *hydra;
 	StaticLabEnvironment *lab;
 	btDiscreteDynamicsWorld* world;
+	ProcedureObject *righternSelectedProcedureObject;
+	ProcedureObject *lefternSelectedProcedureObject;
 
 	Scene();
 	~Scene();
