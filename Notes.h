@@ -1,7 +1,7 @@
 #ifndef NOTES_H
 #define NOTES_H
 
-class ProcedureInformation;
+struct ProcedureInformation;
 
 class Notes{
 public:

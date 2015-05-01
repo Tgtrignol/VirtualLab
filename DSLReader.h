@@ -6,7 +6,7 @@
 
 #define PROCEDURE_LOCATION_FILE_LOCATION "C:\\VirtualLab\\ProcedureLocationFile.plf"
 
-class ProcedureInformation;
+struct ProcedureInformation;
 
 class DSLReader{
 public:
