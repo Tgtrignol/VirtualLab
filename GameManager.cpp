@@ -11,8 +11,10 @@
 #include <iostream>
 #include <ctime>
 #include <cmath>
+#include <string>
 
 #include "DSLReader.h"
+#include "ProcedureObject.h"
 
 GameManager* GameManager::getInstance()
 {
@@ -25,7 +27,9 @@ void GameManager::init()
 	scene = new Scene();
 	renderManager = new RenderManager();
 	Logger::initLogger(); 
-	DSLReader().readProcedureLocationFromFile();//test
+	std::vector<std::string> procedureFileLocations = DSLReader().readProcedureLocationFromFile();//test
+	if (procedureFileLocations.size() > 0)//test
+		ProcedureInformation *po = DSLReader().readProcedureFromFile(procedureFileLocations[0]);//test
 }
 
 void GameManager::draw(const glm::mat4 &projectionMatrix, const glm::mat4 &modelViewMatrix)

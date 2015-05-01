@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 
-class ProcedureInformation;
+struct ProcedureInformation;
 
 class ProcedureManager{
 public:
