@@ -353,9 +353,9 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			ProcedureObject* appliedObject = 0;
 			ProcedureObject* changingObject = 0;
 
-			for (int i = 1; i < 3; i++)
+			if (keyPoint->m_params.size() > 1)
 			{
-				if (keyPoint->m_params[i] != nullptr)
+				for (int i = 1; i < keyPoint->m_params.size(); i++)
 				{
 					std::string objectName = *keyPoint->m_params[i];
 					for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
