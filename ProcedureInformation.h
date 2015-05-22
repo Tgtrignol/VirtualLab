@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include "ControlEnum.h"
 
 struct KeyPoint;
 class ProcedureObject;

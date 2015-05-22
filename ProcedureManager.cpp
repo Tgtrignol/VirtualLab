@@ -43,8 +43,8 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		if (keyPoint->m_isSuccessTriggered)
 			continue;
 
-		ProcedureObject *contextObject;
-		Control *contextControl;
+		ProcedureObject *contextObject = 0;
+		Control *contextControl = 0;
 
 		for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
 		{
@@ -64,6 +64,9 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (isBreakCalled)
 				break;
 		}
+
+		if (contextControl == 0 || contextObject == 0)
+			return;
 
 		if (keyPoint->m_primitive == "Rinse")
 		{

@@ -11,6 +11,7 @@
 #include "GameManager.h"
 #include "Scene.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include "ProcedureManager.h"
 
 void Hydra::init()
 {
@@ -156,7 +157,7 @@ void Hydra::update()
 
 		if (res.hasHit()){
 			float yCoord = res.m_hitPointWorld.y();
-			GameManager::getInstance()->scene->righternSelectedProcedureObject = (ProcedureObject *)res.m_collisionObject->getUserPointer();
+			GameManager::getInstance()->scene->procedureManager->righternSelectedProcedureObject = (ProcedureObject *)res.m_collisionObject->getUserPointer();
 
 			printf("yCoord: %f",yCoord);
 		}
@@ -218,7 +219,7 @@ void Hydra::update()
 
 		if (res.hasHit()){
 			float yCoord = res.m_hitPointWorld.y();
-			GameManager::getInstance()->scene->lefternSelectedProcedureObject = (ProcedureObject *)res.m_collisionObject->getUserPointer();
+			GameManager::getInstance()->scene->procedureManager->lefternSelectedProcedureObject = (ProcedureObject *)res.m_collisionObject->getUserPointer();
 
 			printf("yCoord: %f", yCoord);
 		}
