@@ -26,10 +26,7 @@ void GameManager::init()
 {
 	scene = new Scene();
 	renderManager = new RenderManager();
-	Logger::initLogger(); 
-	std::vector<std::string> procedureFileLocations = DSLReader().readProcedureLocationFromFile();//test
-	if (procedureFileLocations.size() > 0)//test
-		ProcedureInformation *po = DSLReader().readProcedureFromFile(procedureFileLocations[0]);//test
+	Logger::initLogger();
 }
 
 void GameManager::draw(const glm::mat4 &projectionMatrix, const glm::mat4 &modelViewMatrix)

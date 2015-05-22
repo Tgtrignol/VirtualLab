@@ -4,16 +4,22 @@
 #include <vector>
 #include <string>
 
+enum ControlEnum;
 struct ProcedureInformation;
+class ProcedureObject;
 
 class ProcedureManager{
 public:
 	void init();
 	void draw();
-	void update();
+	void update(ControlEnum controlEnum);
 private:
-	std::vector<std::string> procedureLocations;
-	std::vector<ProcedureInformation *> procedureInformations;
+	std::vector<std::string> procedureFileLocations;
+	ProcedureInformation *currentProcedureInformation;
+
+public:
+	ProcedureObject *righternSelectedProcedureObject;
+	ProcedureObject *lefternSelectedProcedureObject;
 };
 
 #endif

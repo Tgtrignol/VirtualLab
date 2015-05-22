@@ -11,6 +11,8 @@
 #include "Camera.h"
 #include "Notes.h"
 #include "StaticLabEnvironment.h"
+#include "ProcedureManager.h"
+#include "ControlEnum.h"
 
 #include <iostream>
 #include <VrLib\Application.h>
@@ -90,6 +92,9 @@ Scene::Scene()
 	srand(static_cast<unsigned int>(time(NULL)));
 
 	gContactProcessedCallback = &contactProcessedCallback;
+
+	procedureManager = new ProcedureManager();
+	procedureManager->init();
 }
 
 Scene::~Scene()
@@ -190,6 +195,7 @@ void Scene::update()
 	//End of keyboard
 
 	hydra->update();
+	procedureManager->update(ControlEnum::Joystick1);//TODO: pass correct value;
 }
 
 void Scene::update(double frameTime, double totalTime)
@@ -222,6 +228,8 @@ void Scene::draw(DrawMode drawMode)
 	//f->draw();
 	lab->draw();
 	notes->draw();
+	procedureManager->draw();
+
 
 	glPopMatrix();
 
