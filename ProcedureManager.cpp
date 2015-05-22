@@ -48,6 +48,8 @@ void ProcedureManager::update(ControlEnum controlEnum)
 
 		for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
 		{
+			//TODO: Check if Hydra is near the object, then perform control
+
 			bool isBreakCalled = false;
 			for each (Control *control in procedureObject->controls)
 			{
@@ -73,8 +75,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (contextControl->m_control == controlEnum)
 			{
 				keyPoint->m_isSuccessTriggered = true;
-				
-				//contextObject->doControl("Rinse", ProcedureObject2);
 			}
 			else
 			{
@@ -87,8 +87,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (contextControl->m_control == controlEnum)
 			{
 				keyPoint->m_isSuccessTriggered = true;
-
-				//contextObject->doControl("GrabRelease");
 			}
 			else
 			{
@@ -101,8 +99,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (contextControl->m_control == controlEnum)
 			{
 				keyPoint->m_isSuccessTriggered = true;
-
-				//contextObject->doControl("FlushLiquid", ProcedureObject2);
 			}
 			else
 			{
@@ -115,8 +111,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (contextControl->m_control == controlEnum)
 			{
 				keyPoint->m_isSuccessTriggered = true;
-
-				//contextObject->doControl("FillHalfway", ProcedureObject2);
 			}
 			else
 			{
@@ -129,8 +123,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (contextControl->m_control == controlEnum)
 			{
 				keyPoint->m_isSuccessTriggered = true;
-
-				//contextObject->doControl("FillUntilMark", ProcedureObject2);
 			}
 			else
 			{
@@ -143,8 +135,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (contextControl->m_control == controlEnum)
 			{
 				keyPoint->m_isSuccessTriggered = true;
-
-				//contextObject->doControl("Liquefy");
 			}
 			else
 			{
@@ -157,8 +147,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (contextControl->m_control == controlEnum)
 			{
 				keyPoint->m_isSuccessTriggered = true;
-
-				//contextObject->doControl("Attach", ProcedureObject2);
 			}
 			else
 			{
@@ -171,8 +159,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (contextControl->m_control == controlEnum)
 			{
 				keyPoint->m_isSuccessTriggered = true;
-
-				//contextObject->doControl("Swerve");
 			}
 			else
 			{
@@ -185,8 +171,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (contextControl->m_control == controlEnum)
 			{
 				keyPoint->m_isSuccessTriggered = true;
-
-				//contextObject->doControl("Rotate");
 			}
 			else
 			{
@@ -199,8 +183,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (contextControl->m_control == controlEnum)
 			{
 				keyPoint->m_isSuccessTriggered = true;
-
-				//contextObject->doControl("DetachFunnel");
 			}
 			else
 			{
@@ -213,8 +195,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (contextControl->m_control == controlEnum)
 			{
 				keyPoint->m_isSuccessTriggered = true;
-
-				//contextObject->doControl("Cork", ProcedureObject2);
 			}
 			else
 			{
@@ -227,8 +207,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (contextControl->m_control == controlEnum)
 			{
 				keyPoint->m_isSuccessTriggered = true;
-
-				//contextObject->doControl("Dump", ProcedureObject2);
 			}
 			else
 			{
@@ -241,8 +219,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (contextControl->m_control == controlEnum)
 			{
 				keyPoint->m_isSuccessTriggered = true;
-
-				//contextObject->doControl("SuckLiquid", ProcedureObject2);
 			}
 			else
 			{
@@ -255,8 +231,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (contextControl->m_control == controlEnum)
 			{
 				keyPoint->m_isSuccessTriggered = true;
-
-				//contextObject->doControl("TurnSideWay");
 			}
 			else
 			{
@@ -269,8 +243,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (contextControl->m_control == controlEnum)
 			{
 				keyPoint->m_isSuccessTriggered = true;
-
-				//contextObject->doControl("PourWithLiquid", ProcedureObject2);
 			}
 			else
 			{
@@ -283,8 +255,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (contextControl->m_control == controlEnum)
 			{
 				keyPoint->m_isSuccessTriggered = true;
-
-				//contextObject->doControl("Dry", ProcedureObject2);
 			}
 			else
 			{
@@ -297,8 +267,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (contextControl->m_control == controlEnum)
 			{
 				keyPoint->m_isSuccessTriggered = true;
-
-				//contextObject->doControl("Turn45Degree");
 			}
 			else
 			{
@@ -311,8 +279,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (contextControl->m_control == controlEnum)
 			{
 				keyPoint->m_isSuccessTriggered = true;
-
-				//contextObject->doControl("LowerLiquid", ProcedureObject2);
 			}
 			else
 			{
@@ -325,8 +291,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (contextControl->m_control == controlEnum)
 			{
 				keyPoint->m_isSuccessTriggered = true;
-
-				//contextObject->doControl("OpenCloseTap");
 			}
 			else
 			{
@@ -339,8 +303,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (contextControl->m_control == controlEnum)
 			{
 				keyPoint->m_isSuccessTriggered = true;
-
-				//contextObject->doControl("Pour10Ml", ProcedureObject2);
 			}
 			else
 			{
@@ -353,8 +315,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (contextControl->m_control == controlEnum)
 			{
 				keyPoint->m_isSuccessTriggered = true;
-
-				//contextObject->doControl("Fill", ProcedureObject2);
 			}
 			else
 			{
@@ -367,8 +327,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (contextControl->m_control == controlEnum)
 			{
 				keyPoint->m_isSuccessTriggered = true;
-
-				//contextObject->doControl("Titrate1Ml");
 			}
 			else
 			{
@@ -381,8 +339,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (contextControl->m_control == controlEnum)
 			{
 				keyPoint->m_isSuccessTriggered = true;
-
-				//contextObject->doControl("ReadAmount");
 			}
 			else
 			{
@@ -390,8 +346,46 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
+
+		//Performing Control
+		if (keyPoint->m_isSuccessTriggered == true)
+		{
+			ProcedureObject* appliedObject = 0;
+			ProcedureObject* changingObject = 0;
+
+			for (int i = 1; i < 3; i++)
+			{
+				if (keyPoint->m_params[i] != nullptr)
+				{
+					std::string objectName = *keyPoint->m_params[i];
+					for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
+					{
+						if (objectName == procedureObject->name)
+						{
+							if (i == 1)
+								appliedObject = procedureObject;
+							else if (i == 2)
+								changingObject = procedureObject;
+						}
+					}
+				}
+			}
+			//TODO: Call control method
+			//contextObject->doControl(keyPoint->m_primitive, appliedObject, changingObject);
+		}
+
 		break;
 	}
 
-	//TODO: Check for procedure completion.
+	bool procedureCompleted = true;
+	for each (KeyPoint *keyPoint in currentProcedureInformation->m_keyPoints)
+	{
+		if (keyPoint->m_isSuccessTriggered == false)
+			procedureCompleted = false;
+	}
+
+	if (procedureCompleted)
+	{
+		//TODO: Do something for procedure completion.
+	}
 }
