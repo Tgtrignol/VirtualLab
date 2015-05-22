@@ -4,10 +4,14 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <algorithm>
 
 #include "ProcedureInformation.h"
 #include "ProcedureObject.h"
 #include "Logger.h"
+#include "KeyPoint.h"
+#include "Control.h"
+#include "ControlEnum.h"
 
 std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems)
 {
@@ -60,7 +64,7 @@ ProcedureInformation *DSLReader::readProcedureFromFile(std::string procedureFile
 {
 	Logger::logToFile("DSLReader::readProcedureFromFile, procedureFileLocation: %s", procedureFileLocation);
 
-	std::string procedureName = "Not Implemented";
+	std::string procedureName;
 	std::vector<ProcedureObject *> objects;
 	std::vector<KeyPoint *> keyPoints;
 
@@ -77,41 +81,46 @@ ProcedureInformation *DSLReader::readProcedureFromFile(std::string procedureFile
 
 			if (line.substr(0, 2) == "//")
 				continue;
-
-			if (line == "")
-				continue;
 			
 			std::vector<std::string> parts = split(line, ' ');
-			
+
+			if (parts[0] == "Name")
+			{
+				std::replace(parts[1].begin(), parts[1].end(), '_', ' ');
+				procedureName = parts[1];
+			}
+			else
 			if (parts[0] == "Item")
 			{
 				if (currentProcedureObject != 0)
 					objects.push_back(currentProcedureObject);
 
-				currentProcedureObject = new ProcedureObject(parts[1]);
+				currentProcedureObject = new ProcedureObject(parts[2], parts[1]);
 			}
-
+			else
 			if (parts[0] == "Control") //TODO: Replace with primitive later
 			{
 				if (currentProcedureObject == 0)
 					continue;
 
-				std::string temp;
-				for (size_t i = 1; i < parts.size(); ++i)
-				{
-					temp += (parts[i] + (i + 1 == parts.size() ? "" : " "));
-				}
-				currentProcedureObject->controls.push_back(temp);
+				currentProcedureObject->controls.push_back(new Control(StringToControlEnum(parts[1]), parts[2]));
 			}
-
-			if (parts[0] == "Procedure")
+			else
+			if (parts[0] == "Procedure") //TODO: Use primitives later
 			{
 				if (currentProcedureObject != 0)
 				{
 					objects.push_back(currentProcedureObject);
 					currentProcedureObject = 0;
 				}
-				//keyPoints.push_back(new KeyPoint());
+
+				std::replace(parts[1].begin(), parts[1].end(), '_', ' ');
+				std::vector<std::string *> params;
+				for (size_t i = 3; i < parts.size(); i++)
+				{
+					params.push_back(new std::string(parts[i]));
+				}
+				keyPoints.push_back(new KeyPoint(parts[1], false, parts[2], params));
 			}
 
 			Logger::logToFile(line);
