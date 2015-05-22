@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 
-class KeyPoint;
+struct KeyPoint;
 class ProcedureObject;
 
 struct ProcedureInformation{
@@ -14,6 +14,8 @@ struct ProcedureInformation{
 
 	ProcedureInformation(std::vector<KeyPoint *> keyPoints, std::vector<ProcedureObject *> procedureObjects, std::string name) :
 		m_keyPoints(keyPoints), m_procedureObjects(procedureObjects), m_name(name) { }
+
+	void processInput(ControlEnum controlEnum);
 };
 
 #endif
