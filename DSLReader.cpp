@@ -98,7 +98,7 @@ ProcedureInformation *DSLReader::readProcedureFromFile(std::string procedureFile
 				currentProcedureObject = new ProcedureObject(parts[2], parts[1]);
 			}
 			else
-			if (parts[0] == "Control") //TODO: Replace with primitive later
+			if (parts[0] == "Control")
 			{
 				if (currentProcedureObject == 0)
 					continue;
@@ -106,7 +106,7 @@ ProcedureInformation *DSLReader::readProcedureFromFile(std::string procedureFile
 				currentProcedureObject->controls.push_back(new Control(StringToControlEnum(parts[1]), parts[2]));
 			}
 			else
-			if (parts[0] == "Procedure") //TODO: Use primitives later
+			if (parts[0] == "Procedure")
 			{
 				if (currentProcedureObject != 0)
 				{
