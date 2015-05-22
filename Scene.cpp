@@ -9,6 +9,7 @@
 #include "Main.h"
 #include "stb_image.h"
 #include "Camera.h"
+#include "Notes.h"
 #include "StaticLabEnvironment.h"
 
 #include <iostream>
@@ -25,6 +26,8 @@
 
 CollisionInformation leftHydraCollisionInformation;
 CollisionInformation rightHydraCollisionInformation;
+
+Notes *notes;
 
 bool contactProcessedCallback(btManifoldPoint& cp, void* body0, void* body1)
 {
@@ -218,6 +221,7 @@ void Scene::draw(DrawMode drawMode)
 
 	//f->draw();
 	lab->draw();
+	notes->draw();
 
 	glPopMatrix();
 
