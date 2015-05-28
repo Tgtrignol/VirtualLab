@@ -6,6 +6,7 @@
 
 #include <glm\glm.hpp>
 #include <VrLib/Device.h>
+#include <btBulletDynamicsCommon.h>
 
 class ObjModel;
 
@@ -18,8 +19,8 @@ public:
 	bool initRigidbodies = false;
 	ObjModel *leftModel;
 	ObjModel *rightModel;
-	btVector3 getRightHydraCor();
-	btVector3 getLeftHydraCor();
+	btVector3* getRightHydraCor();
+	btVector3* getLeftHydraCor();
 
 private:
 	unsigned int shaderID;
@@ -36,8 +37,8 @@ private:
 	glm::vec4 hydraLeftOrientation;
 	bool hydraEnabled = false;
 
-	btVector3 hydraRightVector;
-	btVector3 hydraLeftVector;
+	btVector3* hydraRightVector;
+	btVector3* hydraLeftVector;
 
 	glm::mat4 getWorldMatrixFromHydra(glm::mat4 old);
 	void initHydraModels();
