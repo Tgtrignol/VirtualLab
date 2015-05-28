@@ -121,6 +121,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				keyPoint->m_isSuccessTriggered = true;
 				if (!contextObject->grabbed)
 				{
+					
 					//TODO: get coordinates of Hydra and apply to item
 				}
 				else
