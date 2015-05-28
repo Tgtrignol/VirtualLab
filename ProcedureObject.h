@@ -17,6 +17,8 @@ public:
 	std::vector<Control *> controls;
 	std::string fileName;
 	std::string name;
+	bool grabbed = false;
+	bool closed = true;
 	btVector3 *origin;
 
 	ProcedureObject::ProcedureObject(std::string fileName, std::string name) : fileName(fileName), name(name) { }
