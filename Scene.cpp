@@ -195,7 +195,7 @@ void Scene::update()
 	//End of keyboard
 
 	hydra->update();
-	procedureManager->update(ControlEnum::Joystick1);//TODO: pass correct value;
+	procedureManager->update(ControlEnum::JoystickZ);//TODO: pass correct value;
 }
 
 void Scene::update(double frameTime, double totalTime)
