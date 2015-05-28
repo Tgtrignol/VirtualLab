@@ -6,6 +6,7 @@
 
 struct Control;
 class ObjModel;
+class btVector3;
 
 class ProcedureObject
 {
@@ -14,10 +15,11 @@ private:
 	ObjModel *pObjModel;
 public:
 	std::vector<Control *> controls;
-	std::string id;
+	std::string fileName;
 	std::string name;
+	btVector3 *origin;
 
-	ProcedureObject(std::string id, std::string name);
+	ProcedureObject::ProcedureObject(std::string fileName, std::string name) : fileName(fileName), name(name) { }
 	void init();
 	void draw();
 	void update();

@@ -133,7 +133,7 @@ shaderAttachFromFile(GLuint program, GLenum type, const char *filePath)
 GLuint initShader(char *fileName)
 {
 	GLint result;
-	
+
 	/* create program object and attach shaders */
 
 	GLuint uiShaderID = glCreateProgram();

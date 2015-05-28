@@ -70,8 +70,8 @@
     <None Include="Data\lightingShader.vp" />
     <None Include="Data\noPostProcessing.fp" />
     <None Include="Data\noPostProcessing.vp" />
-    <None Include="Data\simple.fp" />
-    <None Include="Data\simple.vp" />
+    <None Include="Data\procedureObject.fp" />
+    <None Include="Data\procedureObject.vp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Data\grass4.png" />

@@ -1,0 +1,23 @@
+#version 410 compatibility
+//TODO: Will be removing the need of compatibility soon.
+
+layout(location = 0) in vec4 InVertex;
+layout(location = 1) in vec3 InNormal;
+layout(location = 2) in vec2 InTexCoord0;
+uniform bool useTexture;
+
+out vec4 fragVert;
+out vec3 fragNormal;
+out vec2 fragTexCoord;
+
+void main()
+{
+	fragVert = InVertex;
+	fragNormal = InNormal;
+	if(useTexture)
+	{
+		fragTexCoord = vec2(InTexCoord0.s, 1.0 - InTexCoord0.t);
+	}
+
+	gl_Position = gl_ModelViewProjectionMatrix * InVertex;
+}

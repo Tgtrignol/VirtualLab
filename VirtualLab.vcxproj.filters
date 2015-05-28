@@ -171,12 +171,6 @@
     <None Include="Data\gaussianblur.vp">
       <Filter>Data</Filter>
     </None>
-    <None Include="Data\simple.fp">
-      <Filter>Data</Filter>
-    </None>
-    <None Include="Data\simple.vp">
-      <Filter>Data</Filter>
-    </None>
     <None Include="Data\lightingShader.fp">
       <Filter>Data</Filter>
     </None>
@@ -187,6 +181,12 @@
       <Filter>Data</Filter>
     </None>
     <None Include="Data\noPostProcessing.vp">
+      <Filter>Data</Filter>
+    </None>
+    <None Include="Data\procedureObject.vp">
+      <Filter>Data</Filter>
+    </None>
+    <None Include="Data\procedureObject.fp">
       <Filter>Data</Filter>
     </None>
   </ItemGroup>
