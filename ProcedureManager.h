@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <string>
+#include <btBulletCollisionCommon.h>
+#include <btBulletDynamicsCommon.h>
 
 enum ControlEnum;
 struct ProcedureInformation;
@@ -12,7 +14,7 @@ class ProcedureManager{
 public:
 	void init();
 	void draw();
-	void update(ControlEnum controlEnum);
+	void update(ControlEnum controlEnum, btVector3* LeftHydra, btVector3* RightHydra);
 private:
 	std::vector<std::string> procedureFileLocations;
 	ProcedureInformation *currentProcedureInformation;

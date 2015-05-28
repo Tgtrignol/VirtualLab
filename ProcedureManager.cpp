@@ -28,7 +28,7 @@ void ProcedureManager::draw()
 	}
 }
 
-void ProcedureManager::update(ControlEnum controlEnum)
+void ProcedureManager::update(ControlEnum controlEnum, btVector3* LeftHydra, btVector3* RightHydra)
 {
 	for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
 	{
@@ -121,7 +121,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				keyPoint->m_isSuccessTriggered = true;
 				if (!contextObject->grabbed)
 				{
-					
 					//TODO: get coordinates of Hydra and apply to item
 				}
 				else

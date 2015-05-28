@@ -37,8 +37,8 @@ private:
 	glm::vec4 hydraLeftOrientation;
 	bool hydraEnabled = false;
 
-	btVector3* hydraRightVector;
-	btVector3* hydraLeftVector;
+	btVector3 hydraRightVector = btVector3(10, 0, 0);
+	btVector3 hydraLeftVector = btVector3(-10, 0, 0);
 
 	glm::mat4 getWorldMatrixFromHydra(glm::mat4 old);
 	void initHydraModels();
