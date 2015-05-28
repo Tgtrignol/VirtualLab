@@ -156,7 +156,7 @@ void Hydra::update()
 		GameManager::getInstance()->scene->world->rayTest(btFrom, btTo, res); // m_btWorld is btDiscreteDynamicsWorld
 
 		if (res.hasHit()){
-			hydraLeftVector = btVector3(res.m_hitPointWorld.x, res.m_hitPointWorld.y, res.m_hitPointWorld.z);
+			hydraLeftVector = &btVector3(res.m_hitPointWorld.x, res.m_hitPointWorld.y, res.m_hitPointWorld.z);
 
 			GameManager::getInstance()->scene->procedureManager->righternSelectedProcedureObject = (ProcedureObject *)res.m_collisionObject->getUserPointer();
 
@@ -218,7 +218,7 @@ void Hydra::update()
 		GameManager::getInstance()->scene->world->rayTest(btFrom, btTo, res); // m_btWorld is btDiscreteDynamicsWorld
 
 		if (res.hasHit()){
-			hydraRightVector = btVector3(res.m_hitPointWorld.x, res.m_hitPointWorld.y, res.m_hitPointWorld.z);
+			hydraRightVector = &btVector3(res.m_hitPointWorld.x, res.m_hitPointWorld.y, res.m_hitPointWorld.z);
 
 			GameManager::getInstance()->scene->procedureManager->lefternSelectedProcedureObject = (ProcedureObject *)res.m_collisionObject->getUserPointer();
 		}
