@@ -14,7 +14,7 @@ class ProcedureManager{
 public:
 	void init();
 	void draw();
-	void update(ControlEnum controlEnum, btVector3* LeftHydra, btVector3* RightHydra);
+	void update(ControlEnum controlEnum);
 private:
 	std::vector<std::string> procedureFileLocations;
 	ProcedureInformation *currentProcedureInformation;

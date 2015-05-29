@@ -5,6 +5,9 @@
 #include "ProcedureInformation.h"
 #include "ProcedureObject.h"
 #include "Control.h"
+#include "GameManager.h"
+#include "Scene.h"
+#include "Hydra.h"
 
 void ProcedureManager::init()
 {
@@ -28,7 +31,7 @@ void ProcedureManager::draw()
 	}
 }
 
-void ProcedureManager::update(ControlEnum controlEnum, btVector3* LeftHydra, btVector3* RightHydra)
+void ProcedureManager::update(ControlEnum controlEnum)
 {
 	for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
 	{
@@ -43,28 +46,35 @@ void ProcedureManager::update(ControlEnum controlEnum, btVector3* LeftHydra, btV
 		if (keyPoint->m_isSuccessTriggered)
 			continue;
 
+		bool selectedHydraLeft = false;
 		ProcedureObject *contextObject = 0;
 		Control *contextControl = 0;
 
 		for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
 		{
-			//TODO: Check if Hydra is near the object, then perform control
-
-			bool isBreakCalled = false;
-			for each (Control *control in procedureObject->controls)
+			if (righternSelectedProcedureObject == procedureObject || lefternSelectedProcedureObject == procedureObject)
 			{
-				if (control->m_primitive == keyPoint->m_primitive)
+				if (righternSelectedProcedureObject == procedureObject)
+					selectedHydraLeft == false;
+				else if (lefternSelectedProcedureObject == procedureObject)
+					selectedHydraLeft == true;
+				
+				bool isBreakCalled = false;
+				for each (Control *control in procedureObject->controls)
 				{
-					contextObject = procedureObject;
-					contextControl = control;
+					if (control->m_primitive == keyPoint->m_primitive)
+					{
+						contextObject = procedureObject;
+						contextControl = control;
 
-					isBreakCalled = true;
-					break;
+						isBreakCalled = true;
+						break;
+					}
 				}
-			}
 
-			if (isBreakCalled)
-				break;
+				if (isBreakCalled)
+					break;
+			}
 		}
 
 		if (contextControl == 0 || contextObject == 0)
@@ -121,7 +131,13 @@ void ProcedureManager::update(ControlEnum controlEnum, btVector3* LeftHydra, btV
 				keyPoint->m_isSuccessTriggered = true;
 				if (!contextObject->grabbed)
 				{
-					//TODO: get coordinates of Hydra and apply to item
+					btVector3* coordinates;
+					if (selectedHydraLeft)
+						coordinates = GameManager::getInstance()->scene->hydra->getLeftHydraCor();
+					else
+						coordinates = GameManager::getInstance()->scene->hydra->getRightHydraCor();
+
+
 				}
 				else
 				{
