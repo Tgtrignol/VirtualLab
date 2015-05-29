@@ -18,6 +18,7 @@ public:
 	std::string fileName;
 	std::string name;
 	bool grabbed = false;
+	int hydra = 0;
 	bool closed = true;
 	btVector3 *origin;
 
@@ -25,6 +26,8 @@ public:
 	void init();
 	void draw();
 	void update();
+	void setGravity(btVector3*);
+	void rotate(bool horizontal, int degrees);
 };
 
 #endif

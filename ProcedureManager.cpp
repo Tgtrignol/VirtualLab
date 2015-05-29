@@ -131,17 +131,17 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				keyPoint->m_isSuccessTriggered = true;
 				if (!contextObject->grabbed)
 				{
-					btVector3* coordinates;
+					contextObject->grabbed = true;
 					if (selectedHydraLeft)
-						coordinates = GameManager::getInstance()->scene->hydra->getLeftHydraCor();
+						contextObject->hydra = 0;
 					else
-						coordinates = GameManager::getInstance()->scene->hydra->getRightHydraCor();
-
-
+						contextObject->hydra = 1;
+					contextObject->update();
 				}
 				else
 				{
-					//TODO: get coordinates of dropping item
+					contextObject->grabbed = false;
+					contextObject->setGravity(&btVector3(0, -9.81f * 20.0f, 0));
 				}
 			}
 			else

@@ -5,6 +5,9 @@
 #include <btBulletCollisionCommon.h>
 #include "ObjModel.h"
 #include "Camera.h"
+#include "GameManager.h"
+#include "Scene.h"
+#include "Hydra.h"
 
 void ProcedureObject::init()
 {
@@ -72,6 +75,27 @@ void ProcedureObject::draw()
 }
 
 void ProcedureObject::update()
+{
+	if (grabbed)
+	{
+		pObjModel->rigidBody->setGravity(btVector3(0, 0, 0));
+		if (hydra == 0)
+			origin = GameManager::getInstance()->scene->hydra->getLeftHydraCor();
+		else if (hydra == 1)
+			origin = GameManager::getInstance()->scene->hydra->getRightHydraCor();
+
+		btTransform transform = pObjModel->rigidBody->getCenterOfMassTransform();
+		transform.setOrigin(*origin);
+		pObjModel->rigidBody->setCenterOfMassTransform(transform);
+	}
+}
+
+void ProcedureObject::setGravity(btVector3* gravity)
+{
+	pObjModel->rigidBody->setGravity(btVector3(0, 0, 0));
+}
+
+void ProcedureObject::rotate(bool horizontal, int degrees)
 {
 
 }
