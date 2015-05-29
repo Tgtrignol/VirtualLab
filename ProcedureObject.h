@@ -12,8 +12,8 @@ class ProcedureObject
 {
 private:
 	unsigned int shaderID;
-	ObjModel *pObjModel;
 public:
+	ObjModel *pObjModel;
 	std::vector<Control *> controls;
 	std::string fileName;
 	std::string name;

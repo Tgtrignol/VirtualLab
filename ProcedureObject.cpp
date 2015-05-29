@@ -15,7 +15,8 @@ void ProcedureObject::init()
 	shaderID = initShader("procedureObject");
 	btVector3 size(0.2, 0.45, 1.0);
 	btScalar mass = 0.0;
-	pObjModel = new ObjModel("c:\\VrCave\\Development\\VirtualLab\\Data\\"+fileName, size, mass, *origin);
+	pObjModel = new ObjModel("c:\\VrCave\\Development\\VirtualLab\\Data\\" + fileName, size, mass, *origin);
+	pObjModel->rigidBody->setUserPointer(this);
 }
 
 void ProcedureObject::draw()

@@ -7,7 +7,6 @@
 #include "Control.h"
 #include "GameManager.h"
 #include "Scene.h"
-#include "Hydra.h"
 
 void ProcedureManager::init()
 {
