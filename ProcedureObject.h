@@ -21,6 +21,7 @@ public:
 	int hydra = 0;
 	bool closed = true;
 	btVector3 *origin;
+	bool initRigidbodies = false;
 
 	ProcedureObject::ProcedureObject(std::string fileName, std::string name) : fileName(fileName), name(name) { }
 	void init();

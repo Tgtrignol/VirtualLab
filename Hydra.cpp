@@ -25,6 +25,8 @@ void Hydra::init()
 
 	hydraLeftTrigger.init("LeftTrigger");
 	hydraLeftBumper.init("LeftBumper");
+	hydraRightTrigger.init("RightTrigger");
+	hydraRightBumper.init("RightBumper");
 
 	hydraLeftOne.init("LeftButtonOne");
 	hydraRightOne.init("RightButtonOne");
@@ -164,13 +166,13 @@ void Hydra::update()
 		btVector3 btFrom(hydraRightPositionVector.x, hydraRightPositionVector.y, hydraRightPositionVector.z);
 		btVector3 btTo(hydraRightOrientation.x, hydraRightOrientation.y, hydraRightOrientation.z);
 		btCollisionWorld::ClosestRayResultCallback res(btFrom, btTo);
+		hydraRightVector = btFrom;
 
 		GameManager::getInstance()->scene->world->rayTest(btFrom, btTo, res); // m_btWorld is btDiscreteDynamicsWorld
 
 		if (res.hasHit()){
 			if (res.m_collisionObject->getUserPointer() != this)
 			{
-				hydraRightVector = btVector3(res.m_hitPointWorld.x(), res.m_hitPointWorld.y(), res.m_hitPointWorld.z());
 
 				GameManager::getInstance()->scene->procedureManager->righternSelectedProcedureObject = (ProcedureObject *)res.m_collisionObject->getUserPointer();
 			}
@@ -228,13 +230,13 @@ void Hydra::update()
 		btVector3 btFrom(hydraLeftPositionVector.x, hydraLeftPositionVector.y, hydraLeftPositionVector.z);
 		btVector3 btTo(hydraLeftOrientation.x * 100, hydraLeftOrientation.y * 100, hydraLeftOrientation.z * 100);
 		btCollisionWorld::ClosestRayResultCallback res(btFrom, btTo);
+		hydraLeftVector = btFrom;
 
 		GameManager::getInstance()->scene->world->rayTest(btFrom, btTo, res); // m_btWorld is btDiscreteDynamicsWorld
 
 		if (res.hasHit()){
 			if (res.m_collisionObject->getUserPointer() != this)
 			{
-				hydraLeftVector = btVector3(res.m_hitPointWorld.x(), res.m_hitPointWorld.y(), res.m_hitPointWorld.z());
 
 				GameManager::getInstance()->scene->procedureManager->lefternSelectedProcedureObject = (ProcedureObject *)res.m_collisionObject->getUserPointer();
 			}
@@ -282,13 +284,13 @@ void Hydra::update()
 	}
 	if (hydraLeftBumper.isInitialized())
 	{
-		if (hydraLeftBumper.getData() == DigitalState::ON || hydraLeftBumper.getData() == DigitalState::TOGGLE_ON)
-			MoveUpward();
+		//if (hydraLeftBumper.getData() == DigitalState::ON || hydraLeftBumper.getData() == DigitalState::TOGGLE_ON)
+			//MoveUpward();
 	}
 	if (hydraLeftTrigger.isInitialized())
 	{
-		if (hydraLeftTrigger.getData() - 0.1f > 0.0f)
-			MoveDownward();
+		//if (hydraLeftTrigger.getData() - 0.1f > 0.0f)
+			//MoveDownward();
 	}
 }
 
@@ -357,6 +359,24 @@ std::string Hydra::checkButtons()
 			printf("Four");
 			hydraPressed = true;
 			return "Joystick-4";
+		}
+	}
+	else if ((hydraLeftBumper.getData() == DigitalState::TOGGLE_ON || hydraLeftBumper.getData() == DigitalState::ON) || (hydraRightBumper.getData() == DigitalState::TOGGLE_ON || hydraRightBumper.getData() == DigitalState::ON))
+	{
+		if (!hydraPressed)
+		{
+			printf("Four");
+			hydraPressed = true;
+			return "Joystick-C";
+		}
+	}
+	else if ((hydraLeftTrigger.getData() == DigitalState::TOGGLE_ON || hydraLeftTrigger.getData() == DigitalState::ON) || (hydraRightTrigger.getData() == DigitalState::TOGGLE_ON || hydraRightTrigger.getData() == DigitalState::ON))
+	{
+		if (!hydraPressed)
+		{
+			printf("Four");
+			hydraPressed = true;
+			return "Joystick-Z";
 		}
 	}
 	else if (hydraLeftOne.getData() == DigitalState::OFF || hydraRightOne.getData() == DigitalState::OFF || hydraLeftTwo.getData() == DigitalState::OFF || hydraRightTwo.getData() == DigitalState::OFF || hydraLeftThree.getData() == DigitalState::OFF || hydraRightThree.getData() == DigitalState::OFF || hydraLeftFour.getData() == DigitalState::OFF || hydraRightFour.getData() == DigitalState::OFF)

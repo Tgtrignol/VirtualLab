@@ -77,14 +77,21 @@ void ProcedureObject::draw()
 
 void ProcedureObject::update()
 {
+	if (!initRigidbodies)
+	{
+		GameManager::getInstance()->scene->world->addRigidBody(pObjModel->rigidBody);
+		initRigidbodies = true;
+	}
+
 	if (grabbed)
 	{
-		pObjModel->rigidBody->setGravity(btVector3(0, 0, 0));
+		//pObjModel->rigidBody->setGravity(btVector3(0, 0, 0));
 		if (hydra == 0)
 			origin = GameManager::getInstance()->scene->hydra->getLeftHydraCor();
 		else if (hydra == 1)
 			origin = GameManager::getInstance()->scene->hydra->getRightHydraCor();
 
+		pObjModel->rigidBody->setActivationState(1);
 		btTransform transform = pObjModel->rigidBody->getCenterOfMassTransform();
 		transform.setOrigin(*origin);
 		pObjModel->rigidBody->setCenterOfMassTransform(transform);
