@@ -11,12 +11,16 @@
 
 void ProcedureObject::init()
 {
-	origin = new btVector3(0.0, 0.0, 0.0); //TODO: Replace with a value read from file
 	shaderID = initShader("procedureObject");
-	btVector3 size(0.2, 0.45, 1.0);
+	btVector3 size(0.2, 0.45, 1.0); //TODO: Should read this from file aswell
 	btScalar mass = 0.0;
-	pObjModel = new ObjModel("c:\\VrCave\\Development\\VirtualLab\\Data\\" + fileName, size, mass, *origin);
+	pObjModel = new ObjModel("c:\\VrCave\\Development\\VirtualLab\\Data\\"+fileName, size, mass, *origin);
 	pObjModel->rigidBody->setUserPointer(this);
+
+	btTransform trans;
+	pObjModel->rigidBody->getMotionState()->getWorldTransform(trans);
+	trans.setRotation(btQuaternion(TO_RADIANS(rotation->y()), TO_RADIANS(rotation->x()), TO_RADIANS(rotation->z())));
+	pObjModel->rigidBody->getMotionState()->setWorldTransform(trans);
 }
 
 void ProcedureObject::draw()
@@ -30,14 +34,9 @@ void ProcedureObject::draw()
 	trans.getOpenGLMatrix(m);
 	glMultMatrixf(m);
 
-	//TODO: Remove hardcoded example
-	glScalef(0.10, 0.10, 0.10);
-	glScalef(1.0, 1.0, -1.0);
+	glScalef(scale->x(), scale->y(), scale->z());
 
 	GLint uniform = 0;
-
-	//EXAMPLE: Turn this on and off.
-	bool useColorInsteadOfTexture = true;//TODO: Replace true with a value read from file
 
 	uniform = glGetUniformLocation(shaderID, "useTexture");
 	glUniform1i(uniform, !useColorInsteadOfTexture); 
@@ -45,17 +44,17 @@ void ProcedureObject::draw()
 	if (useColorInsteadOfTexture)
 	{
 		uniform = glGetUniformLocation(shaderID, "color");
-		glUniform4f(uniform, 1.0f, 0.0f, 0.0f, 0.5f); //TODO: Replace red with a value read form file
+		glUniform4f(uniform, color->x(), color->y(), color->z(), color->w());
 	}
 
 	uniform = glGetUniformLocation(shaderID, "materialShininess");
-	glUniform1f(uniform, 80.0f);
+	glUniform1f(uniform, 10.0f);
 
 	uniform = glGetUniformLocation(shaderID, "materialSpecularColor");
 	glUniform3f(uniform, 0.5f, 0.3f, 0.1f);
 
 	uniform = glGetUniformLocation(shaderID, "light.position");
-	glUniform3f(uniform, 0.0f, 1.0f, 0.0f); //TODO: Take a non-random place
+	glUniform3f(uniform, 0.82f, 1.85f, 1.45f);
 
 	uniform = glGetUniformLocation(shaderID, "light.intensities");
 	glUniform3f(uniform, 1.0f, 1.0f, 1.0f);
@@ -64,10 +63,20 @@ void ProcedureObject::draw()
 	glUniform1f(uniform, 0.2f);
 
 	uniform = glGetUniformLocation(shaderID, "light.ambientCoefficient");
-	glUniform1f(uniform, 0.005f);
+	glUniform1f(uniform, 0.5f);
 
 	uniform = glGetUniformLocation(shaderID, "cameraPosition");
 	glUniform3f(uniform, fpCameraXCoordinate, fpCameraYCoordinate, fpCameraZCoordinate);
+
+	GLfloat modelViewMatrix[16];
+	glGetFloatv(GL_MODELVIEW_MATRIX, modelViewMatrix);
+	uniform = glGetUniformLocation(shaderID, "modelView");
+	glUniformMatrix4fv(uniform, 1.0f, GL_FALSE, modelViewMatrix);
+
+	GLfloat projectionMatrix[16];
+	glGetFloatv(GL_PROJECTION_MATRIX, projectionMatrix);
+	uniform = glGetUniformLocation(shaderID, "projection");
+	glUniformMatrix4fv(uniform, 1.0f, GL_FALSE, projectionMatrix);
 
 	pObjModel->draw(shaderID);
 
@@ -105,5 +114,6 @@ void ProcedureObject::setGravity(btVector3* gravity)
 
 void ProcedureObject::rotate(bool horizontal, int degrees)
 {
+
 
 }

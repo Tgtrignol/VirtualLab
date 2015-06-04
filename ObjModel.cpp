@@ -173,10 +173,10 @@ void ObjModel::createRigidBody(const btVector3 &size, btScalar mass, const btVec
 	groundTransform.setIdentity();
 	groundTransform.setOrigin(origin);
 	//btQuaternion quat(34.5, 0.0, 0.0);
-	btQuaternion quat(0, 0, 0);
-	quat.setRotation(btVector3(0.0, 1.0, 0.0), TO_RADIANS(180));
-	const btQuaternion &quaternion = quat;
-	groundTransform.setRotation(quaternion);
+	//btQuaternion quat(0, 0, 0);
+	//quat.setRotation(btVector3(0.0, 1.0, 0.0), TO_RADIANS(135));
+	//const btQuaternion &quaternion = quat;
+	//groundTransform.setRotation(quaternion);
 
 	myMotionState = new btDefaultMotionState(groundTransform); //motionstate provides interpolation capabilities, and only synchronizes 'active' objects
 	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, groundShape, localInertia);
@@ -274,10 +274,21 @@ ObjModel::ObjModel(std::string fileName, const btVector3 &size, btScalar mass, c
 			glm::vec3 p1(vertices[(atoi(indices1[0].c_str())-1)*3+0],vertices[(atoi(indices1[0].c_str())-1)*3+1],vertices[(atoi(indices1[0].c_str())-1)*3+2]);
 			glm::vec3 p2(vertices[(atoi(indices2[0].c_str())-1)*3+0],vertices[(atoi(indices2[0].c_str())-1)*3+1],vertices[(atoi(indices2[0].c_str())-1)*3+2]);
 			glm::vec3 p3(vertices[(atoi(indices3[0].c_str())-1)*3+0],vertices[(atoi(indices3[0].c_str())-1)*3+1],vertices[(atoi(indices3[0].c_str())-1)*3+2]);
-			glm::vec2 t1(texcoords[(atoi(indices1[1].c_str())-1)*2+0],texcoords[(atoi(indices1[1].c_str())-1)*2+1]);
-			glm::vec2 t2(texcoords[(atoi(indices2[1].c_str())-1)*2+0],texcoords[(atoi(indices2[1].c_str())-1)*2+1]);
-			glm::vec2 t3(texcoords[(atoi(indices3[1].c_str())-1)*2+0],texcoords[(atoi(indices3[1].c_str())-1)*2+1]);
-
+			glm::vec2 t1;
+			glm::vec2 t2;
+			glm::vec2 t3;
+			if (texcoords.size() > 0)
+			{
+				t1 = glm::vec2(texcoords[(atoi(indices1[1].c_str()) - 1) * 2 + 0], texcoords[(atoi(indices1[1].c_str()) - 1) * 2 + 1]);
+				t2 = glm::vec2(texcoords[(atoi(indices2[1].c_str()) - 1) * 2 + 0], texcoords[(atoi(indices2[1].c_str()) - 1) * 2 + 1]);
+				t3 = glm::vec2(texcoords[(atoi(indices3[1].c_str()) - 1) * 2 + 0], texcoords[(atoi(indices3[1].c_str()) - 1) * 2 + 1]);
+			}
+			else
+			{
+				t1 = glm::vec2(0, 0);
+				t2 = glm::vec2(0, 0);
+				t3 = glm::vec2(0, 0);
+			}
 			glm::vec3 n;
 			
 			if (!normals.empty())
@@ -306,15 +317,31 @@ ObjModel::ObjModel(std::string fileName, const btVector3 &size, btScalar mass, c
 					}
 					if(indices.size() == 2) //texture 
 					{
-						t[0] = texcoords[(atoi(indices[1].c_str())-1) * 2+0];
-						t[1] = texcoords[(atoi(indices[1].c_str())-1) * 2+1];
+						if (texcoords.size() > 0)
+						{
+							t[0] = texcoords[(atoi(indices[1].c_str()) - 1) * 2 + 0];
+							t[1] = texcoords[(atoi(indices[1].c_str()) - 1) * 2 + 1];
+						}
+						else
+						{
+							t[0] = 0;
+							t[1] = 0;
+						}
 					}
 					if(indices.size() == 3)
 					{
 						if( indices[1] != "")
 						{
-							t[0] = texcoords[(atoi(indices[1].c_str())-1) * 2+0];
-							t[1] = texcoords[(atoi(indices[1].c_str())-1) * 2+1];
+							if (texcoords.size() > 0)
+							{
+								t[0] = texcoords[(atoi(indices[1].c_str()) - 1) * 2 + 0];
+								t[1] = texcoords[(atoi(indices[1].c_str()) - 1) * 2 + 1];
+							}
+							else
+							{
+								t[0] = 0;
+								t[1] = 0;
+							}
 						}
 						n[0] = normals[(atoi(indices[2].c_str())-1) * 3+0];
 						n[1] = normals[(atoi(indices[2].c_str())-1) * 3+1];

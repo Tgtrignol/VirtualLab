@@ -49,6 +49,73 @@ void Hydra::draw(float InitialModelView[16])
 		return;
 	}
 
+	glColor3f(1, 1, 0);
+
+	//Hydra Laser
+	float cameraYAngle = TO_RADIANS(-fpXAngle);
+	float cameraXAngle = TO_RADIANS(-fpYAngle);
+
+	//Left
+	{
+		glBegin(GL_LINES);
+
+		glm::mat4 tra;
+		tra = glm::translate(tra, glm::vec3(fpCameraXCoordinate, fpCameraYCoordinate, fpCameraZCoordinate));
+		tra = glm::rotate(tra, -cameraYAngle, glm::vec3(0.0f, 1.0f, 0.0f));
+		tra = glm::rotate(tra, -cameraXAngle, glm::vec3(1, 0, 0));
+		tra = glm::translate(tra, glm::vec3(hydraLeftPositionVector.x * 2.0f,
+			hydraLeftPositionVector.y * 2.0f - 1.0f,
+			hydraLeftPositionVector.z * 2.0f - 2.0f));
+
+		glm::vec4 tran = tra * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+		glVertex3f(tran.x, tran.y, tran.z);
+
+		tra = glm::mat4();
+		tra = glm::translate(tra, glm::vec3(fpCameraXCoordinate, fpCameraYCoordinate, fpCameraZCoordinate));
+		tra = glm::rotate(tra, -cameraYAngle, glm::vec3(0.0f, 1.0f, 0.0f));
+		tra = glm::rotate(tra, -cameraXAngle, glm::vec3(1, 0, 0));
+		tra = glm::translate(tra, glm::vec3(hydraLeftPositionVector.x * 2.0f + hydraLeftOrientation.x,
+			hydraLeftPositionVector.y * 2.0f - 1.0f + hydraLeftOrientation.y,
+			hydraLeftPositionVector.z * 2.0f - 2.0f + hydraLeftOrientation.z));
+		tran = tra * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+
+		glVertex3f(tran.x, tran.y, tran.z);
+
+		glEnd();
+	}
+
+	//Right
+	{
+		glBegin(GL_LINES);
+
+		glm::mat4 tra;
+		tra = glm::translate(tra, glm::vec3(fpCameraXCoordinate, fpCameraYCoordinate, fpCameraZCoordinate));
+		tra = glm::rotate(tra, -cameraYAngle, glm::vec3(0.0f, 1.0f, 0.0f));
+		tra = glm::rotate(tra, -cameraXAngle, glm::vec3(1, 0, 0));
+		tra = glm::translate(tra, glm::vec3(hydraRightPositionVector.x * 2.0f,
+			hydraRightPositionVector.y * 2.0f - 1.0f,
+			hydraRightPositionVector.z * 2.0f - 2.0f));
+
+		glm::vec4 tran = tra * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+		glVertex3f(tran.x, tran.y, tran.z);
+
+		tra = glm::mat4();
+		tra = glm::translate(tra, glm::vec3(fpCameraXCoordinate, fpCameraYCoordinate, fpCameraZCoordinate));
+		tra = glm::rotate(tra, -cameraYAngle, glm::vec3(0.0f, 1.0f, 0.0f));
+		tra = glm::rotate(tra, -cameraXAngle, glm::vec3(1, 0, 0));
+		tra = glm::translate(tra, glm::vec3(hydraRightPositionVector.x * 2.0f + hydraRightOrientation.x,
+			hydraRightPositionVector.y * 2.0f - 1.0f + hydraRightOrientation.y,
+			hydraRightPositionVector.z * 2.0f - 2.0f + hydraRightOrientation.z));
+		tran = tra * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+
+		glVertex3f(tran.x, tran.y, tran.z);
+
+		glEnd();
+	}
+	//End Hydra Laser
+
+	glColor3f(0, 0, 0);
+
 	glPushMatrix();
 	btScalar m[16];
 	btTransform trans;
@@ -85,15 +152,18 @@ void Hydra::draw(float InitialModelView[16])
 
 	//Right Hydra
 	{
+
 		glPushMatrix();
 		glLoadMatrixf(InitialModelView);
 		rightModel->rigidBody->getMotionState()->getWorldTransform(trans);
 		trans.getOpenGLMatrix(m);
+		
 		glTranslatef(hydraRightPositionVector[0], hydraRightPositionVector[1] - 1.0f, -2.0f + hydraRightPositionVector[2]);
 
 		glm::mat4 old = hydraRightPosition.getData();
 
 		glMultMatrixf(glm::value_ptr(getWorldMatrixFromHydra(old)));
+		
 		glRotatef(180.0f, 0.0f, 0.0f, 1.0f);
 
 		glTranslatef(0.0f, SWORD_Y_OFFSET, 0.0f);
@@ -115,6 +185,7 @@ void Hydra::draw(float InitialModelView[16])
 
 	//Left Hydra
 	{
+		
 		glPushMatrix();
 		glLoadMatrixf(InitialModelView);
 		leftModel->rigidBody->getMotionState()->getWorldTransform(trans);
@@ -163,22 +234,51 @@ void Hydra::update()
 		hydraRightPositionVector = hydraMatrix * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f); // The origin of the razer hydra.
 		hydraRightOrientation = glm::normalize((hydraMatrix * glm::vec4(0.0f, 0.0f, -1.0f, 1.0f)) - hydraRightPositionVector); // Where the razer hydra point to.
 
-		btVector3 btFrom(hydraRightPositionVector.x, hydraRightPositionVector.y, hydraRightPositionVector.z);
-		btVector3 btTo(hydraRightOrientation.x, hydraRightOrientation.y, hydraRightOrientation.z);
-		btCollisionWorld::ClosestRayResultCallback res(btFrom, btTo);
-		hydraRightVector = btFrom;
+		{
+			float cameraYAngle = TO_RADIANS(-fpXAngle);
+			float cameraXAngle = TO_RADIANS(-fpYAngle);
 
-		GameManager::getInstance()->scene->world->rayTest(btFrom, btTo, res); // m_btWorld is btDiscreteDynamicsWorld
+			glm::mat4 tra;
+			tra = glm::translate(tra, glm::vec3(fpCameraXCoordinate, fpCameraYCoordinate, fpCameraZCoordinate));
+			tra = glm::rotate(tra, -cameraYAngle, glm::vec3(0.0f, 1.0f, 0.0f));
+			tra = glm::rotate(tra, -cameraXAngle, glm::vec3(1, 0, 0));
+			tra = glm::translate(tra, glm::vec3(
+				hydraRightPositionVector.x * 2.0f,
+				hydraRightPositionVector.y * 2.0f - 1.0f,
+				hydraRightPositionVector.z * 2.0f - 2.0f));
 
-		if (res.hasHit()){
-			if (res.m_collisionObject->getUserPointer() != this)
+			glm::vec4 tran = tra * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+			btVector3 btFrom(tran.x, tran.y, tran.z);
+
+			tra = glm::mat4();
+			tra = glm::translate(tra, glm::vec3(fpCameraXCoordinate, fpCameraYCoordinate, fpCameraZCoordinate));
+			tra = glm::rotate(tra, -cameraYAngle, glm::vec3(0.0f, 1.0f, 0.0f));
+			tra = glm::rotate(tra, -cameraXAngle, glm::vec3(1, 0, 0));
+			tra = glm::translate(tra, glm::vec3(
+				hydraRightPositionVector.x * 2.0f + hydraRightOrientation.x,
+				hydraRightPositionVector.y * 2.0f - 1.0f + hydraRightOrientation.y,
+				hydraRightPositionVector.z * 2.0f - 2.0f + hydraRightOrientation.z)); //TODO: Add stable point of standing parameters
+
+			tran = tra * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+			btVector3 btTo(tran.x, tran.y, tran.z);
+
+
+			btCollisionWorld::ClosestRayResultCallback res(btFrom, btTo);
+			hydraRightVector = btFrom;
+
+			GameManager::getInstance()->scene->world->rayTest(btFrom, btTo, res); // m_btWorld is btDiscreteDynamicsWorld
+
+			if (res.hasHit()){
+				if (res.m_collisionObject->getUserPointer() != this)
+				{
+					GameManager::getInstance()->scene->procedureManager->righternSelectedProcedureObject = (ProcedureObject *)res.m_collisionObject->getUserPointer();
+				}
+			}
+			else
 			{
-
-				GameManager::getInstance()->scene->procedureManager->righternSelectedProcedureObject = (ProcedureObject *)res.m_collisionObject->getUserPointer();
+				GameManager::getInstance()->scene->procedureManager->righternSelectedProcedureObject = nullptr;
 			}
 		}
-
-
 
 		// Rotation of the camera. 
 		glm::vec2 joystickData = hydraRightJoystick.getData();
@@ -207,7 +307,7 @@ void Hydra::update()
 		tra = glm::translate(tra, glm::vec3(fpCameraXCoordinate, fpCameraYCoordinate, fpCameraZCoordinate));
 		tra = glm::rotate(tra, -cameraYAngle, glm::vec3(0.0f, 1.0f, 0.0f));
 		tra = glm::rotate(tra, -cameraXAngle, glm::vec3(1.0f, 0.0f, 0.0f));
-		tra = glm::translate(tra, glm::vec3(hydraRightPositionVector.x * 2., hydraRightPositionVector.y * 2.0f - 1.0f, hydraRightPositionVector.z * 2.0f - 2.0f));
+		tra = glm::translate(tra, glm::vec3(hydraRightPositionVector.x * 2.0f, hydraRightPositionVector.y * 2.0f - 1.0f, hydraRightPositionVector.z * 2.0f - 2.0f));
 		glm::vec4 tran = tra * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 		transform.setOrigin(btVector3(tran.x, tran.y, tran.z));
 
@@ -227,18 +327,49 @@ void Hydra::update()
 		hydraLeftPositionVector = hydraMatrix * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 		hydraLeftOrientation = glm::normalize((hydraMatrix * glm::vec4(0.0f, 0.0f, -1.0f, 1.0f)) - hydraLeftPositionVector);
 
-		btVector3 btFrom(hydraLeftPositionVector.x, hydraLeftPositionVector.y, hydraLeftPositionVector.z);
-		btVector3 btTo(hydraLeftOrientation.x * 100, hydraLeftOrientation.y * 100, hydraLeftOrientation.z * 100);
-		btCollisionWorld::ClosestRayResultCallback res(btFrom, btTo);
-		hydraLeftVector = btFrom;
+		{
+			float cameraYAngle = TO_RADIANS(-fpXAngle);
+			float cameraXAngle = TO_RADIANS(-fpYAngle);
 
-		GameManager::getInstance()->scene->world->rayTest(btFrom, btTo, res); // m_btWorld is btDiscreteDynamicsWorld
+			glm::mat4 tra;
+			tra = glm::translate(tra, glm::vec3(fpCameraXCoordinate, fpCameraYCoordinate, fpCameraZCoordinate));
+			tra = glm::rotate(tra, -cameraYAngle, glm::vec3(0.0f, 1.0f, 0.0f));
+			tra = glm::rotate(tra, -cameraXAngle, glm::vec3(1, 0, 0));
+			tra = glm::translate(tra, glm::vec3(
+				hydraLeftPositionVector.x * 2.0f,
+				hydraLeftPositionVector.y * 2.0f - 1.0f,
+				hydraLeftPositionVector.z * 2.0f - 2.0f));
 
-		if (res.hasHit()){
-			if (res.m_collisionObject->getUserPointer() != this)
+			glm::vec4 tran = tra * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+			btVector3 btFrom(tran.x, tran.y, tran.z);
+
+			tra = glm::mat4();
+			tra = glm::translate(tra, glm::vec3(fpCameraXCoordinate, fpCameraYCoordinate, fpCameraZCoordinate));
+			tra = glm::rotate(tra, -cameraYAngle, glm::vec3(0.0f, 1.0f, 0.0f));
+			tra = glm::rotate(tra, -cameraXAngle, glm::vec3(1, 0, 0));
+			tra = glm::translate(tra, glm::vec3(
+				hydraLeftPositionVector.x * 2.0f + hydraLeftOrientation.x,
+				hydraLeftPositionVector.y * 2.0f - 1.0f + hydraLeftOrientation.y,
+				hydraLeftPositionVector.z * 2.0f - 2.0f + hydraLeftOrientation.z)); //TODO: Add stable point of standing parameters
+
+			tran = tra * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+			btVector3 btTo(tran.x, tran.y, tran.z);
+
+
+			btCollisionWorld::ClosestRayResultCallback res(btFrom, btTo);
+			hydraLeftVector = btFrom;
+
+			GameManager::getInstance()->scene->world->rayTest(btFrom, btTo, res); // m_btWorld is btDiscreteDynamicsWorld
+
+			if (res.hasHit()){
+				if (res.m_collisionObject->getUserPointer() != this)
+				{
+					GameManager::getInstance()->scene->procedureManager->lefternSelectedProcedureObject = (ProcedureObject *)res.m_collisionObject->getUserPointer();
+				}
+			}
+			else
 			{
-
-				GameManager::getInstance()->scene->procedureManager->lefternSelectedProcedureObject = (ProcedureObject *)res.m_collisionObject->getUserPointer();
+				GameManager::getInstance()->scene->procedureManager->lefternSelectedProcedureObject = nullptr;
 			}
 		}
 

@@ -38,7 +38,9 @@ void ProcedureManager::update(ControlEnum controlEnum)
 	}
 
 	if (controlEnum == ControlEnum::None)
+	{
 		return;
+	}
 
 	for each (KeyPoint *keyPoint in currentProcedureInformation->m_keyPoints)
 	{
@@ -56,7 +58,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				bool isBreakCalled = false;
 				for each (Control *control in procedureObject->controls)
 				{
-					if (control->m_primitive == keyPoint->m_primitive)
+					if (control->m_primitive == "GrabRelease")
 					{
 						contextObject = procedureObject;
 						contextControl = control;
@@ -72,9 +74,15 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			else if (righternSelectedProcedureObject == procedureObject || lefternSelectedProcedureObject == procedureObject)
 			{
 				if (righternSelectedProcedureObject == procedureObject)
-					selectedHydraLeft == false;
+				{
+					righternSelectedProcedureObject = NULL;
+					selectedHydraLeft = false;
+				}
 				else if (lefternSelectedProcedureObject == procedureObject)
-					selectedHydraLeft == true;
+				{
+					lefternSelectedProcedureObject = NULL; 
+					selectedHydraLeft = true;
+				}
 				
 				bool isBreakCalled = false;
 				for each (Control *control in procedureObject->controls)
@@ -158,7 +166,8 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				else
 				{
 					contextObject->grabbed = false;
-					contextObject->setGravity(&btVector3(0, -9.81f * 20.0f, 0));
+					//contextObject->setGravity(&btVector3(0, -9.81f * 20.0f, 0));
+					contextObject->update();
 				}
 			}
 			else

@@ -2,6 +2,10 @@
 #include <glut\glut.h>
 #include <string>
 #include "Notes.h"
+#include "ProcedureManager.h"
+#include "GameManager.h"
+#include "Scene.h"
+#include "ProcedureObject.h"
 
 using namespace std;
 
@@ -9,7 +13,7 @@ void Notes::drawNotes(const char *text, int length, int x, int y, int z) {
 
 	glPushMatrix();
 	glMatrixMode(GL_PROJECTION);
-	glColor3f(0.0f, 0.0f, 0.0f);
+	glColor3f(1.0f, 0.0f, 0.0f);
 
 	glPushMatrix();
 	glLoadIdentity();
@@ -38,8 +42,10 @@ void Notes::draw()
 	int itemNr = 0;
 	for (int posY = 0; posY < 400; posY += 20) {
 		itemNr++;
-			string text = "Nr. " + to_string(itemNr) + " Column 1 en Column 2";
-			drawNotes(text.data(), text.length(), 500, posY, 5);
+		string text = GameManager::getInstance()->scene->procedureManager->righternSelectedProcedureObject == nullptr ? "" : 
+														GameManager::getInstance()->scene->procedureManager->righternSelectedProcedureObject->name;
+		//string text = "Nr. " + to_string(itemNr) + " Column 1 en Column 2";
+		drawNotes(text.data(), text.length(), 500, posY, 5);
 	}
 
 }
