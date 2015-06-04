@@ -15,11 +15,14 @@ class ProcedureObject
 {
 private:
 	unsigned int shaderID;
-	ObjModel *pObjModel;
 public:
+	ObjModel *pObjModel;
 	std::vector<Control *> controls;
 	std::string fileName;
 	std::string name;
+	bool grabbed = false;
+	int hydra = 0;
+	bool closed = true;
 	btVector3 *origin;
 	btVector3 *rotation;
 	btVector3 *scale;
@@ -30,6 +33,8 @@ public:
 	void init();
 	void draw();
 	void update();
+	void setGravity(btVector3*);
+	void rotate(bool horizontal, int degrees);
 };
 
 #endif

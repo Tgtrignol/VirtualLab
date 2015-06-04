@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <string>
+#include <btBulletCollisionCommon.h>
+#include <btBulletDynamicsCommon.h>
 
 enum ControlEnum;
 struct ProcedureInformation;
