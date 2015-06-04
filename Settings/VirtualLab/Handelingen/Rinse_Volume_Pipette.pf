@@ -1,0 +1,63 @@
+Name Rinse_Volume_Pipette
+
+Item Volume_Pipette Volume_pipet.obj
+Control Joystick-Z GrabRelease
+Control Joystick Move
+Control Joystick-1 SuckLiquidHalfway
+Control Joystick-2 TurnSideWay
+Control Joystick-3 Rotate
+
+Item Sink Wasbak.obj
+Control Joystick-1 FlushLiquid
+
+Item Beaker Bekerglas.obj
+Control Joystick-Z GrabRelease
+Control Joystick Move
+Control Joystick-1 PourWithLiquid
+
+Item Tissue Tissue.obj
+Control Joystick-Z GrabRelease
+Control Joystick Move
+Control Joystick-1 Dry
+
+//Take a Beaker and pour it with some liquid
+Procedure Grab_Beaker GrabRelease Beaker
+Procedure Pour_liquid_in_Beaker PourWithLiquid Beaker
+
+//Suck the liquid halfway in the Volume Pipette
+Procedure Grab_Volume_Pipette GrabRelease Volume_Pipette
+Procedure Suck_liquid_from_Beaker_with_Volume_Pipette_until_the_pipette_is_half_full SuckLiquidHalfway Volume_Pipette Beaker
+Procedure Release_Beaker GrabRelease Beaker
+
+//Rinse by turning the Volume_Pipette horizontal and rotate a couple of times
+Procedure Turn_the_Volume_pipette_horizontal TurnSideWay Volume_Pipette
+Procedure Rotate_Volume_Pipette Rotate Volume_Pipette
+Procedure Rotate_Volume_Pipette Rotate Volume_Pipette
+Procedure Rotate_Volume_Pipette Rotate Volume_Pipette
+Procedure Turn_the_Volume_pipette_vertical TurnSideWay Volume_Pipette
+
+//Flush the liquid out of the Volume_Pipette into the sink
+Procedure Dump_Liquid_in_Volume_Pipette_in_the_sink Sink FlushLiquid
+
+//Dry the volume pipette with a tissue
+Procedure Grab_Tissue GrabRelease Tissue
+Procedure Dry_Volume_Pipette_with_Tissue Dry Tissue Volume_Pipette
+Procedure Release_Tissue GrabRelease Tissue
+
+//Repeat rinsing one more time
+Procedure Grab_Volume_Pipette GrabRelease Volume_Pipette
+Procedure Suck_liquid_from_Beaker_with_Volume_Pipette_until_the_pipette_is_half_full SuckLiquidHalfway Volume_Pipette Volume_Pipette
+Procedure Release_Beaker GrabRelease Beaker
+
+Procedure TurnSideWay Volume_Pipette
+Procedure Turn_the_Volume_pipette_horizontal TurnSideWay Volume_Pipette
+Procedure Rotate_Volume_Pipette Rotate Volume_Pipette
+Procedure Rotate_Volume_Pipette Rotate Volume_Pipette
+Procedure Rotate_Volume_Pipette Rotate Volume_Pipette
+Procedure Turn_the_Volume_pipette_vertical TurnSideWay Volume_Pipette
+
+Procedure Dump_Liquid_in_Volume_Pipette_in_the_sink Sink FlushLiquid
+
+Procedure Grab_Tissue GrabRelease Tissue
+Procedure Dry_Volume_Pipette_with_Tissue Dry Tissue Volume_Pipette
+Procedure Release_Tissue GrabRelease Tissue
