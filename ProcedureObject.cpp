@@ -12,7 +12,8 @@ void ProcedureObject::init()
 	btVector3 size(0.2, 0.45, 1.0); //TODO: Should read this from file aswell
 	btScalar mass = 0.0;
 	pObjModel = new ObjModel("c:\\VrCave\\Development\\VirtualLab\\Data\\"+fileName, size, mass, *origin);
-	
+	pObjModel->rigidBody->setUserPointer(this);
+
 	btTransform trans;
 	pObjModel->rigidBody->getMotionState()->getWorldTransform(trans);
 	trans.setRotation(btQuaternion(TO_RADIANS(rotation->y()), TO_RADIANS(rotation->x()), TO_RADIANS(rotation->z())));

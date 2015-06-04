@@ -54,9 +54,9 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (righternSelectedProcedureObject == procedureObject || lefternSelectedProcedureObject == procedureObject)
 			{
 				if (righternSelectedProcedureObject == procedureObject)
-					selectedHydraLeft == false;
+					selectedHydraLeft = false;
 				else if (lefternSelectedProcedureObject == procedureObject)
-					selectedHydraLeft == true;
+					selectedHydraLeft = true;
 				
 				bool isBreakCalled = false;
 				for each (Control *control in procedureObject->controls)
@@ -140,7 +140,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				else
 				{
 					contextObject->grabbed = false;
-					contextObject->setGravity(&btVector3(0, -9.81f * 20.0f, 0));
 				}
 			}
 			else
