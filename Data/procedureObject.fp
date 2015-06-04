@@ -1,5 +1,4 @@
-#version 410 compatibility
-//TODO: Will be removing the need of compatibility soon.
+#version 410
 
 //A general color of the whole item, could change this per vertex, 
 //but no need has arrived yet.
@@ -10,6 +9,7 @@ uniform sampler2D texture;
 uniform float materialShininess;
 uniform vec3 materialSpecularColor;
 uniform vec3 cameraPosition;
+uniform mat4 modelView;
 
 uniform struct Light
 {
@@ -27,8 +27,9 @@ out vec4 outputColor;
 
 void main()
 {
-	vec3 normal = normalize(transpose(inverse(mat3(gl_ModelViewMatrix))) * fragNormal);
-	vec3 surfacePos = vec3(gl_ModelViewMatrix * fragVert);
+	//outputColor = texture2D(texture, fragTexCoord);
+	vec3 normal = normalize(transpose(inverse(mat3(modelView))) * fragNormal);
+	vec3 surfacePos = vec3(modelView * fragVert);
 	
 	vec4 surfaceColor;
 	if(useTexture)
@@ -45,7 +46,7 @@ void main()
 	
 	//ambient
 	vec3 ambient = light.ambientCoefficient * surfaceColor.rgb * light.intensities;
-
+	
 	//diffuse
 	float diffuseCoefficient = max(0.0, dot(normal, surfaceToLight));
 	vec3 diffuse = diffuseCoefficient * surfaceColor.rgb * light.intensities;
@@ -59,7 +60,7 @@ void main()
 	//attenuation
 	float distanceToLight = length(light.position - surfacePos);
 	float attenuation = 1.0 / (1.0 + light.attenuation * pow(distanceToLight, 2));
-
+	
 	//linear color (color before gamma correction)
 	vec3 linearColor = ambient + attenuation*(diffuse + specular);
 	

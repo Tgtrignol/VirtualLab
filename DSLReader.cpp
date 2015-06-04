@@ -12,6 +12,7 @@
 #include "KeyPoint.h"
 #include "Control.h"
 #include "ControlEnum.h"
+#include <btBulletCollisionCommon.h>
 
 std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems)
 {
@@ -96,6 +97,15 @@ ProcedureInformation *DSLReader::readProcedureFromFile(std::string procedureFile
 					objects.push_back(currentProcedureObject);
 
 				currentProcedureObject = new ProcedureObject(parts[2], parts[1]);
+				currentProcedureObject->origin = new btVector3(std::stof(parts[3]), std::stof(parts[4]), std::stof(parts[5]));
+				currentProcedureObject->rotation = new btVector3(std::stof(parts[6]), std::stof(parts[7]), std::stof(parts[8]));
+				currentProcedureObject->scale = new btVector3(std::stof(parts[9]), std::stof(parts[10]), std::stof(parts[11]));
+
+				if (parts.size() > 12)
+				{
+					currentProcedureObject->useColorInsteadOfTexture = true;
+					currentProcedureObject->color = new btVector4(std::stof(parts[12]), std::stof(parts[13]), std::stof(parts[14]), std::stof(parts[15]));
+				}
 			}
 			else
 			if (parts[0] == "Control")

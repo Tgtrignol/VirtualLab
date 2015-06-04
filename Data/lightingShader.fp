@@ -24,7 +24,6 @@ out vec4 outputColor;
 
 void main()
 {
-	//outputColor = texture2D(texture, fragTexCoord);
 	vec3 normal = normalize(transpose(inverse(mat3(modelView))) * fragNormal);
 	vec3 surfacePos = vec3(modelView * fragVert);
 	vec4 surfaceColor = texture2D(texture, fragTexCoord);

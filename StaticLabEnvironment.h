@@ -1,13 +1,13 @@
 #ifndef STATIC_LAB_ENVIRONMENT_H
 #define STATIC_LAB_ENVIRONMENT_H
-#include "ObjModel.h"
 
-#include <CaveLib\CaveLib\model.h>
-
+class ShaderProgram;
+class ObjModel;
 
 class StaticLabEnvironment{
 public:
-	cModel *Labmodel;
+	ObjModel *pObjModel;
+	unsigned int shaderID;
 	void init();
 	void draw();
 };

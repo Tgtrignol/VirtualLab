@@ -226,10 +226,9 @@ void Scene::draw(DrawMode drawMode)
 	hydra->draw(InitialModelView);
 
 	//f->draw();
-	//lab->draw();
+	lab->draw();
 	notes->draw();
 	procedureManager->draw();
-
 
 	glPopMatrix();
 
