@@ -73,17 +73,16 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			}
 			else if (righternSelectedProcedureObject == procedureObject || lefternSelectedProcedureObject == procedureObject)
 			{
-				if (righternSelectedProcedureObject == procedureObject)
-				{
-					righternSelectedProcedureObject = NULL;
+				if (righternSelectedProcedureObject == procedureObject && RightLeft == "Right")
 					selectedHydraLeft = false;
-				}
-				else if (lefternSelectedProcedureObject == procedureObject)
-				{
-					lefternSelectedProcedureObject = NULL; 
+				else if (lefternSelectedProcedureObject == procedureObject && RightLeft == "Left")
 					selectedHydraLeft = true;
-				}
-				
+				else
+					return;
+
+				righternSelectedProcedureObject = NULL;
+				lefternSelectedProcedureObject = NULL;
+
 				bool isBreakCalled = false;
 				if (procedure)
 				{
