@@ -104,6 +104,10 @@ void ProcedureObject::update()
 		btTransform transform = pObjModel->rigidBody->getCenterOfMassTransform();
 		transform.setOrigin(*origin);
 		pObjModel->rigidBody->setCenterOfMassTransform(transform);
+
+		pObjModel->rigidBody->getMotionState()->getWorldTransform(transform);
+		transform.setOrigin(*origin);
+		pObjModel->rigidBody->getMotionState()->setWorldTransform(transform);
 	}
 }
 
