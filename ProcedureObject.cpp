@@ -95,9 +95,9 @@ void ProcedureObject::update()
 	if (grabbed)
 	{
 		//pObjModel->rigidBody->setGravity(btVector3(0, 0, 0));
-		if (hydra == 0)
+		if (LeftRight == "Left")
 			origin = GameManager::getInstance()->scene->hydra->getLeftHydraCor();
-		else if (hydra == 1)
+		else if (LeftRight == "Right")
 			origin = GameManager::getInstance()->scene->hydra->getRightHydraCor();
 
 		pObjModel->rigidBody->setActivationState(1);

@@ -22,6 +22,7 @@ private:
 public:
 	ProcedureObject *righternSelectedProcedureObject;
 	ProcedureObject *lefternSelectedProcedureObject;
+	std::string RightLeft = "None";
 };
 
 #endif

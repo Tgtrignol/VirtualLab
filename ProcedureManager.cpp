@@ -58,7 +58,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				bool isBreakCalled = false;
 				for each (Control *control in procedureObject->controls)
 				{
-					if (control->m_primitive == "GrabRelease")
+					if (control->m_primitive == "GrabRelease"  && RightLeft == procedureObject->LeftRight)
 					{
 						contextObject = procedureObject;
 						contextControl = control;
@@ -174,9 +174,9 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				{
 					contextObject->grabbed = true;
 					if (selectedHydraLeft)
-						contextObject->hydra = 0;
+						contextObject->LeftRight = "Left";
 					else
-						contextObject->hydra = 1;
+						contextObject->LeftRight = "Right";
 					contextObject->update();
 				}
 				else

@@ -456,64 +456,119 @@ glm::mat4 Hydra::getWorldMatrixFromHydra(glm::mat4 old)
 
 std::string Hydra::checkButtons()
 {
-	if ((hydraLeftOne.getData() == DigitalState::TOGGLE_ON || hydraLeftOne.getData() == DigitalState::ON) || (hydraRightOne.getData() == DigitalState::TOGGLE_ON || hydraRightOne.getData() == DigitalState::ON))
+	if (hydraLeftOne.getData() == DigitalState::TOGGLE_ON || hydraLeftOne.getData() == DigitalState::ON)
 	{
 		if (!hydraPressed)
 		{
-			printf("One");
 			hydraPressed = true;
+			GameManager::getInstance()->scene->procedureManager->RightLeft = "Left";
 			return "Joystick-1"; 
 		}
 	}
-	else if ((hydraLeftTwo.getData() == DigitalState::TOGGLE_ON || hydraLeftTwo.getData() == DigitalState::ON) || (hydraRightTwo.getData() == DigitalState::TOGGLE_ON || hydraRightTwo.getData() == DigitalState::ON))
+	else if (hydraRightOne.getData() == DigitalState::TOGGLE_ON || hydraRightOne.getData() == DigitalState::ON)
 	{
 		if (!hydraPressed)
 		{
-			printf("Two");
 			hydraPressed = true;
+			GameManager::getInstance()->scene->procedureManager->RightLeft = "Right";
+			return "Joystick-1";
+		}
+	}
+	else if (hydraLeftTwo.getData() == DigitalState::TOGGLE_ON || hydraLeftTwo.getData() == DigitalState::ON)
+	{
+		if (!hydraPressed)
+		{
+			hydraPressed = true;
+			GameManager::getInstance()->scene->procedureManager->RightLeft = "Left";
 			return "Joystick-2";
 		}
 	}
-	else if ((hydraLeftThree.getData() == DigitalState::TOGGLE_ON || hydraLeftThree.getData() == DigitalState::ON) || (hydraRightThree.getData() == DigitalState::TOGGLE_ON || hydraRightThree.getData() == DigitalState::ON))
+	else if (hydraRightTwo.getData() == DigitalState::TOGGLE_ON || hydraRightTwo.getData() == DigitalState::ON)
 	{
 		if (!hydraPressed)
 		{
-			printf("Three");
 			hydraPressed = true;
+			GameManager::getInstance()->scene->procedureManager->RightLeft = "Right";
+			return "Joystick-2";
+		}
+	}
+	else if (hydraLeftThree.getData() == DigitalState::TOGGLE_ON || hydraLeftThree.getData() == DigitalState::ON)
+	{
+		if (!hydraPressed)
+		{
+			hydraPressed = true;
+			GameManager::getInstance()->scene->procedureManager->RightLeft = "Left";
 			return "Joystick-3";
 		}
 	}
-	else if ((hydraLeftFour.getData() == DigitalState::TOGGLE_ON || hydraLeftFour.getData() == DigitalState::ON) || (hydraRightFour.getData() == DigitalState::TOGGLE_ON || hydraRightFour.getData() == DigitalState::ON))
+	else if (hydraRightThree.getData() == DigitalState::TOGGLE_ON || hydraRightThree.getData() == DigitalState::ON)
 	{
 		if (!hydraPressed)
 		{
-			printf("Four");
 			hydraPressed = true;
+			GameManager::getInstance()->scene->procedureManager->RightLeft = "Right";
+			return "Joystick-3";
+		}
+	}
+	else if (hydraLeftFour.getData() == DigitalState::TOGGLE_ON || hydraLeftFour.getData() == DigitalState::ON)
+	{
+		if (!hydraPressed)
+		{
+			hydraPressed = true;
+			GameManager::getInstance()->scene->procedureManager->RightLeft = "Left";
 			return "Joystick-4";
 		}
 	}
-	else if ((hydraLeftBumper.getData() == DigitalState::TOGGLE_ON || hydraLeftBumper.getData() == DigitalState::ON) || (hydraRightBumper.getData() == DigitalState::TOGGLE_ON || hydraRightBumper.getData() == DigitalState::ON))
+	else if (hydraRightFour.getData() == DigitalState::TOGGLE_ON || hydraRightFour.getData() == DigitalState::ON)
 	{
 		if (!hydraPressed)
 		{
-			printf("Four");
 			hydraPressed = true;
+			GameManager::getInstance()->scene->procedureManager->RightLeft = "Right";
+			return "Joystick-4";
+		}
+	}
+	else if (hydraLeftBumper.getData() == DigitalState::TOGGLE_ON || hydraLeftBumper.getData() == DigitalState::ON)
+	{
+		if (!hydraPressed)
+		{
+			hydraPressed = true;
+			GameManager::getInstance()->scene->procedureManager->RightLeft = "Left";
 			return "Joystick-C";
 		}
 	}
-	else if ((hydraLeftTrigger.getData() == DigitalState::TOGGLE_ON || hydraLeftTrigger.getData() == DigitalState::ON) || (hydraRightTrigger.getData() == DigitalState::TOGGLE_ON || hydraRightTrigger.getData() == DigitalState::ON))
+	else if (hydraRightBumper.getData() == DigitalState::TOGGLE_ON || hydraRightBumper.getData() == DigitalState::ON)
 	{
 		if (!hydraPressed)
 		{
-			printf("Four");
 			hydraPressed = true;
+			GameManager::getInstance()->scene->procedureManager->RightLeft = "Right";
+			return "Joystick-C|Right";
+		}
+	}
+	else if (hydraLeftTrigger.getData() == DigitalState::TOGGLE_ON || hydraLeftTrigger.getData() == DigitalState::ON)
+	{
+		if (!hydraPressed)
+		{
+			hydraPressed = true;
+			GameManager::getInstance()->scene->procedureManager->RightLeft = "Left";
 			return "Joystick-Z";
 		}
 	}
-	else if (hydraLeftOne.getData() == DigitalState::OFF || hydraRightOne.getData() == DigitalState::OFF || hydraLeftTwo.getData() == DigitalState::OFF || hydraRightTwo.getData() == DigitalState::OFF || hydraLeftThree.getData() == DigitalState::OFF || hydraRightThree.getData() == DigitalState::OFF || hydraLeftFour.getData() == DigitalState::OFF || hydraRightFour.getData() == DigitalState::OFF)
+	else if (hydraRightTrigger.getData() == DigitalState::TOGGLE_ON || hydraRightTrigger.getData() == DigitalState::ON)
+	{
+		if (!hydraPressed)
+		{
+			hydraPressed = true;
+			GameManager::getInstance()->scene->procedureManager->RightLeft = "Right";
+			return "Joystick-Z";
+		}
+	}
+	else if (hydraLeftOne.getData() == DigitalState::OFF || hydraRightOne.getData() == DigitalState::OFF || hydraLeftTwo.getData() == DigitalState::OFF || hydraRightTwo.getData() == DigitalState::OFF || hydraLeftThree.getData() == DigitalState::OFF || hydraRightThree.getData() == DigitalState::OFF || hydraLeftFour.getData() == DigitalState::OFF || hydraRightFour.getData() == DigitalState::OFF || hydraLeftBumper.getData() == DigitalState::OFF || hydraRightBumper.getData() == DigitalState::OFF || hydraLeftTrigger.getData() == DigitalState::OFF || hydraRightTrigger.getData() == DigitalState::OFF)
 	{
 		if (hydraPressed)
 		{
+			GameManager::getInstance()->scene->procedureManager->RightLeft = "None";
 			hydraPressed = false;
 		}
 	}
