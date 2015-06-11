@@ -18,6 +18,10 @@ void ProcedureObject::init()
 	pObjModel->rigidBody->setUserPointer(this);
 
 	btTransform trans;
+	trans = pObjModel->rigidBody->getCenterOfMassTransform();
+	trans.setRotation(btQuaternion(TO_RADIANS(rotation->y()), TO_RADIANS(rotation->x()), TO_RADIANS(rotation->z())));
+	pObjModel->rigidBody->setCenterOfMassTransform(trans);
+
 	pObjModel->rigidBody->getMotionState()->getWorldTransform(trans);
 	trans.setRotation(btQuaternion(TO_RADIANS(rotation->y()), TO_RADIANS(rotation->x()), TO_RADIANS(rotation->z())));
 	pObjModel->rigidBody->getMotionState()->setWorldTransform(trans);
