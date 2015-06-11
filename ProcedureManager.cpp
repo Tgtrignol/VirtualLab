@@ -50,26 +50,13 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		bool selectedHydraLeft = false;
 		ProcedureObject *contextObject = 0;
 		Control *contextControl = 0;
+		bool objectSelected = false;
 
 		for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
 		{
 			if (procedureObject->grabbed)
 			{
-				bool isBreakCalled = false;
-				for each (Control *control in procedureObject->controls)
-				{
-					if (control->m_primitive == "GrabRelease"  && RightLeft == procedureObject->LeftRight)
-					{
-						contextObject = procedureObject;
-						contextControl = control;
-
-						isBreakCalled = true;
-						break;
-					}
-				}
-
-				if (isBreakCalled)
-					break;
+				objectSelected = true;
 			}
 			else if (righternSelectedProcedureObject == procedureObject || lefternSelectedProcedureObject == procedureObject)
 			{
@@ -83,6 +70,11 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				righternSelectedProcedureObject = NULL;
 				lefternSelectedProcedureObject = NULL;
 
+				objectSelected = true;
+			}
+
+			if (objectSelected)
+			{
 				bool isBreakCalled = false;
 				if (procedure)
 				{

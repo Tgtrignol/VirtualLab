@@ -17,11 +17,13 @@ void ProcedureObject::init()
 	pObjModel = new ObjModel("c:\\VrCave\\Development\\VirtualLab\\Data\\"+fileName, size, mass, *origin);
 	pObjModel->rigidBody->setUserPointer(this);
 
+	//Rigidbody transform
 	btTransform trans;
 	trans = pObjModel->rigidBody->getCenterOfMassTransform();
 	trans.setRotation(btQuaternion(TO_RADIANS(rotation->y()), TO_RADIANS(rotation->x()), TO_RADIANS(rotation->z())));
 	pObjModel->rigidBody->setCenterOfMassTransform(trans);
 
+	//Object transform
 	pObjModel->rigidBody->getMotionState()->getWorldTransform(trans);
 	trans.setRotation(btQuaternion(TO_RADIANS(rotation->y()), TO_RADIANS(rotation->x()), TO_RADIANS(rotation->z())));
 	pObjModel->rigidBody->getMotionState()->setWorldTransform(trans);
@@ -104,11 +106,13 @@ void ProcedureObject::update()
 		else if (LeftRight == "Right")
 			origin = GameManager::getInstance()->scene->hydra->getRightHydraCor();
 
+		//Rigidbody transform
 		pObjModel->rigidBody->setActivationState(1);
 		btTransform transform = pObjModel->rigidBody->getCenterOfMassTransform();
 		transform.setOrigin(*origin);
 		pObjModel->rigidBody->setCenterOfMassTransform(transform);
 
+		//Object transform
 		pObjModel->rigidBody->getMotionState()->getWorldTransform(transform);
 		transform.setOrigin(*origin);
 		pObjModel->rigidBody->getMotionState()->setWorldTransform(transform);
@@ -122,6 +126,21 @@ void ProcedureObject::setGravity(btVector3* gravity)
 
 void ProcedureObject::rotate(bool horizontal, int degrees)
 {
+	//Rigidbody transform
+	btTransform trans;
+	trans = pObjModel->rigidBody->getCenterOfMassTransform();
+	if (horizontal)
+		trans.setRotation(btQuaternion(TO_RADIANS(degrees), TO_RADIANS(0), TO_RADIANS(rotation->z())));
+	else
+		trans.setRotation(btQuaternion(TO_RADIANS(0), TO_RADIANS(0), TO_RADIANS(degrees)));
 
+	pObjModel->rigidBody->setCenterOfMassTransform(trans);
 
+	//Object transform
+	pObjModel->rigidBody->getMotionState()->getWorldTransform(trans);
+	if (horizontal)
+		trans.setRotation(btQuaternion(TO_RADIANS(degrees), TO_RADIANS(0), TO_RADIANS(rotation->z())));
+	else
+		trans.setRotation(btQuaternion(TO_RADIANS(0), TO_RADIANS(0), TO_RADIANS(degrees)));
+	pObjModel->rigidBody->getMotionState()->setWorldTransform(trans);
 }
