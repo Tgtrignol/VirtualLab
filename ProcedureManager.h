@@ -18,9 +18,11 @@ public:
 private:
 	std::vector<std::string> procedureFileLocations;
 	ProcedureInformation *currentProcedureInformation;
+	bool procedure = false;
 public:
 	ProcedureObject *righternSelectedProcedureObject;
 	ProcedureObject *lefternSelectedProcedureObject;
+	std::string RightLeft = "None";
 };
 
 #endif

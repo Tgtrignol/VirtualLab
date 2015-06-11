@@ -25,6 +25,8 @@ void Hydra::init()
 
 	hydraLeftTrigger.init("LeftTrigger");
 	hydraLeftBumper.init("LeftBumper");
+	hydraRightTrigger.init("RightTrigger");
+	hydraRightBumper.init("RightBumper");
 
 	hydraLeftOne.init("LeftButtonOne");
 	hydraRightOne.init("RightButtonOne");
@@ -46,6 +48,73 @@ void Hydra::draw(float InitialModelView[16])
 	{
 		return;
 	}
+
+	glColor3f(1, 1, 0);
+
+	//Hydra Laser
+	float cameraYAngle = TO_RADIANS(-fpXAngle);
+	float cameraXAngle = TO_RADIANS(-fpYAngle);
+
+	//Left
+	{
+		glBegin(GL_LINES);
+
+		glm::mat4 tra;
+		tra = glm::translate(tra, glm::vec3(fpCameraXCoordinate, fpCameraYCoordinate, fpCameraZCoordinate));
+		tra = glm::rotate(tra, -cameraYAngle, glm::vec3(0.0f, 1.0f, 0.0f));
+		tra = glm::rotate(tra, -cameraXAngle, glm::vec3(1, 0, 0));
+		tra = glm::translate(tra, glm::vec3(hydraLeftPositionVector.x * 2.0f,
+			hydraLeftPositionVector.y * 2.0f - 1.0f,
+			hydraLeftPositionVector.z * 2.0f - 2.0f));
+
+		glm::vec4 tran = tra * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+		glVertex3f(tran.x, tran.y, tran.z);
+
+		tra = glm::mat4();
+		tra = glm::translate(tra, glm::vec3(fpCameraXCoordinate, fpCameraYCoordinate, fpCameraZCoordinate));
+		tra = glm::rotate(tra, -cameraYAngle, glm::vec3(0.0f, 1.0f, 0.0f));
+		tra = glm::rotate(tra, -cameraXAngle, glm::vec3(1, 0, 0));
+		tra = glm::translate(tra, glm::vec3(hydraLeftPositionVector.x * 2.0f + hydraLeftOrientation.x,
+			hydraLeftPositionVector.y * 2.0f - 1.0f + hydraLeftOrientation.y,
+			hydraLeftPositionVector.z * 2.0f - 2.0f + hydraLeftOrientation.z));
+		tran = tra * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+
+		glVertex3f(tran.x, tran.y, tran.z);
+
+		glEnd();
+	}
+
+	//Right
+	{
+		glBegin(GL_LINES);
+
+		glm::mat4 tra;
+		tra = glm::translate(tra, glm::vec3(fpCameraXCoordinate, fpCameraYCoordinate, fpCameraZCoordinate));
+		tra = glm::rotate(tra, -cameraYAngle, glm::vec3(0.0f, 1.0f, 0.0f));
+		tra = glm::rotate(tra, -cameraXAngle, glm::vec3(1, 0, 0));
+		tra = glm::translate(tra, glm::vec3(hydraRightPositionVector.x * 2.0f,
+			hydraRightPositionVector.y * 2.0f - 1.0f,
+			hydraRightPositionVector.z * 2.0f - 2.0f));
+
+		glm::vec4 tran = tra * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+		glVertex3f(tran.x, tran.y, tran.z);
+
+		tra = glm::mat4();
+		tra = glm::translate(tra, glm::vec3(fpCameraXCoordinate, fpCameraYCoordinate, fpCameraZCoordinate));
+		tra = glm::rotate(tra, -cameraYAngle, glm::vec3(0.0f, 1.0f, 0.0f));
+		tra = glm::rotate(tra, -cameraXAngle, glm::vec3(1, 0, 0));
+		tra = glm::translate(tra, glm::vec3(hydraRightPositionVector.x * 2.0f + hydraRightOrientation.x,
+			hydraRightPositionVector.y * 2.0f - 1.0f + hydraRightOrientation.y,
+			hydraRightPositionVector.z * 2.0f - 2.0f + hydraRightOrientation.z));
+		tran = tra * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+
+		glVertex3f(tran.x, tran.y, tran.z);
+
+		glEnd();
+	}
+	//End Hydra Laser
+
+	glColor3f(0, 0, 0);
 
 	glPushMatrix();
 	btScalar m[16];
@@ -83,15 +152,18 @@ void Hydra::draw(float InitialModelView[16])
 
 	//Right Hydra
 	{
+
 		glPushMatrix();
 		glLoadMatrixf(InitialModelView);
 		rightModel->rigidBody->getMotionState()->getWorldTransform(trans);
 		trans.getOpenGLMatrix(m);
+		
 		glTranslatef(hydraRightPositionVector[0], hydraRightPositionVector[1] - 1.0f, -2.0f + hydraRightPositionVector[2]);
 
 		glm::mat4 old = hydraRightPosition.getData();
 
 		glMultMatrixf(glm::value_ptr(getWorldMatrixFromHydra(old)));
+		
 		glRotatef(180.0f, 0.0f, 0.0f, 1.0f);
 
 		glTranslatef(0.0f, SWORD_Y_OFFSET, 0.0f);
@@ -113,6 +185,7 @@ void Hydra::draw(float InitialModelView[16])
 
 	//Left Hydra
 	{
+		
 		glPushMatrix();
 		glLoadMatrixf(InitialModelView);
 		leftModel->rigidBody->getMotionState()->getWorldTransform(trans);
@@ -161,22 +234,51 @@ void Hydra::update()
 		hydraRightPositionVector = hydraMatrix * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f); // The origin of the razer hydra.
 		hydraRightOrientation = glm::normalize((hydraMatrix * glm::vec4(0.0f, 0.0f, -1.0f, 1.0f)) - hydraRightPositionVector); // Where the razer hydra point to.
 
-		btVector3 btFrom(hydraRightPositionVector.x, hydraRightPositionVector.y, hydraRightPositionVector.z);
-		btVector3 btTo(hydraRightOrientation.x, hydraRightOrientation.y, hydraRightOrientation.z);
-		btCollisionWorld::ClosestRayResultCallback res(btFrom, btTo);
+		{
+			float cameraYAngle = TO_RADIANS(-fpXAngle);
+			float cameraXAngle = TO_RADIANS(-fpYAngle);
 
-		GameManager::getInstance()->scene->world->rayTest(btFrom, btTo, res); // m_btWorld is btDiscreteDynamicsWorld
+			glm::mat4 tra;
+			tra = glm::translate(tra, glm::vec3(fpCameraXCoordinate, fpCameraYCoordinate, fpCameraZCoordinate));
+			tra = glm::rotate(tra, -cameraYAngle, glm::vec3(0.0f, 1.0f, 0.0f));
+			tra = glm::rotate(tra, -cameraXAngle, glm::vec3(1, 0, 0));
+			tra = glm::translate(tra, glm::vec3(
+				hydraRightPositionVector.x * 2.0f,
+				hydraRightPositionVector.y * 2.0f - 1.0f,
+				hydraRightPositionVector.z * 2.0f - 2.0f));
 
-		if (res.hasHit()){
-			if (res.m_collisionObject->getUserPointer() != this)
+			glm::vec4 tran = tra * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+			btVector3 btFrom(tran.x, tran.y, tran.z);
+
+			tra = glm::mat4();
+			tra = glm::translate(tra, glm::vec3(fpCameraXCoordinate, fpCameraYCoordinate, fpCameraZCoordinate));
+			tra = glm::rotate(tra, -cameraYAngle, glm::vec3(0.0f, 1.0f, 0.0f));
+			tra = glm::rotate(tra, -cameraXAngle, glm::vec3(1, 0, 0));
+			tra = glm::translate(tra, glm::vec3(
+				hydraRightPositionVector.x * 2.0f + hydraRightOrientation.x,
+				hydraRightPositionVector.y * 2.0f - 1.0f + hydraRightOrientation.y,
+				hydraRightPositionVector.z * 2.0f - 2.0f + hydraRightOrientation.z)); //TODO: Add stable point of standing parameters
+
+			tran = tra * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+			btVector3 btTo(tran.x, tran.y, tran.z);
+
+
+			btCollisionWorld::ClosestRayResultCallback res(btFrom, btTo);
+			hydraRightVector = btFrom;
+
+			GameManager::getInstance()->scene->world->rayTest(btFrom, btTo, res); // m_btWorld is btDiscreteDynamicsWorld
+
+			if (res.hasHit()){
+				if (res.m_collisionObject->getUserPointer() != this)
+				{
+					GameManager::getInstance()->scene->procedureManager->righternSelectedProcedureObject = (ProcedureObject *)res.m_collisionObject->getUserPointer();
+				}
+			}
+			else
 			{
-				hydraRightVector = btVector3(res.m_hitPointWorld.x(), res.m_hitPointWorld.y(), res.m_hitPointWorld.z());
-
-				GameManager::getInstance()->scene->procedureManager->righternSelectedProcedureObject = (ProcedureObject *)res.m_collisionObject->getUserPointer();
+				GameManager::getInstance()->scene->procedureManager->righternSelectedProcedureObject = nullptr;
 			}
 		}
-
-
 
 		// Rotation of the camera. 
 		glm::vec2 joystickData = hydraRightJoystick.getData();
@@ -205,7 +307,7 @@ void Hydra::update()
 		tra = glm::translate(tra, glm::vec3(fpCameraXCoordinate, fpCameraYCoordinate, fpCameraZCoordinate));
 		tra = glm::rotate(tra, -cameraYAngle, glm::vec3(0.0f, 1.0f, 0.0f));
 		tra = glm::rotate(tra, -cameraXAngle, glm::vec3(1.0f, 0.0f, 0.0f));
-		tra = glm::translate(tra, glm::vec3(hydraRightPositionVector.x * 2., hydraRightPositionVector.y * 2.0f - 1.0f, hydraRightPositionVector.z * 2.0f - 2.0f));
+		tra = glm::translate(tra, glm::vec3(hydraRightPositionVector.x * 2.0f, hydraRightPositionVector.y * 2.0f - 1.0f, hydraRightPositionVector.z * 2.0f - 2.0f));
 		glm::vec4 tran = tra * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 		transform.setOrigin(btVector3(tran.x, tran.y, tran.z));
 
@@ -225,18 +327,49 @@ void Hydra::update()
 		hydraLeftPositionVector = hydraMatrix * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 		hydraLeftOrientation = glm::normalize((hydraMatrix * glm::vec4(0.0f, 0.0f, -1.0f, 1.0f)) - hydraLeftPositionVector);
 
-		btVector3 btFrom(hydraLeftPositionVector.x, hydraLeftPositionVector.y, hydraLeftPositionVector.z);
-		btVector3 btTo(hydraLeftOrientation.x * 100, hydraLeftOrientation.y * 100, hydraLeftOrientation.z * 100);
-		btCollisionWorld::ClosestRayResultCallback res(btFrom, btTo);
+		{
+			float cameraYAngle = TO_RADIANS(-fpXAngle);
+			float cameraXAngle = TO_RADIANS(-fpYAngle);
 
-		GameManager::getInstance()->scene->world->rayTest(btFrom, btTo, res); // m_btWorld is btDiscreteDynamicsWorld
+			glm::mat4 tra;
+			tra = glm::translate(tra, glm::vec3(fpCameraXCoordinate, fpCameraYCoordinate, fpCameraZCoordinate));
+			tra = glm::rotate(tra, -cameraYAngle, glm::vec3(0.0f, 1.0f, 0.0f));
+			tra = glm::rotate(tra, -cameraXAngle, glm::vec3(1, 0, 0));
+			tra = glm::translate(tra, glm::vec3(
+				hydraLeftPositionVector.x * 2.0f,
+				hydraLeftPositionVector.y * 2.0f - 1.0f,
+				hydraLeftPositionVector.z * 2.0f - 2.0f));
 
-		if (res.hasHit()){
-			if (res.m_collisionObject->getUserPointer() != this)
+			glm::vec4 tran = tra * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+			btVector3 btFrom(tran.x, tran.y, tran.z);
+
+			tra = glm::mat4();
+			tra = glm::translate(tra, glm::vec3(fpCameraXCoordinate, fpCameraYCoordinate, fpCameraZCoordinate));
+			tra = glm::rotate(tra, -cameraYAngle, glm::vec3(0.0f, 1.0f, 0.0f));
+			tra = glm::rotate(tra, -cameraXAngle, glm::vec3(1, 0, 0));
+			tra = glm::translate(tra, glm::vec3(
+				hydraLeftPositionVector.x * 2.0f + hydraLeftOrientation.x,
+				hydraLeftPositionVector.y * 2.0f - 1.0f + hydraLeftOrientation.y,
+				hydraLeftPositionVector.z * 2.0f - 2.0f + hydraLeftOrientation.z)); //TODO: Add stable point of standing parameters
+
+			tran = tra * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+			btVector3 btTo(tran.x, tran.y, tran.z);
+
+
+			btCollisionWorld::ClosestRayResultCallback res(btFrom, btTo);
+			hydraLeftVector = btFrom;
+
+			GameManager::getInstance()->scene->world->rayTest(btFrom, btTo, res); // m_btWorld is btDiscreteDynamicsWorld
+
+			if (res.hasHit()){
+				if (res.m_collisionObject->getUserPointer() != this)
+				{
+					GameManager::getInstance()->scene->procedureManager->lefternSelectedProcedureObject = (ProcedureObject *)res.m_collisionObject->getUserPointer();
+				}
+			}
+			else
 			{
-				hydraLeftVector = btVector3(res.m_hitPointWorld.x(), res.m_hitPointWorld.y(), res.m_hitPointWorld.z());
-
-				GameManager::getInstance()->scene->procedureManager->lefternSelectedProcedureObject = (ProcedureObject *)res.m_collisionObject->getUserPointer();
+				GameManager::getInstance()->scene->procedureManager->lefternSelectedProcedureObject = nullptr;
 			}
 		}
 
@@ -282,13 +415,13 @@ void Hydra::update()
 	}
 	if (hydraLeftBumper.isInitialized())
 	{
-		if (hydraLeftBumper.getData() == DigitalState::ON || hydraLeftBumper.getData() == DigitalState::TOGGLE_ON)
-			MoveUpward();
+		//if (hydraLeftBumper.getData() == DigitalState::ON || hydraLeftBumper.getData() == DigitalState::TOGGLE_ON)
+			//MoveUpward();
 	}
 	if (hydraLeftTrigger.isInitialized())
 	{
-		if (hydraLeftTrigger.getData() - 0.1f > 0.0f)
-			MoveDownward();
+		//if (hydraLeftTrigger.getData() - 0.1f > 0.0f)
+			//MoveDownward();
 	}
 }
 
@@ -323,46 +456,119 @@ glm::mat4 Hydra::getWorldMatrixFromHydra(glm::mat4 old)
 
 std::string Hydra::checkButtons()
 {
-	if ((hydraLeftOne.getData() == DigitalState::TOGGLE_ON || hydraLeftOne.getData() == DigitalState::ON) || (hydraRightOne.getData() == DigitalState::TOGGLE_ON || hydraRightOne.getData() == DigitalState::ON))
+	if (hydraLeftOne.getData() == DigitalState::TOGGLE_ON || hydraLeftOne.getData() == DigitalState::ON)
 	{
 		if (!hydraPressed)
 		{
-			printf("One");
 			hydraPressed = true;
+			GameManager::getInstance()->scene->procedureManager->RightLeft = "Left";
 			return "Joystick-1"; 
 		}
 	}
-	else if ((hydraLeftTwo.getData() == DigitalState::TOGGLE_ON || hydraLeftTwo.getData() == DigitalState::ON) || (hydraRightTwo.getData() == DigitalState::TOGGLE_ON || hydraRightTwo.getData() == DigitalState::ON))
+	else if (hydraRightOne.getData() == DigitalState::TOGGLE_ON || hydraRightOne.getData() == DigitalState::ON)
 	{
 		if (!hydraPressed)
 		{
-			printf("Two");
 			hydraPressed = true;
+			GameManager::getInstance()->scene->procedureManager->RightLeft = "Right";
+			return "Joystick-1";
+		}
+	}
+	else if (hydraLeftTwo.getData() == DigitalState::TOGGLE_ON || hydraLeftTwo.getData() == DigitalState::ON)
+	{
+		if (!hydraPressed)
+		{
+			hydraPressed = true;
+			GameManager::getInstance()->scene->procedureManager->RightLeft = "Left";
 			return "Joystick-2";
 		}
 	}
-	else if ((hydraLeftThree.getData() == DigitalState::TOGGLE_ON || hydraLeftThree.getData() == DigitalState::ON) || (hydraRightThree.getData() == DigitalState::TOGGLE_ON || hydraRightThree.getData() == DigitalState::ON))
+	else if (hydraRightTwo.getData() == DigitalState::TOGGLE_ON || hydraRightTwo.getData() == DigitalState::ON)
 	{
 		if (!hydraPressed)
 		{
-			printf("Three");
 			hydraPressed = true;
+			GameManager::getInstance()->scene->procedureManager->RightLeft = "Right";
+			return "Joystick-2";
+		}
+	}
+	else if (hydraLeftThree.getData() == DigitalState::TOGGLE_ON || hydraLeftThree.getData() == DigitalState::ON)
+	{
+		if (!hydraPressed)
+		{
+			hydraPressed = true;
+			GameManager::getInstance()->scene->procedureManager->RightLeft = "Left";
 			return "Joystick-3";
 		}
 	}
-	else if ((hydraLeftFour.getData() == DigitalState::TOGGLE_ON || hydraLeftFour.getData() == DigitalState::ON) || (hydraRightFour.getData() == DigitalState::TOGGLE_ON || hydraRightFour.getData() == DigitalState::ON))
+	else if (hydraRightThree.getData() == DigitalState::TOGGLE_ON || hydraRightThree.getData() == DigitalState::ON)
 	{
 		if (!hydraPressed)
 		{
-			printf("Four");
 			hydraPressed = true;
+			GameManager::getInstance()->scene->procedureManager->RightLeft = "Right";
+			return "Joystick-3";
+		}
+	}
+	else if (hydraLeftFour.getData() == DigitalState::TOGGLE_ON || hydraLeftFour.getData() == DigitalState::ON)
+	{
+		if (!hydraPressed)
+		{
+			hydraPressed = true;
+			GameManager::getInstance()->scene->procedureManager->RightLeft = "Left";
 			return "Joystick-4";
 		}
 	}
-	else if (hydraLeftOne.getData() == DigitalState::OFF || hydraRightOne.getData() == DigitalState::OFF || hydraLeftTwo.getData() == DigitalState::OFF || hydraRightTwo.getData() == DigitalState::OFF || hydraLeftThree.getData() == DigitalState::OFF || hydraRightThree.getData() == DigitalState::OFF || hydraLeftFour.getData() == DigitalState::OFF || hydraRightFour.getData() == DigitalState::OFF)
+	else if (hydraRightFour.getData() == DigitalState::TOGGLE_ON || hydraRightFour.getData() == DigitalState::ON)
+	{
+		if (!hydraPressed)
+		{
+			hydraPressed = true;
+			GameManager::getInstance()->scene->procedureManager->RightLeft = "Right";
+			return "Joystick-4";
+		}
+	}
+	else if (hydraLeftBumper.getData() == DigitalState::TOGGLE_ON || hydraLeftBumper.getData() == DigitalState::ON)
+	{
+		if (!hydraPressed)
+		{
+			hydraPressed = true;
+			GameManager::getInstance()->scene->procedureManager->RightLeft = "Left";
+			return "Joystick-C";
+		}
+	}
+	else if (hydraRightBumper.getData() == DigitalState::TOGGLE_ON || hydraRightBumper.getData() == DigitalState::ON)
+	{
+		if (!hydraPressed)
+		{
+			hydraPressed = true;
+			GameManager::getInstance()->scene->procedureManager->RightLeft = "Right";
+			return "Joystick-C|Right";
+		}
+	}
+	else if (hydraLeftTrigger.getData() == DigitalState::TOGGLE_ON || hydraLeftTrigger.getData() == DigitalState::ON)
+	{
+		if (!hydraPressed)
+		{
+			hydraPressed = true;
+			GameManager::getInstance()->scene->procedureManager->RightLeft = "Left";
+			return "Joystick-Z";
+		}
+	}
+	else if (hydraRightTrigger.getData() == DigitalState::TOGGLE_ON || hydraRightTrigger.getData() == DigitalState::ON)
+	{
+		if (!hydraPressed)
+		{
+			hydraPressed = true;
+			GameManager::getInstance()->scene->procedureManager->RightLeft = "Right";
+			return "Joystick-Z";
+		}
+	}
+	else if (hydraLeftOne.getData() == DigitalState::OFF || hydraRightOne.getData() == DigitalState::OFF || hydraLeftTwo.getData() == DigitalState::OFF || hydraRightTwo.getData() == DigitalState::OFF || hydraLeftThree.getData() == DigitalState::OFF || hydraRightThree.getData() == DigitalState::OFF || hydraLeftFour.getData() == DigitalState::OFF || hydraRightFour.getData() == DigitalState::OFF || hydraLeftBumper.getData() == DigitalState::OFF || hydraRightBumper.getData() == DigitalState::OFF || hydraLeftTrigger.getData() == DigitalState::OFF || hydraRightTrigger.getData() == DigitalState::OFF)
 	{
 		if (hydraPressed)
 		{
+			GameManager::getInstance()->scene->procedureManager->RightLeft = "None";
 			hydraPressed = false;
 		}
 	}

@@ -29,8 +29,11 @@ private:
 	PositionalDevice hydraLeftPosition;
 	TwoDimensionDevice hydraRightJoystick;
 	TwoDimensionDevice hydraLeftJoystick;
+
 	AnalogDevice hydraLeftTrigger;
 	DigitalDevice hydraLeftBumper;
+	AnalogDevice hydraRightTrigger;
+	DigitalDevice hydraRightBumper;
 
 	DigitalDevice hydraLeftOne;
 	DigitalDevice hydraRightOne;

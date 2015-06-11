@@ -21,9 +21,10 @@ public:
 	std::string fileName;
 	std::string name;
 	bool grabbed = false;
-	int hydra = 0;
+	std::string LeftRight = "None";
 	bool closed = true;
 	btVector3 *origin;
+	bool initRigidbodies = false;
 	btVector3 *rotation;
 	btVector3 *scale;
 	btVector4 *color;

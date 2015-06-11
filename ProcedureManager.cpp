@@ -38,11 +38,13 @@ void ProcedureManager::update(ControlEnum controlEnum)
 	}
 
 	if (controlEnum == ControlEnum::None)
+	{
 		return;
+	}
 
 	for each (KeyPoint *keyPoint in currentProcedureInformation->m_keyPoints)
 	{
-		if (keyPoint->m_isSuccessTriggered)
+		if (keyPoint->m_isSuccessTriggered && procedure)
 			continue;
 
 		bool selectedHydraLeft = false;
@@ -51,17 +53,12 @@ void ProcedureManager::update(ControlEnum controlEnum)
 
 		for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
 		{
-			if (righternSelectedProcedureObject == procedureObject || lefternSelectedProcedureObject == procedureObject)
+			if (procedureObject->grabbed)
 			{
-				if (righternSelectedProcedureObject == procedureObject)
-					selectedHydraLeft = false;
-				else if (lefternSelectedProcedureObject == procedureObject)
-					selectedHydraLeft = true;
-				
 				bool isBreakCalled = false;
 				for each (Control *control in procedureObject->controls)
 				{
-					if (control->m_primitive == keyPoint->m_primitive)
+					if (control->m_primitive == "GrabRelease"  && RightLeft == procedureObject->LeftRight)
 					{
 						contextObject = procedureObject;
 						contextControl = control;
@@ -71,6 +68,50 @@ void ProcedureManager::update(ControlEnum controlEnum)
 					}
 				}
 
+				if (isBreakCalled)
+					break;
+			}
+			else if (righternSelectedProcedureObject == procedureObject || lefternSelectedProcedureObject == procedureObject)
+			{
+				if (righternSelectedProcedureObject == procedureObject && RightLeft == "Right")
+					selectedHydraLeft = false;
+				else if (lefternSelectedProcedureObject == procedureObject && RightLeft == "Left")
+					selectedHydraLeft = true;
+				else
+					return;
+
+				righternSelectedProcedureObject = NULL;
+				lefternSelectedProcedureObject = NULL;
+
+				bool isBreakCalled = false;
+				if (procedure)
+				{
+					for each (Control *control in procedureObject->controls)
+					{
+						if (control->m_primitive == keyPoint->m_primitive)
+						{
+							contextObject = procedureObject;
+							contextControl = control;
+
+							isBreakCalled = true;
+							break;
+						}
+					}
+				}
+				else
+				{
+					for each (Control *control in procedureObject->controls)
+					{
+						if (control->m_control == controlEnum)
+						{
+							contextObject = procedureObject;
+							contextControl = control;
+
+							isBreakCalled = true;
+							break;
+						}
+					}
+				}
 				if (isBreakCalled)
 					break;
 			}
@@ -102,7 +143,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		}
 
 		//Checking and performing control
-		if (keyPoint->m_primitive == "Rinse")
+		if ((keyPoint->m_primitive == "Rinse" && procedure) || contextControl->m_primitive == "Rinse")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -123,7 +164,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if (keyPoint->m_primitive == "GrabRelease")
+		else if ((keyPoint->m_primitive == "GrabRelease" && procedure) || contextControl->m_primitive == "GrabRelease")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -132,14 +173,16 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				{
 					contextObject->grabbed = true;
 					if (selectedHydraLeft)
-						contextObject->hydra = 0;
+						contextObject->LeftRight = "Left";
 					else
-						contextObject->hydra = 1;
+						contextObject->LeftRight = "Right";
 					contextObject->update();
 				}
 				else
 				{
 					contextObject->grabbed = false;
+					//contextObject->setGravity(&btVector3(0, -9.81f * 20.0f, 0));
+					contextObject->update();
 				}
 			}
 			else
@@ -148,7 +191,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if (keyPoint->m_primitive == "FlushLiquid")
+		else if ((keyPoint->m_primitive == "FlushLiquid" && procedure) || contextControl->m_primitive == "FlushLiquid")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -169,7 +212,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if (keyPoint->m_primitive == "FillHalfway")
+		else if ((keyPoint->m_primitive == "FillHalfway"&& procedure) || contextControl->m_primitive == "FillHalfway")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -190,7 +233,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if (keyPoint->m_primitive == "FillUntilMark")
+		else if ((keyPoint->m_primitive == "FillUntilMark" && procedure) || contextControl->m_primitive == "FillUntilMark")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -211,7 +254,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if (keyPoint->m_primitive == "Liquefy")
+		else if ((keyPoint->m_primitive == "Liquefy"&& procedure) || contextControl->m_primitive == "Liquefy")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -232,7 +275,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if (keyPoint->m_primitive == "Attach")
+		else if ((keyPoint->m_primitive == "Attach"&& procedure) || contextControl->m_primitive == "Attach")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -253,7 +296,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if (keyPoint->m_primitive == "Swerve")
+		else if ((keyPoint->m_primitive == "Swerve"&& procedure) || contextControl->m_primitive == "Swerve")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -274,7 +317,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if (keyPoint->m_primitive == "Rotate")
+		else if ((keyPoint->m_primitive == "Rotate"&& procedure) || contextControl->m_primitive == "Rotate")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -295,7 +338,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if (keyPoint->m_primitive == "DetachFunnel")
+		else if ((keyPoint->m_primitive == "DetachFunnel"&& procedure) || contextControl->m_primitive == "DetachFunnel")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -316,7 +359,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if (keyPoint->m_primitive == "Cork")
+		else if ((keyPoint->m_primitive == "Cork" && procedure) || contextControl->m_primitive == "Cork")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -337,7 +380,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if (keyPoint->m_primitive == "Dump")
+		else if ((keyPoint->m_primitive == "Dump" && procedure) || contextControl->m_primitive == "Dump")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -358,7 +401,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if (keyPoint->m_primitive == "SuckLiquid")
+		else if ((keyPoint->m_primitive == "SuckLiquid" && procedure) || contextControl->m_primitive == "SuckLiquid")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -379,7 +422,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if (keyPoint->m_primitive == "TurnSideWay")
+		else if ((keyPoint->m_primitive == "TurnSideWay" && procedure) || contextControl->m_primitive == "TurnSideway")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -400,7 +443,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if (keyPoint->m_primitive == "PourWithLiquid")
+		else if ((keyPoint->m_primitive == "PourWithLiquid" && procedure) || contextControl->m_primitive == "PourWithLiquid")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -422,7 +465,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if (keyPoint->m_primitive == "Dry")
+		else if ((keyPoint->m_primitive == "Dry" && procedure) || contextControl->m_primitive == "Dry")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -443,7 +486,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if (keyPoint->m_primitive == "Turn45Degree")
+		else if ((keyPoint->m_primitive == "Turn45Degree" && procedure) || contextControl->m_primitive == "Turn45Degree")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -464,7 +507,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if (keyPoint->m_primitive == "LowerLiquid")
+		else if ((keyPoint->m_primitive == "LowerLiquid"&& procedure) || contextControl->m_primitive == "LowerLiquid")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -485,7 +528,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if (keyPoint->m_primitive == "OpenCloseTap")
+		else if ((keyPoint->m_primitive == "OpenCloseTap"&& procedure) || contextControl->m_primitive == "OpenCloseTap")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -510,7 +553,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if (keyPoint->m_primitive == "Pour10Ml")
+		else if ((keyPoint->m_primitive == "Pour10Ml"&& procedure) || contextControl->m_primitive == "Pour10Ml")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -531,7 +574,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if (keyPoint->m_primitive == "Fill")
+		else if ((keyPoint->m_primitive == "Fill"&& procedure) || contextControl->m_primitive == "Fill")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -552,7 +595,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if (keyPoint->m_primitive == "Titrate1Ml")
+		else if ((keyPoint->m_primitive == "Titrate1Ml"&& procedure) || contextControl->m_primitive == "Titrate1Ml")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -573,7 +616,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if (keyPoint->m_primitive == "ReadAmount")
+		else if ((keyPoint->m_primitive == "ReadAmount"&& procedure) || contextControl->m_primitive == "ReadAmount")
 		{
 			if (contextControl->m_control == controlEnum)
 			{

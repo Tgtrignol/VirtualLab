@@ -195,7 +195,7 @@ void Scene::update()
 	//End of keyboard
 
 	hydra->update();
-	procedureManager->update(StringToControlEnum(hydra->checkButtons()));//TODO: pass correct value;
+	procedureManager->update(StringToControlEnum(hydra->checkButtons()));
 }
 
 void Scene::update(double frameTime, double totalTime)
