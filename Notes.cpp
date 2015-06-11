@@ -39,7 +39,7 @@ void Notes::drawNotes(const char *text, int length, int x, int y, int z) {
 
 void Notes::draw()
 {
-	glPopMatrix();
+	glPushMatrix();
 	int itemNr = 0;
 	for (int posY = 100; posY < 400; posY += 20) {
 		itemNr++;
@@ -48,7 +48,7 @@ void Notes::draw()
 		//string text = "Nr. " + to_string(itemNr) + " Column 1 en Column 2";
 		drawNotes(text.data(), text.length(), 500, posY, 5);
 	}
-	glPushMatrix();
+	glPopMatrix();
 
 }
 
