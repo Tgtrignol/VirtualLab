@@ -1,0 +1,33 @@
+#
+## Alias OBJ Material File
+# Exported from SketchUp, (c) 2000-2012 Trimble Navigation Limited
+
+newmtl _Metal_Aluminum_Anodized_1
+Ka 0.000000 0.000000 0.000000
+Kd 0.792157 0.819608 0.858824
+Ks 0.330000 0.330000 0.330000
+map_Kd Board/_Metal_Aluminum_Anodized_1.jpg
+
+newmtl Color_002
+Ka 0.000000 0.000000 0.000000
+Kd 0.776471 0.776471 0.776471
+Ks 0.330000 0.330000 0.330000
+
+newmtl Wood_Board_Particle
+Ka 0.000000 0.000000 0.000000
+Kd 0.678431 0.537255 0.219608
+Ks 0.330000 0.330000 0.330000
+map_Kd Board/Wood_Board_Particle.jpg
+
+newmtl Metal_Corrogated_Shiny
+Ka 0.000000 0.000000 0.000000
+Kd 0.756863 0.756863 0.756863
+Ks 0.330000 0.330000 0.330000
+map_Kd Board/Metal_Corrogated_Shiny.jpg
+
+newmtl M_2166tanCAM1
+Ka 0.000000 0.000000 0.000000
+Kd 0.513725 0.396078 0.223529
+Ks 0.330000 0.330000 0.330000
+map_Kd Board/M_2166tanCAM1.png
+
