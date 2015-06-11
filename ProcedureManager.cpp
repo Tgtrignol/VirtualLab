@@ -56,7 +56,8 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		{
 			if (procedureObject->grabbed)
 			{
-				objectSelected = true;
+				if (RightLeft == procedureObject->LeftRight)
+					objectSelected = true;
 			}
 			else if (righternSelectedProcedureObject == procedureObject || lefternSelectedProcedureObject == procedureObject)
 			{
@@ -137,9 +138,9 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		//Checking and performing control
 		if ((keyPoint->m_primitive == "Rinse" && procedure) || contextControl->m_primitive == "Rinse")
 		{
-			if (contextControl->m_control == controlEnum)
+			if (contextControl->m_control == controlEnum)// && appliedObject != NULL)
 			{
-				if (contextObject->grabbed && appliedObject->grabbed)
+				if (contextObject->grabbed)// && appliedObject->grabbed)
 				{
 					keyPoint->m_isSuccessTriggered = true;
 					//TODO: Rinse appliedObject
@@ -206,7 +207,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		}
 		else if ((keyPoint->m_primitive == "FillHalfway"&& procedure) || contextControl->m_primitive == "FillHalfway")
 		{
-			if (contextControl->m_control == controlEnum)
+			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
@@ -227,7 +228,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		}
 		else if ((keyPoint->m_primitive == "FillUntilMark" && procedure) || contextControl->m_primitive == "FillUntilMark")
 		{
-			if (contextControl->m_control == controlEnum)
+			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
@@ -248,7 +249,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		}
 		else if ((keyPoint->m_primitive == "Liquefy"&& procedure) || contextControl->m_primitive == "Liquefy")
 		{
-			if (contextControl->m_control == controlEnum)
+			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
@@ -269,7 +270,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		}
 		else if ((keyPoint->m_primitive == "Attach"&& procedure) || contextControl->m_primitive == "Attach")
 		{
-			if (contextControl->m_control == controlEnum)
+			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed && changingObject != NULL)
 				{
@@ -316,6 +317,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				if (contextObject->grabbed)
 				{
 					keyPoint->m_isSuccessTriggered = true;
+					contextObject->rotate("Z", 45);
 					//TODO: Rotate object vertical 360 degrees
 				}
 				else
@@ -353,7 +355,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		}
 		else if ((keyPoint->m_primitive == "Cork" && procedure) || contextControl->m_primitive == "Cork")
 		{
-			if (contextControl->m_control == controlEnum)
+			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
@@ -374,7 +376,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		}
 		else if ((keyPoint->m_primitive == "Dump" && procedure) || contextControl->m_primitive == "Dump")
 		{
-			if (contextControl->m_control == controlEnum)
+			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
@@ -395,7 +397,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		}
 		else if ((keyPoint->m_primitive == "SuckLiquid" && procedure) || contextControl->m_primitive == "SuckLiquid")
 		{
-			if (contextControl->m_control == controlEnum)
+			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
 				if (contextObject->grabbed)
 				{
@@ -459,7 +461,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		}
 		else if ((keyPoint->m_primitive == "Dry" && procedure) || contextControl->m_primitive == "Dry")
 		{
-			if (contextControl->m_control == controlEnum)
+			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
 				if (contextObject->grabbed && appliedObject-> grabbed)
 				{
@@ -480,7 +482,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		}
 		else if ((keyPoint->m_primitive == "Turn45Degree" && procedure) || contextControl->m_primitive == "Turn45Degree")
 		{
-			if (contextControl->m_control == controlEnum)
+			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
@@ -501,7 +503,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		}
 		else if ((keyPoint->m_primitive == "LowerLiquid"&& procedure) || contextControl->m_primitive == "LowerLiquid")
 		{
-			if (contextControl->m_control == controlEnum)
+			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
@@ -547,7 +549,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		}
 		else if ((keyPoint->m_primitive == "Pour10Ml"&& procedure) || contextControl->m_primitive == "Pour10Ml")
 		{
-			if (contextControl->m_control == controlEnum)
+			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
@@ -568,7 +570,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		}
 		else if ((keyPoint->m_primitive == "Fill"&& procedure) || contextControl->m_primitive == "Fill")
 		{
-			if (contextControl->m_control == controlEnum)
+			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed && changingObject != NULL)
 				{
@@ -589,7 +591,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		}
 		else if ((keyPoint->m_primitive == "Titrate1Ml"&& procedure) || contextControl->m_primitive == "Titrate1Ml")
 		{
-			if (contextControl->m_control == controlEnum)
+			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
 				if (appliedObject->grabbed)
 				{

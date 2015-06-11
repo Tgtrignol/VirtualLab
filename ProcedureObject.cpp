@@ -124,23 +124,30 @@ void ProcedureObject::setGravity(btVector3* gravity)
 	pObjModel->rigidBody->setGravity(btVector3(0, 0, 0));
 }
 
-void ProcedureObject::rotate(bool horizontal, int degrees)
+void ProcedureObject::rotate(std::string direction, int degrees)
 {
 	//Rigidbody transform
-	btTransform trans;
-	trans = pObjModel->rigidBody->getCenterOfMassTransform();
-	if (horizontal)
-		trans.setRotation(btQuaternion(TO_RADIANS(degrees), TO_RADIANS(0), TO_RADIANS(rotation->z())));
-	else
-		trans.setRotation(btQuaternion(TO_RADIANS(0), TO_RADIANS(0), TO_RADIANS(degrees)));
+	btTransform transOb;
+	btTransform transRig;
+	transRig = pObjModel->rigidBody->getCenterOfMassTransform();
+	pObjModel->rigidBody->getMotionState()->getWorldTransform(transOb);
 
-	pObjModel->rigidBody->setCenterOfMassTransform(trans);
+	if (direction == "X")
+	{
+		rotation->setY(rotation->y() + degrees);
+	}
+	else if (direction == "Y")
+	{
+		rotation->setX(rotation->x() + degrees);
+	}
+	else if (direction == "Z")
+	{
+		rotation->setZ(rotation->z() + degrees);
+	}
 
-	//Object transform
-	pObjModel->rigidBody->getMotionState()->getWorldTransform(trans);
-	if (horizontal)
-		trans.setRotation(btQuaternion(TO_RADIANS(degrees), TO_RADIANS(0), TO_RADIANS(rotation->z())));
-	else
-		trans.setRotation(btQuaternion(TO_RADIANS(0), TO_RADIANS(0), TO_RADIANS(degrees)));
-	pObjModel->rigidBody->getMotionState()->setWorldTransform(trans);
+	transRig.setRotation(btQuaternion(TO_RADIANS(rotation->y()), TO_RADIANS(rotation->x()), TO_RADIANS(rotation->z())));
+	transOb.setRotation(btQuaternion(TO_RADIANS(rotation->y()), TO_RADIANS(rotation->x()), TO_RADIANS(rotation->z())));
+
+	pObjModel->rigidBody->setCenterOfMassTransform(transRig);
+	pObjModel->rigidBody->getMotionState()->setWorldTransform(transOb);
 }
