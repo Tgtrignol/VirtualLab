@@ -138,9 +138,9 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		//Checking and performing control
 		if ((keyPoint->m_primitive == "Rinse" && procedure) || contextControl->m_primitive == "Rinse")
 		{
-			if (contextControl->m_control == controlEnum)// && appliedObject != NULL)
+			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
-				if (contextObject->grabbed)// && appliedObject->grabbed)
+				if (contextObject->grabbed && appliedObject->grabbed)
 				{
 					keyPoint->m_isSuccessTriggered = true;
 					//TODO: Rinse appliedObject
