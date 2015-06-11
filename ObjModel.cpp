@@ -161,32 +161,29 @@ glm::vec4 calcTangentVector(
 	tangent[3] = handedness;*/
 }
 
-
-void ObjModel::createRigidBody(const btVector3 &size, btScalar mass, const btVector3 &origin)
+void ObjModel::createRigidBody(btScalar mass, const btVector3 &origin, const std::vector<float> *vertices, const btVector3 &scale)
 {
-	groundShape = new btBoxShape(size);
-	btVector3 localInertia(0, 0, 0);
+	groundShape = new btConvexHullShape();
+	for (int i = 0; i < vertices->size(); i += 3)
+	{
+		btVector3 vertex((*vertices)[i] * scale.x(), (*vertices)[i + 1] * scale.y(), (*vertices)[i+2] * scale.z());
+		((btConvexHullShape *)groundShape)->addPoint(vertex);
+	}
 
+	btVector3 localInertia(0, 0, 0);
 	groundShape->calculateLocalInertia(mass, localInertia);
 
 	btTransform groundTransform;
 	groundTransform.setIdentity();
 	groundTransform.setOrigin(origin);
-	//btQuaternion quat(34.5, 0.0, 0.0);
-	//btQuaternion quat(0, 0, 0);
-	//quat.setRotation(btVector3(0.0, 1.0, 0.0), TO_RADIANS(135));
-	//const btQuaternion &quaternion = quat;
-	//groundTransform.setRotation(quaternion);
 
 	myMotionState = new btDefaultMotionState(groundTransform); //motionstate provides interpolation capabilities, and only synchronizes 'active' objects
 	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, groundShape, localInertia);
 	rigidBody = new btRigidBody(rbInfo);
 	rigidBody->setUserPointer(this);
-
-	rigidBody->setAngularFactor(btVector3(0.0, 1.0, 0.0));
 }
 
-ObjModel::ObjModel(std::string fileName, const btVector3 &size, btScalar mass, const btVector3 &origin)
+ObjModel::ObjModel(std::string fileName, btScalar mass, const btVector3 &origin, const btVector3 &scale)
 {
 	//If allready in buffer, load that instead.
 	objModelCore = buffer[fileName];
@@ -197,7 +194,7 @@ ObjModel::ObjModel(std::string fileName, const btVector3 &size, btScalar mass, c
 	}
 	else
 	{
-		createRigidBody(size, mass, origin);
+		createRigidBody(mass, origin, objModelCore->vertices, scale);
 		return;
 	}
 
@@ -420,7 +417,8 @@ ObjModel::ObjModel(std::string fileName, const btVector3 &size, btScalar mass, c
         
     glBindVertexArray(0);
 
-	createRigidBody(size, mass, origin);
+	objModelCore->vertices = new std::vector<float>(vertices);
+	createRigidBody(mass, origin, objModelCore->vertices, scale);
 }
 
 ObjModel::~ObjModel(void)

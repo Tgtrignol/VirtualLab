@@ -9,18 +9,49 @@
 #include "Scene.h"
 #include "Hydra.h"
 
+std::string originAnchorToString(OriginAnchor originAnchor)
+{
+	switch (originAnchor)
+	{
+	case OriginAnchor::Room:
+		return "Room";
+	case OriginAnchor::Table:
+		return "Table";
+	}
+}
+
+OriginAnchor stringToOriginAnchor(std::string str)
+{
+	if (str == "Room")
+		return OriginAnchor::Room;
+	else if (str == "Table")
+		return OriginAnchor::Table;
+}
+
+void ProcedureObject::applyOriginAnchorTranslation()
+{
+	if (originAnchor == OriginAnchor::Room) {
+		//Empty on purpose
+	}
+	else if (originAnchor == OriginAnchor::Table) {
+		btVector3 vec = *origin;
+		delete origin;
+		origin = new btVector3(vec.x() + -1, vec.y() + 0.9, vec.z() + -0.15);
+	}
+}
+
 void ProcedureObject::init()
 {
 	shaderID = initShader("procedureObject");
-	btVector3 size(0.2, 0.45, 1.0); //TODO: Should read this from file aswell
-	btScalar mass = 0.0;
-	pObjModel = new ObjModel("c:\\VrCave\\Development\\VirtualLab\\Data\\"+fileName, size, mass, *origin);
+
+	applyOriginAnchorTranslation();
+	const btVector3 &refScale = *scale;
+	pObjModel = new ObjModel("c:\\VrCave\\Development\\VirtualLab\\Data\\" + fileName, 0.0, *origin, refScale);
 	pObjModel->rigidBody->setUserPointer(this);
 
-	btTransform trans;
-	pObjModel->rigidBody->getMotionState()->getWorldTransform(trans);
-	trans.setRotation(btQuaternion(TO_RADIANS(rotation->y()), TO_RADIANS(rotation->x()), TO_RADIANS(rotation->z())));
-	pObjModel->rigidBody->getMotionState()->setWorldTransform(trans);
+	btTransform trans = pObjModel->rigidBody->getCenterOfMassTransform();
+	trans.setRotation(btQuaternion(TO_RADIANS(rotation->y()), TO_RADIANS(rotation->x()), TO_RADIANS(rotation->z())) * trans.getRotation());
+	pObjModel->rigidBody->setCenterOfMassTransform(trans);
 }
 
 void ProcedureObject::draw()
@@ -34,6 +65,9 @@ void ProcedureObject::draw()
 	trans.getOpenGLMatrix(m);
 	glMultMatrixf(m);
 
+	glRotatef(rotation->x(), 1, 0, 0);
+	glRotatef(rotation->y(), 0, 1, 0);//TODO: check axis
+	glRotatef(rotation->z(), 0, 0, 1);
 	glScalef(scale->x(), scale->y(), scale->z());
 
 	GLint uniform = 0;
@@ -113,11 +147,5 @@ void ProcedureObject::update()
 
 void ProcedureObject::setGravity(btVector3* gravity)
 {
-	pObjModel->rigidBody->setGravity(btVector3(0, 0, 0));
-}
-
-void ProcedureObject::rotate(bool horizontal, int degrees)
-{
-
-
+	pObjModel->rigidBody->setGravity(*gravity);
 }

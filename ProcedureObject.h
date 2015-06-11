@@ -11,10 +11,20 @@ class ObjModel;
 class btVector3;
 class btVector4;
 
+enum OriginAnchor{
+	Table,
+	Room
+};
+
+std::string originAnchorToString(OriginAnchor originAnchor);
+OriginAnchor stringToOriginAnchor(std::string str);
+
+
 class ProcedureObject
 {
 private:
 	unsigned int shaderID;
+	void applyOriginAnchorTranslation();
 public:
 	ObjModel *pObjModel;
 	std::vector<Control *> controls;
@@ -29,6 +39,7 @@ public:
 	btVector3 *scale;
 	btVector4 *color;
 	bool useColorInsteadOfTexture = false;
+	OriginAnchor originAnchor;
 
 	ProcedureObject::ProcedureObject(std::string fileName, std::string name) : fileName(fileName), name(name) { }
 	void init();

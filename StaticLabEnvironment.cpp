@@ -9,9 +9,8 @@
 void StaticLabEnvironment::init()
 {
 	shaderID = initShader("procedureObject");
-	btVector3 size(0.2, 0.45, 1.0); //TODO: Should read this from file aswell
 	btScalar mass = 0.0;
-	pObjModel = new ObjModel("c:\\VrCave\\Development\\VirtualLab\\Data\\Lab\\Lab_v0.2.obj", size, mass, btVector3(0, 0, 0));
+	pObjModel = new ObjModel("c:\\VrCave\\Development\\VirtualLab\\Data\\Lab\\Lab_v0.2.obj", mass, btVector3(0, 0, 0), btVector3(1, 1, 1));
 	//Labmodel = CaveLib::loadModel("../Development/VirtualLab/Data/Lab/Lab_v0.2.obj");
 }
 

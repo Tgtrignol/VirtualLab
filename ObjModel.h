@@ -48,6 +48,7 @@ public: //private:
 		std::vector<ObjGroup*> groups;
 		std::vector<MaterialInfo*> materials;
 		GLuint _vertexArray;
+		std::vector<float> *vertices;
 	};
 
 	btRigidBody *rigidBody;
@@ -58,8 +59,8 @@ public: //private:
 
 	void loadMaterialFile(std::string fileName, std::string dirName);
 //public:
-	ObjModel(std::string filename, const btVector3 &size, btScalar mass, const btVector3 &origin);
-	void ObjModel::createRigidBody(const btVector3 &size, btScalar mass, const btVector3 &origin);
+	ObjModel::ObjModel(std::string fileName, btScalar mass, const btVector3 &origin, const btVector3 &scale);
+	void ObjModel::createRigidBody(btScalar mass, const btVector3 &origin, const std::vector<float> *vertices, const btVector3 &scale);
 	~ObjModel(void);
 
 	void draw(unsigned int shaderID);

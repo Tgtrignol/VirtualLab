@@ -427,11 +427,9 @@ void Hydra::update()
 
 void Hydra::initHydraModels()
 {
-	btVector3 size = btVector3(0.1f, 0.1f, 0.85f);
-	btScalar mass = 0;
-	rightModel = new ObjModel("c:\\VrCave\\Development\\VirtualLab\\Data\\Sword01\\rusword.obj", size, mass, btVector3(0, -100, 0));
+	rightModel = new ObjModel("c:\\VrCave\\Development\\VirtualLab\\Data\\Sword01\\rusword.obj", 0, btVector3(0, -100, 0), btVector3(0.0018, 0.0018, 0.0018)); //TODO: Adjust scale
 	rightModel->rigidBody->setUserPointer(this);
-	leftModel = new ObjModel("c:\\VrCave\\Development\\VirtualLab\\Data\\Sword02\\rusword.obj", size, mass, btVector3(0, -100, 0));
+	leftModel = new ObjModel("c:\\VrCave\\Development\\VirtualLab\\Data\\Sword02\\rusword.obj", 0, btVector3(0, -100, 0), btVector3(0.0018, 0.0018, 0.0018));
 	leftModel->rigidBody->setUserPointer(this);
 }
 
