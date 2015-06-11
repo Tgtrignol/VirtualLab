@@ -93,14 +93,13 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				}
 				else
 				{
+					isBreakCalled = true;
 					for each (Control *control in procedureObject->controls)
 					{
 						if (control->m_control == controlEnum)
 						{
 							contextObject = procedureObject;
 							contextControl = control;
-
-							isBreakCalled = true;
 							break;
 						}
 					}
