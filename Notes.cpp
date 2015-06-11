@@ -39,14 +39,16 @@ void Notes::drawNotes(const char *text, int length, int x, int y, int z) {
 
 void Notes::draw()
 {
+	glPushMatrix();
 	int itemNr = 0;
-	for (int posY = 0; posY < 400; posY += 20) {
+	for (int posY = 100; posY < 400; posY += 20) {
 		itemNr++;
 		string text = GameManager::getInstance()->scene->procedureManager->righternSelectedProcedureObject == nullptr ? "" : 
 														GameManager::getInstance()->scene->procedureManager->righternSelectedProcedureObject->name;
 		//string text = "Nr. " + to_string(itemNr) + " Column 1 en Column 2";
 		drawNotes(text.data(), text.length(), 500, posY, 5);
 	}
+	glPopMatrix();
 
 }
 

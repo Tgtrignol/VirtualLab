@@ -49,9 +49,16 @@ void ProcedureObject::init()
 	pObjModel = new ObjModel("c:\\VrCave\\Development\\VirtualLab\\Data\\" + fileName, 0.0, *origin, refScale);
 	pObjModel->rigidBody->setUserPointer(this);
 
-	btTransform trans = pObjModel->rigidBody->getCenterOfMassTransform();
-	trans.setRotation(btQuaternion(TO_RADIANS(rotation->y()), TO_RADIANS(rotation->x()), TO_RADIANS(rotation->z())) * trans.getRotation());
+	//Rigidbody transform
+	btTransform trans;
+	trans = pObjModel->rigidBody->getCenterOfMassTransform();
+	trans.setRotation(btQuaternion(TO_RADIANS(rotation->y()), TO_RADIANS(rotation->x()), TO_RADIANS(rotation->z())));
 	pObjModel->rigidBody->setCenterOfMassTransform(trans);
+
+	//Object transform
+	pObjModel->rigidBody->getMotionState()->getWorldTransform(trans);
+	trans.setRotation(btQuaternion(TO_RADIANS(rotation->y()), TO_RADIANS(rotation->x()), TO_RADIANS(rotation->z())));
+	pObjModel->rigidBody->getMotionState()->setWorldTransform(trans);
 }
 
 void ProcedureObject::draw()
@@ -65,9 +72,9 @@ void ProcedureObject::draw()
 	trans.getOpenGLMatrix(m);
 	glMultMatrixf(m);
 
-	glRotatef(rotation->x(), 1, 0, 0);
-	glRotatef(rotation->y(), 0, 1, 0);//TODO: check axis
-	glRotatef(rotation->z(), 0, 0, 1);
+	//glRotatef(rotation->x(), 1, 0, 0);
+	//glRotatef(rotation->y(), 0, 1, 0);//TODO: check axis
+	//glRotatef(rotation->z(), 0, 0, 1);
 	glScalef(scale->x(), scale->y(), scale->z());
 
 	GLint uniform = 0;
@@ -134,11 +141,13 @@ void ProcedureObject::update()
 		else if (LeftRight == "Right")
 			origin = GameManager::getInstance()->scene->hydra->getRightHydraCor();
 
+		//Rigidbody transform
 		pObjModel->rigidBody->setActivationState(1);
 		btTransform transform = pObjModel->rigidBody->getCenterOfMassTransform();
 		transform.setOrigin(*origin);
 		pObjModel->rigidBody->setCenterOfMassTransform(transform);
 
+		//Object transform
 		pObjModel->rigidBody->getMotionState()->getWorldTransform(transform);
 		transform.setOrigin(*origin);
 		pObjModel->rigidBody->getMotionState()->setWorldTransform(transform);
@@ -148,4 +157,32 @@ void ProcedureObject::update()
 void ProcedureObject::setGravity(btVector3* gravity)
 {
 	pObjModel->rigidBody->setGravity(*gravity);
+}
+
+void ProcedureObject::rotate(std::string direction, int degrees)
+{
+	//Rigidbody transform
+	btTransform transOb;
+	btTransform transRig;
+	transRig = pObjModel->rigidBody->getCenterOfMassTransform();
+	pObjModel->rigidBody->getMotionState()->getWorldTransform(transOb);
+
+	if (direction == "X")
+	{
+		rotation->setY(rotation->y() + degrees);
+	}
+	else if (direction == "Y")
+	{
+		rotation->setX(rotation->x() + degrees);
+	}
+	else if (direction == "Z")
+	{
+		rotation->setZ(rotation->z() + degrees);
+	}
+
+	transRig.setRotation(btQuaternion(TO_RADIANS(rotation->y()), TO_RADIANS(rotation->x()), TO_RADIANS(rotation->z())));
+	transOb.setRotation(btQuaternion(TO_RADIANS(rotation->y()), TO_RADIANS(rotation->x()), TO_RADIANS(rotation->z())));
+
+	pObjModel->rigidBody->setCenterOfMassTransform(transRig);
+	pObjModel->rigidBody->getMotionState()->setWorldTransform(transOb);
 }
