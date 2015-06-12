@@ -13,6 +13,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "ProcedureManager.h"
 #include <iostream>
+#include "HUD.h"
 
 void Hydra::init()
 {

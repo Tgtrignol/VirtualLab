@@ -7,6 +7,8 @@
 #include "Control.h"
 #include "GameManager.h"
 #include "Scene.h"
+#include "hud.h"
+#include <iostream>
 
 void ProcedureManager::init()
 {
@@ -41,6 +43,8 @@ void ProcedureManager::update(ControlEnum controlEnum)
 	{
 		return;
 	}
+
+	GameManager::getInstance()->scene->hud->buttonText = std::string(ControlEnumToString(controlEnum));
 
 	for each (KeyPoint *keyPoint in currentProcedureInformation->m_keyPoints)
 	{

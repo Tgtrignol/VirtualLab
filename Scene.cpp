@@ -13,6 +13,7 @@
 #include "StaticLabEnvironment.h"
 #include "ProcedureManager.h"
 #include "ControlEnum.h"
+#include "HUD.h"
 
 #include <iostream>
 #include <VrLib\Application.h>
@@ -28,8 +29,6 @@
 
 CollisionInformation leftHydraCollisionInformation;
 CollisionInformation rightHydraCollisionInformation;
-
-Notes *notes;
 
 bool contactProcessedCallback(btManifoldPoint& cp, void* body0, void* body1)
 {
@@ -67,6 +66,9 @@ Scene::Scene()
 	DownKey->init("DownKey");
 	LeftKey->init("LeftKey");
 	RightKey->init("RightKey");
+
+	notes = new Notes();
+	hud = new HUD();
 
 	hydra = new Hydra();
 	hydra->init();
@@ -227,7 +229,10 @@ void Scene::draw(DrawMode drawMode)
 
 	//f->draw();
 	lab->draw();
-	notes->draw();
+	if (notes != nullptr)
+		notes->draw();
+	if (hud != nullptr)
+		hud->draw();
 	procedureManager->draw();
 
 	glPopMatrix();

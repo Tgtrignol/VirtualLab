@@ -1,13 +1,15 @@
 #include <stdlib.h>
 #include <glut\glut.h>
-#include <string>
 #include "Notes.h"
 #include "ProcedureManager.h"
 #include "GameManager.h"
 #include "Scene.h"
 #include "ProcedureObject.h"
+#include "Hydra.h"
 
-using namespace std;
+Notes::Notes() {
+	buttonText = "";
+}
 
 void Notes::drawNotes(const char *text, int length, int x, int y, int z) {
 
@@ -24,7 +26,7 @@ void Notes::drawNotes(const char *text, int length, int x, int y, int z) {
 	glPushMatrix();
 	glLoadIdentity();
 	glRasterPos3i(x, y, z);
-	
+
 	for (int i = 0; i < length; i++) {
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, (int)text[i]);
 	}
@@ -37,18 +39,21 @@ void Notes::drawNotes(const char *text, int length, int x, int y, int z) {
 
 }
 
-void Notes::draw()
-{
-	glPushMatrix();
+void Notes::drawBoardTxt() {
+
+	glPopMatrix();
 	int itemNr = 0;
 	for (int posY = 100; posY < 400; posY += 20) {
 		itemNr++;
-		string text = GameManager::getInstance()->scene->procedureManager->righternSelectedProcedureObject == nullptr ? "" : 
-														GameManager::getInstance()->scene->procedureManager->righternSelectedProcedureObject->name;
-		//string text = "Nr. " + to_string(itemNr) + " Column 1 en Column 2";
+		std::string text = "Nr. " + std::to_string(itemNr) + " Column 1 en Column 2";
 		drawNotes(text.data(), text.length(), 500, posY, 5);
 	}
-	glPopMatrix();
+	glPushMatrix();
+
+}
+
+void Notes::draw()
+{
 
 }
 
