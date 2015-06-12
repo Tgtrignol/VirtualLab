@@ -1,6 +1,6 @@
 Name Rinse_Erlenmeyer_Flask
 //				  anchorpoint location rotation scale optionalColor
-Item Erlenmeyer_flask Erlenmeyer.obj Table 0 0 0 0 0 0 0.010 0.010 0.010 0.1 0.3 0.4 0.2
+Item Erlenmeyer_flask Erlenmeyer.obj Table 0 0 0 0 90 0 0.010 0.010 0.010 0.1 0.3 0.4 0.2
 Control Joystick-Z GrabRelease
 Control Joystick Move
 
@@ -9,7 +9,7 @@ Item Sink Wasbak.obj Room -0.75 0.45 -1.7 0 315 0 0.011 0.011 0.011 0.8 0.8 0.8 
 Control Joystick-1 FlushLiquid
 
 //		  			  location rotation scale optionalColor
-Item Bottle_of_demineralized_water Fles.obj Table 0 0 -0.1 0 0 0 1 1 1 0.2 0.4 0.8 0.8
+Item Bottle_of_demineralized_water Fles.obj Table 0 0 -0.1 0 90 0 1 1 1 0.2 0.4 0.8 0.8
 //TODO: Get new Fles.obj with proper normals
 Control Joystick-Z GrabRelease
 Control Joystick Move

@@ -173,7 +173,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				else
 				{
 					contextObject->grabbed = false;
-					//contextObject->setGravity(&btVector3(0, -9.81f * 20.0f, 0));
 					contextObject->update();
 				}
 			}
@@ -316,7 +315,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				if (contextObject->grabbed)
 				{
 					keyPoint->m_isSuccessTriggered = true;
-					contextObject->rotate("Z", 45);
+					contextObject->rotate("X", 90);
 					//TODO: Rotate object vertical 360 degrees
 				}
 				else
@@ -421,8 +420,19 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed)
 				{
-					keyPoint->m_isSuccessTriggered = true;
+					if (contextObject->horizontal)
+					{
+						contextObject->horizontal = false;
+						contextObject->rotate("Z", -90);
+					}
+					else
+					{
+						contextObject->horizontal = true;
+						contextObject->rotate("Z", 90);
+					}
 					//TODO: Rotate volume pipette 90 degrees horizontal
+					keyPoint->m_isSuccessTriggered = true;
+
 				}
 				else
 				{

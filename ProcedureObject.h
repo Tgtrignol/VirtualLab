@@ -31,6 +31,7 @@ public:
 	std::string fileName;
 	std::string name;
 	bool grabbed = false;
+	bool horizontal = false;
 	std::string LeftRight = "None";
 	bool closed = true;
 	btVector3 *origin;
@@ -45,7 +46,6 @@ public:
 	void init();
 	void draw();
 	void update();
-	void setGravity(btVector3*);
 	void rotate(std::string direction, int degrees);
 };
 
