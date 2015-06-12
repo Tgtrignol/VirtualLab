@@ -16,6 +16,8 @@ class Hydra;
 class CameraCharacter;
 class StaticLabEnvironment;
 class ProcedureManager;
+class Notes;
+class HUD;
 
 enum CollisionState
 {
@@ -72,6 +74,8 @@ public:
 	StaticLabEnvironment *lab;
 	btDiscreteDynamicsWorld *world;
 	ProcedureManager *procedureManager;
+	Notes *notes;
+	HUD *hud;
 
 	Scene();
 	~Scene();

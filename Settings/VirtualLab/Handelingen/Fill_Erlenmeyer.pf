@@ -12,10 +12,10 @@ Control Joystick-C LowerLiquid
 Item Sink Wasbak.obj
 Control Joystick-1 FlushLiquid 
 
-Item Beaker Bekerglas.obj
+Item Beaker_with_Liquid Bekerglas.obj
 Control Joystick-Z GrabRelease
 Control Joystick Move
-Control Joystick-1 PourWithLiquid
+//Control Joystick-1 PourWithLiquid
 
 Item Erlenmeyer_flask Erlenmeyer.obj
 Control Joystick-Z GrabRelease
@@ -29,7 +29,7 @@ Control Joystick-1 Dry
 //Rinsing Volume pipette
 //Take a Beaker and pour it with some liquid
 Procedure Grab_Beaker GrabRelease Beaker
-Procedure Pour_Liquid_in_the_Beaker PourWithLiquid Beaker
+//Procedure Pour_Liquid_in_the_Beaker PourWithLiquid Beaker
 
 //Suck the liquid halfway in the Volume Pipette
 Procedure Grab_Volume_Pipette GrabRelease Volume_Pipette
