@@ -45,7 +45,6 @@ public:
 	void init();
 	void draw();
 	void update();
-	void setGravity(btVector3*);
 	void rotate(std::string direction, int degrees);
 };
 

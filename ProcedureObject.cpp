@@ -154,11 +154,6 @@ void ProcedureObject::update()
 	}
 }
 
-void ProcedureObject::setGravity(btVector3* gravity)
-{
-	pObjModel->rigidBody->setGravity(*gravity);
-}
-
 void ProcedureObject::rotate(std::string direction, int degrees)
 {
 	//Rigidbody transform
@@ -169,11 +164,11 @@ void ProcedureObject::rotate(std::string direction, int degrees)
 
 	if (direction == "X")
 	{
-		rotation->setY(rotation->y() + degrees);
+		rotation->setX(rotation->x() + degrees);
 	}
 	else if (direction == "Y")
 	{
-		rotation->setX(rotation->x() + degrees);
+		rotation->setY(rotation->y() + degrees);
 	}
 	else if (direction == "Z")
 	{

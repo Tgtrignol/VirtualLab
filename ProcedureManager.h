@@ -19,6 +19,7 @@ private:
 	std::vector<std::string> procedureFileLocations;
 	ProcedureInformation *currentProcedureInformation;
 	bool procedure = false;
+	bool anglePositive = true;
 public:
 	ProcedureObject *righternSelectedProcedureObject;
 	ProcedureObject *lefternSelectedProcedureObject;
