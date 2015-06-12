@@ -31,7 +31,6 @@ public:
 	std::string fileName;
 	std::string name;
 	bool grabbed = false;
-	bool horizontal = false;
 	std::string LeftRight = "None";
 	bool closed = true;
 	btVector3 *origin;

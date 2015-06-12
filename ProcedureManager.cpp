@@ -142,7 +142,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
 					keyPoint->m_isSuccessTriggered = true;
-					//TODO: Rinse appliedObject
+					//TODO: Rinse water in appliedObject
 				}
 				else
 				{
@@ -293,8 +293,19 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed)
 				{
+					contextObject->rotate("Y", 90);
+					if (contextObject->rotation->x() == 45)
+						anglePositive = false;
+					else if (contextObject->rotation->x() == -45)
+						anglePositive = true;
+					
+					if (anglePositive)
+						contextObject->rotate("X", 45);
+					else
+						contextObject->rotate("X", -45);
+
+					//Swerve volumetric flask: perform 4 times for full 360
 					keyPoint->m_isSuccessTriggered = true;
-					//TODO: Swerve volumetric flask
 				}
 				else
 				{
@@ -314,9 +325,10 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed)
 				{
+					//contextObject->rotate("X", 90);
+					contextObject->rotate("X", 120);
+					//Rotate object vertical 360 degrees: Perform 3 times for 360
 					keyPoint->m_isSuccessTriggered = true;
-					contextObject->rotate("X", 90);
-					//TODO: Rotate object vertical 360 degrees
 				}
 				else
 				{
@@ -414,23 +426,21 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if ((keyPoint->m_primitive == "TurnSideWay" && procedure) || contextControl->m_primitive == "TurnSideway")
+		else if ((keyPoint->m_primitive == "TurnSideWay" && procedure) || contextControl->m_primitive == "TurnSideWay")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
 				if (contextObject->grabbed)
 				{
-					if (contextObject->horizontal)
+					if (contextObject->rotation->z() == 90)
 					{
-						contextObject->horizontal = false;
 						contextObject->rotate("Z", -90);
 					}
-					else
+					else if (contextObject->rotation->z() == 0)
 					{
-						contextObject->horizontal = true;
 						contextObject->rotate("Z", 90);
 					}
-					//TODO: Rotate volume pipette 90 degrees horizontal
+					//Rotate volume pipette 90 degrees horizontal: first press is 90 degree rotation, second press is back at 0 degrees
 					keyPoint->m_isSuccessTriggered = true;
 
 				}
@@ -491,12 +501,16 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		}
 		else if ((keyPoint->m_primitive == "Turn45Degree" && procedure) || contextControl->m_primitive == "Turn45Degree")
 		{
-			if (contextControl->m_control == controlEnum && appliedObject != NULL)
+			if (contextControl->m_control == controlEnum )//&& appliedObject != NULL)
 			{
-				if (contextObject->grabbed && appliedObject->grabbed)
+				if (contextObject->grabbed )//&& appliedObject->grabbed)
 				{
+					if (contextObject->rotation->z() == 0)
+						contextObject->rotate("Z", -45);
+					else if (contextObject->rotation->z() == -45)
+						contextObject->rotate("Z", 45);
+					//Rotate contextObject 45 degrees horizontal: First press is 45 degree, second is back
 					keyPoint->m_isSuccessTriggered = true;
-					//TODO: Rotate contextObject 45 degrees horizontal
 				}
 				else
 				{
