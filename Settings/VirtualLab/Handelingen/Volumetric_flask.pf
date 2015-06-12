@@ -1,6 +1,6 @@
 Name Fill_Volumetric_flask
 
-Item Bottle_of_demineralized_water Fles.obj
+Item Bottle_of_demineralized_water Fles.obj Table 0 0 0.4 0 0 0 0.010 0.010 0.010
 Control Joystick-Z GrabRelease
 Control Joystick Move
 Control Joystick-1 Rinse 
@@ -8,31 +8,31 @@ Control Joystick-2 FillHalfway
 Control Joystick-3 FillUntilMark
 Control Joystick-4 Liquefy
 
-Item Sink Wasbak.obj
+Item Sink Wasbak.obj Room -0.75 0.45 -1.7 0 315 0 0.011 0.011 0.011 0.8 0.8 0.8 1.0
 Control Joystick-1 FlushLiquid
 
-Item Funnel Trechter.obj
+Item Funnel Trechter.obj Table 0 0 0.4 0 0 0 0.2 0.2 0.2 1.0 1.0 1.0 1.0
 Control Joystick-Z GrabRelease
 Control Joystick Move
 Control Joystick-1 Attach
 
-Item Volumetric_flask Maatkolf.obj
+Item Volumetric_flask Maatkolf.obj Table 0 0 -0.2 0 0 0 0.010 0.010 0.010 0.1 0.2 0.3 0.8
 Control Joystick-Z GrabRelease
 Control Joystick Move
 Control Joystick-1 Swerve
 Control Joystick-2 Rotate
 
-Item Volumetric_flask_with_Funnel Maatkolf_en_Trechter.obj
+Item Volumetric_flask_with_Funnel Maatkolf_en_Trechter.obj Table 0.1 0 0 0 0 0 0.010 0.010 0.010 0.1 0.2 0.3 0.8
 Control Joystick-Z GrabRelease
 Control Joystick Move
 Control Joystick-1 Detach_Funnel
 
-Item Flask_Cork Kurk.obj
+Item Flask_Cork Kurk.obj Table 0 0 0.2 0 0 0 1 1 1 1.0 1.0 1.0 1.0
 Control Joystick-Z GrabRelease
 Control Joystick Move
 Control Joystick-1 Cork
 
-Item Weighing_boat Weegbakje.obj
+Item Weighing_boat Weegbakje2.obj Table 0 0 -0.3 0 0 0 0.02 0.02 0.02 0.8 0.8 0.8 1.0
 Control Joystick-Z GrabRelease
 Control Joystick Move
 Control Joystick-1 Dump

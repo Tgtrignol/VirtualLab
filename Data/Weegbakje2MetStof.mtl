@@ -1,7 +1,7 @@
 # Blender MTL File: 'None'
 # Material Count: 2
 
-newmtl FrontColor.001
+newmtl FrontColor
 Ns 96.078431
 Ka 0.000000 0.000000 0.000000
 Kd 0.800000 0.800000 0.800000
@@ -10,11 +10,10 @@ Ni 1.000000
 d 1.000000
 illum 2
 
-newmtl _15.001
-Ns 96.078431
+newmtl None
+Ns 0
 Ka 0.000000 0.000000 0.000000
-Kd 0.614902 0.712157 0.749804
-Ks 0.165000 0.165000 0.165000
-Ni 1.000000
-d 0.440000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
 illum 2

@@ -13,7 +13,7 @@ void ProcedureManager::init()
 	procedureFileLocations = DSLReader().readProcedureLocationFromFile();
 	if (procedureFileLocations.size() > 0)//Test: instead of menu.
 	{
-		currentProcedureInformation = DSLReader().readProcedureFromFile(procedureFileLocations[0]);
+		currentProcedureInformation = DSLReader().readProcedureFromFile(procedureFileLocations[6]);
 	}
 
 	for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)

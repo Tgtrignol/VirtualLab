@@ -102,7 +102,7 @@ ProcedureInformation *DSLReader::readProcedureFromFile(std::string procedureFile
 				currentProcedureObject->rotation = new btVector3(std::stof(parts[7]), std::stof(parts[8]), std::stof(parts[9]));
 				currentProcedureObject->scale = new btVector3(std::stof(parts[10]), std::stof(parts[11]), std::stof(parts[12]));
 
-				if (parts.size() > 12)
+				if (parts.size() > 13)
 				{
 					currentProcedureObject->useColorInsteadOfTexture = true;
 					currentProcedureObject->color = new btVector4(std::stof(parts[13]), std::stof(parts[14]), std::stof(parts[15]), std::stof(parts[16]));
