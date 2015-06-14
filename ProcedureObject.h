@@ -38,6 +38,7 @@ public:
 	btVector3 *rotation;
 	btVector3 *scale;
 	btVector4 *color;
+	bool changeObject;
 	bool useColorInsteadOfTexture = false;
 	OriginAnchor originAnchor;
 

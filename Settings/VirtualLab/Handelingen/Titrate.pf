@@ -1,40 +1,40 @@
 Name Titrate
 
-Item Burette Buret.obj
+Item Burette Buret.obj 0 Table 0 0 -0.5 0 0 0 0.003 0.003 0.003 0.1 0.3 0.4 0.2
 Control Joystick-1 OpenCloseTap
 Control Joystick-2 Titrate1Ml
 Control Joystick-3 ReadAmount
 
-Item Burette_with_Funnel Buret_en_Trechter.obj
+Item Burette_with_Funnel Buret_en_Trechter.obj 1 Table 0 0 -0.5 0 0 0 0.003 0.003 0.003 0.1 0.3 0.4 0.2
 Control Joystick-1 OpenCloseTap
 Control Joystick-2 Deattach_Funnel
 
-Item Erlenmeyer_flask Erlenmeyer.obj
+Item Erlenmeyer_flask Erlenmeyer.obj 0 Table 0 0 -0.4 0 0 0 0.010 0.010 0.010 0.1 0.3 0.4 0.2
 Control Joystick-Z GrabRelease
 Control Joystick Move
 
-Item Funnel Trechter.obj
+Item Funnel Trechter.obj 0 Table 0 0 0.6 0 0 0 0.2 0.2 0.2 1.0 1.0 1.0 1.0
 Control Joystick-Z GrabRelease
 Control Joystick Move
 Control Joystick-1 Attach
 
-Item Bottle_of_demineralized_water Fles.obj
+Item Bottle_of_demineralized_water Fles.obj 0 Table 0 0 -0.2 0 90 0 1 1 1 0.2 0.4 0.8 0.8
 Control Joystick-Z GrabRelease
 Control Joystick Move
 Control Joystick-1 Rinse
 
-Item Beaker_With_Liquid Bekerglas.obj
+Item Beaker_With_Liquid Bekerglas.obj 0 Table 0 0 0.4 0 0 0 0.010 0.010 0.010 0.1 0.3 0.4 0.2
 Control Joystick-Z GrabRelease
 Control Joystick Move
 Control Joystick-1 Pour10Ml
 Control Joystick-2 Fill
 
-Item Beaker Bekerglas.obj
+Item Beaker Bekerglas.obj 0 Table 0 0 0.2 0 0 0 0.010 0.010 0.010 0.1 0.3 0.4 0.2
 Control Joystick-Z GrabRelease
 Control Joystick Move
 Control Joystick-1 Rinse 
 
-Item WasteBeaker Bekerglas.obj
+Item WasteBeaker Bekerglas.obj 0 Table 0 0 0.0 0 0 0 0.010 0.010 0.010 0.1 0.3 0.4 0.2
 Control Joystick-Z GrabRelease
 Control Joystick Move
 

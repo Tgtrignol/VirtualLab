@@ -20,7 +20,8 @@ void ProcedureManager::init()
 
 	for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
 	{
-		procedureObject->init();
+		if (!procedureObject->changeObject)
+			procedureObject->init();
 	}
 }
 
@@ -28,7 +29,8 @@ void ProcedureManager::draw()
 {
 	for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
 	{
-		procedureObject->draw();
+		if (!procedureObject->changeObject)
+			procedureObject->draw();
 	}
 }
 
@@ -36,7 +38,8 @@ void ProcedureManager::update(ControlEnum controlEnum)
 {
 	for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
 	{
-		procedureObject->update();
+		if (!procedureObject->changeObject)
+			procedureObject->update();
 	}
 
 	if (controlEnum == ControlEnum::None)
@@ -390,7 +393,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		}
 		else if ((keyPoint->m_primitive == "Dump" && procedure) || contextControl->m_primitive == "Dump")
 		{
-			if (contextControl->m_control == controlEnum && appliedObject != NULL)
+			if (contextControl->m_control == controlEnum && appliedObject != NULL && changingObject != NULL)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
