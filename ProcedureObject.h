@@ -51,6 +51,7 @@ public:
 	void draw();
 	void update();
 	void rotate(std::string direction, int degrees);
+	void deleteRigidBodyFromWorld();
 };
 
 #endif

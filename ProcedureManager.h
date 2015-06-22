@@ -20,6 +20,7 @@ private:
 	ProcedureInformation *currentProcedureInformation;
 	bool procedure = false;
 	bool anglePositive = true;
+	bool changingObjectTest = false;
 public:
 	ProcedureObject *righternSelectedProcedureObject;
 	ProcedureObject *lefternSelectedProcedureObject;

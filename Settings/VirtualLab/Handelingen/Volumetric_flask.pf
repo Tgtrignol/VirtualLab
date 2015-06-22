@@ -1,6 +1,6 @@
 Name Fill_Volumetric_flask
 
-Item Bottle_of_demineralized_water Fles.obj 0 Table 0 0 0.4 0 0 0 0.010 0.010 0.010
+Item Bottle_of_demineralized_water Fles.obj 0 Table 0 0 0.5 0 90 0 1 1 1 0.2 0.4 0.8 0.8
 Control Joystick-Z GrabRelease
 Control Joystick Move
 Control Joystick-1 Rinse 
@@ -23,7 +23,7 @@ Control Joystick Move
 Control Joystick-1 Swerve
 Control Joystick-2 Rotate
 
-Item Volumetric_flask MaatkolfNoKurk.obj 0 Table 0 0 -0.2 0 0 0 0.010 0.010 0.010 0.1 0.2 0.3 0.8
+Item Volumetric_flask MaatkolfNoKurk.obj 0 0 0 0 0 14 0 Table 0 0 -0.2 0 0 0 0.010 0.010 0.010 0.1 0.2 0.3 0.8
 Control Joystick-Z GrabRelease
 Control Joystick Move
 Control Joystick-1 Swerve

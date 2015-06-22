@@ -20,8 +20,8 @@ void ProcedureManager::init()
 
 	for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
 	{
-		if (!procedureObject->changeObject)
 			procedureObject->init();
+			procedureObject->useWaterOverlay = false;
 	}
 }
 
@@ -123,7 +123,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		ProcedureObject* appliedObject = 0;
 		ProcedureObject* changingObject = 0;
 
-		if (keyPoint->m_params.size() > 1)
+		if (keyPoint->m_params.size() > 1 && procedure)
 		{
 			for (int i = 1; i < keyPoint->m_params.size(); i++)
 			{
@@ -138,6 +138,29 @@ void ProcedureManager::update(ControlEnum controlEnum)
 							changingObject = procedureObject;
 					}
 				}
+			}
+		}
+		else
+		{
+			string appliedName;
+			string changingName;
+			if (!changingObjectTest)
+			{
+				appliedName = "Volumetric_flask";
+				changingName = "Volumetric_flask_with_Funnel";
+			}
+			else
+			{
+				appliedName = "";
+				changingName = "Volumetric_flask";
+			}
+
+			for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
+			{
+				if (appliedName == procedureObject->name)
+					appliedObject = procedureObject;
+				else if (changingName == procedureObject->name)
+					changingObject = procedureObject;
 			}
 		}
 
@@ -290,11 +313,14 @@ void ProcedureManager::update(ControlEnum controlEnum)
 					contextObject->changeObject = true;
 					contextObject->grabbed = false;
 					contextObject->LeftRight = "None";
+					contextObject->deleteRigidBodyFromWorld();
 
 					appliedObject->changeObject = true;
 					appliedObject->grabbed = false;
 					appliedObject->LeftRight = "None";
+					appliedObject->deleteRigidBodyFromWorld();
 
+					changingObjectTest = true;
 
 					keyPoint->m_isSuccessTriggered = true;
 				}
@@ -365,7 +391,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if ((keyPoint->m_primitive == "DetachFunnel"&& procedure) || contextControl->m_primitive == "DetachFunnel")
+		else if ((keyPoint->m_primitive == "Detach_Funnel"&& procedure) || contextControl->m_primitive == "Detach_Funnel")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -389,20 +415,27 @@ void ProcedureManager::update(ControlEnum controlEnum)
 
 					if (otherHandEmpty)
 					{
+						for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
+						{
+							if (procedureObject->name == "Funnel")
+								appliedObject = procedureObject;
+						}
+						
 						//TODO: Change contextObject back into 2 object, the funnel and changingObject
-						contextObject->changeObject = true;
-						contextObject->grabbed = false;
-						contextObject->LeftRight = "None";
+						changingObject->changeObject = false;
+						changingObject->origin = contextObject->origin;
+						changingObject->LeftRight = contextObject->LeftRight;
+						changingObject->grabbed = true;						
 
 						//Funnel
 						appliedObject->changeObject = false;
 						appliedObject->grabbed = true;
 						appliedObject->LeftRight = checkOtherHand;
 
-						changingObject->changeObject = false;
-						changingObject->origin = appliedObject->origin;
-						changingObject->LeftRight = appliedObject->LeftRight;
-						changingObject->grabbed = true;
+						contextObject->changeObject = true;
+						contextObject->grabbed = false;
+						contextObject->LeftRight = "None";
+						contextObject->deleteRigidBodyFromWorld();
 
 						keyPoint->m_isSuccessTriggered = true;
 					}
@@ -441,11 +474,13 @@ void ProcedureManager::update(ControlEnum controlEnum)
 					contextObject->changeObject = true;
 					contextObject->grabbed = false;
 					contextObject->LeftRight = "None";
+					contextObject->deleteRigidBodyFromWorld();
 
 					//Flask
 					appliedObject->changeObject = true;
 					appliedObject->grabbed = false;
 					appliedObject->LeftRight = "None";
+					appliedObject->deleteRigidBodyFromWorld();
 
 					keyPoint->m_isSuccessTriggered = true;
 				}
@@ -479,6 +514,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 					contextObject->changeObject = true;
 					contextObject->grabbed = false;
 					contextObject->LeftRight = "None";
+					contextObject->deleteRigidBodyFromWorld();
 
 					//Change appliedobject
 

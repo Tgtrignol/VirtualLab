@@ -226,8 +226,8 @@ void Hydra::update()
 	{
 		if ((!initRigidbodies) && hydraEnabled)
 		{
-			GameManager::getInstance()->scene->world->addRigidBody(rightModel->rigidBody);
-			GameManager::getInstance()->scene->world->addRigidBody(leftModel->rigidBody);
+			//GameManager::getInstance()->scene->world->addRigidBody(rightModel->rigidBody);
+			//GameManager::getInstance()->scene->world->addRigidBody(leftModel->rigidBody);
 			initRigidbodies = true;
 		}
 
