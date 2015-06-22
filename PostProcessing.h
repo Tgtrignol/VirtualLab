@@ -4,10 +4,12 @@
 #include "RenderManager.h"
 
 class PostProcessing {
+
 public:
 	PostProcessing();
 	virtual void draw();
 	virtual void init();
+
 };
 
 #endif

@@ -1,6 +1,6 @@
 Name Fill_Volumetric_flask
 
-Item Bottle_of_demineralized_water Fles.obj Table 0 0 0.4 0 0 0 0.010 0.010 0.010
+Item Bottle_of_demineralized_water Fles.obj 0 Table 0 0 0.4 0 0 0 0.010 0.010 0.010
 Control Joystick-Z GrabRelease
 Control Joystick Move
 Control Joystick-1 Rinse 
@@ -8,32 +8,43 @@ Control Joystick-2 FillHalfway
 Control Joystick-3 FillUntilMark
 Control Joystick-4 Liquefy
 
-Item Sink Wasbak.obj Room -0.75 0.45 -1.7 0 315 0 0.011 0.011 0.011 0.8 0.8 0.8 1.0
+Item Sink Wasbak.obj 0 Room -0.75 0.45 -1.7 0 315 0 0.011 0.011 0.011 0.8 0.8 0.8 1.0
 Control Joystick-1 FlushLiquid
 
-Item Funnel Trechter.obj Table 0 0 0.4 0 0 0 0.2 0.2 0.2 1.0 1.0 1.0 1.0
+Item Funnel Trechter.obj 0 Table 0 0 0.4 0 0 0 0.2 0.2 0.2 1.0 1.0 1.0 1.0
 Control Joystick-Z GrabRelease
 Control Joystick Move
 Control Joystick-1 Attach
 
 //TODO: Remove example water
-Item Volumetric_flask Maatkolf.obj 0 0 0 0 10 0 Table 0 0 -0.2 0 0 0 0.010 0.010 0.010 0.1 0.2 0.3 0.8
+Item Volumetric_flask_with_Kurk Maatkolf.obj 1 0 0 0 0 10 0 Table 0 0 -0.2 0 0 0 0.010 0.010 0.010 0.1 0.2 0.3 0.8
 Control Joystick-Z GrabRelease
 Control Joystick Move
 Control Joystick-1 Swerve
 Control Joystick-2 Rotate
 
-Item Volumetric_flask_with_Funnel Maatkolf_en_Trechter.obj Table 0.1 0 0 0 0 0 0.010 0.010 0.010 0.1 0.2 0.3 0.8
+Item Volumetric_flask MaatkolfNoKurk.obj 0 Table 0 0 -0.2 0 0 0 0.010 0.010 0.010 0.1 0.2 0.3 0.8
+Control Joystick-Z GrabRelease
+Control Joystick Move
+Control Joystick-1 Swerve
+Control Joystick-2 Rotate
+
+Item Volumetric_flask_with_Funnel Maatkolf_en_Trechter.obj 1 Table 0.1 0 0 0 0 0 0.010 0.010 0.010 0.1 0.2 0.3 0.8
 Control Joystick-Z GrabRelease
 Control Joystick Move
 Control Joystick-1 Detach_Funnel
 
-Item Flask_Cork Kurk.obj Table 0 0 0.2 0 0 0 1 1 1 1.0 1.0 1.0 1.0
+Item Flask_Cork Kurk.obj 0 Table 0 0 0.2 0 0 0 1 1 1 1.0 1.0 1.0 1.0
 Control Joystick-Z GrabRelease
 Control Joystick Move
 Control Joystick-1 Cork
 
-Item Weighing_boat Weegbakje2.obj Table 0 0 -0.3 0 0 0 0.02 0.02 0.02 0.8 0.8 0.8 1.0
+Item Weighing_boat Weegbakje2.obj 1 Table 0 0 -0.5 0 0 0 0.02 0.02 0.02 0.8 0.8 0.8 1.0
+Control Joystick-Z GrabRelease
+Control Joystick Move
+//Control Joystick-1 Dump
+
+Item Weighing_boat_solid Weegbakje2MetStof.obj 0 Table 0 0 -0.5 0 0 0 0.02 0.02 0.02 0.8 0.8 0.8 1.0
 Control Joystick-Z GrabRelease
 Control Joystick Move
 Control Joystick-1 Dump
@@ -52,17 +63,17 @@ Procedure Release_Bottle_of_demineralized_water GrabRelease Bottle_of_deminerali
 Procedure Grab_Funnel GrabRelease Funnel
 Procedure Attach_the_Funnel_on_Volumetric_flask Attach Funnel Volumetric_flask Volumetric_flask_with_Funnel
 Procedure Grab_Weighing_boat GrabRelease Weighing_boat
-Procedure Dump_the_solid_of_the_weighing_boat_into_the_flask Dump Weighing_boat Volumetric_flask
+Procedure Dump_the_solid_of_the_weighing_boat_into_the_flask Dump Weighing_boat_solid Volumetric_flask Weighing_boat
 
 //Rinse the weighing boat and the funnel with demineralized water
 Procedure Release_Weighing_boat GrabRelease Weighing_boat
-Procedure Detach_the_funnel_from_the_flask Detach_Funnel Volumetric_flask_with_Funnel Volumetric_flask
+Procedure Detach_the_funnel_from_the_flask Detach_Funnel Volumetric_flask_with_Funnel Funnel Volumetric_flask
 Procedure Release_Volumetric_flask GrabRelease Volumetric_flask
 Procedure Grab_Bottle_of_demineralized_water GrabRelease Bottle_of_demineralized_water
-Procedure Rinse_the_Funnel_with_demineralized_water Rinse Bottle_of_demineralized_water //Rinsing the funnel
+Procedure Rinse_the_Funnel_with_demineralized_water Rinse Bottle_of_demineralized_water Funnel
 Procedure Release_Funnel GrabRelease Funnel
 Procedure Grab_Weighing_boat GrabRelease Weighing_boat
-Procedure Rinse_the_Weighing_Boat_with_demineralized_water Rinse Bottle_of_demineralized_water 
+Procedure Rinse_the_Weighing_Boat_with_demineralized_water Rinse Bottle_of_demineralized_water Weighing_boat 
 Procedure Release_Weighing_boat GrabRelease Weighing_boat
 
 //Fill the Volumetric flask halfway the scoop
@@ -77,7 +88,7 @@ Procedure Swerve_the_Volumetric_flask Swerve Volumetric_flask
 Procedure Fill_the_Volumetric_flask_until_the_mark FillUntilMark Bottle_of_demineralized_water Volumetric_flask
 Procedure Release_Bottle_of_demineralized_water GrabRelease Bottle_of_demineralized_water
 Procedure Grab_Flask_Cork GrabRelease Flask_Cork
-Procedure Place_the_Cork_on_the_Volumetric_flask Cork Flask_Cork Volumetric_flask
+Procedure Place_the_Cork_on_the_Volumetric_flask Cork Volumetric_flask Flask_Cork
 Procedure Rotate_the_Flask Rotate Volumetric_flask
 Procedure Rotate_the_Flask Rotate Volumetric_flask
 Procedure Rotate_the_Flask Rotate Volumetric_flask
