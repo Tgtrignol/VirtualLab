@@ -97,15 +97,25 @@ ProcedureInformation *DSLReader::readProcedureFromFile(std::string procedureFile
 					objects.push_back(currentProcedureObject);
 
 				currentProcedureObject = new ProcedureObject(parts[2], parts[1]);
-				currentProcedureObject->originAnchor = stringToOriginAnchor(parts[3]);
-				currentProcedureObject->origin = new btVector3(std::stof(parts[4]), std::stof(parts[5]), std::stof(parts[6]));
-				currentProcedureObject->rotation = new btVector3(std::stof(parts[7]), std::stof(parts[8]), std::stof(parts[9]));
-				currentProcedureObject->scale = new btVector3(std::stof(parts[10]), std::stof(parts[11]), std::stof(parts[12]));
+				int waterCompensation = 0;
 
-				if (parts.size() > 13)
+				currentProcedureObject->originAnchor = stringToOriginAnchor(parts[3]);
+				if (currentProcedureObject->originAnchor == OriginAnchor::Error)
+				{
+					waterCompensation = 6;
+					currentProcedureObject->useWaterOverlay = true;
+					currentProcedureObject->waterDirectionMin = new btVector3(std::stof(parts[3]), std::stof(parts[4]), std::stof(parts[5]));
+					currentProcedureObject->waterDirectionMax = new btVector3(std::stof(parts[6]), std::stof(parts[7]), std::stof(parts[8]));
+					currentProcedureObject->originAnchor = stringToOriginAnchor(parts[3 + waterCompensation]);
+				}
+				currentProcedureObject->origin = new btVector3(std::stof(parts[4 + waterCompensation]), std::stof(parts[5 + waterCompensation]), std::stof(parts[6 + waterCompensation]));
+				currentProcedureObject->rotation = new btVector3(std::stof(parts[7 + waterCompensation]), std::stof(parts[8 + waterCompensation]), std::stof(parts[9 + waterCompensation]));
+				currentProcedureObject->scale = new btVector3(std::stof(parts[10 + waterCompensation]), std::stof(parts[11 + waterCompensation]), std::stof(parts[12 + waterCompensation]));
+
+				if (parts.size() > (13 + waterCompensation))
 				{
 					currentProcedureObject->useColorInsteadOfTexture = true;
-					currentProcedureObject->color = new btVector4(std::stof(parts[13]), std::stof(parts[14]), std::stof(parts[15]), std::stof(parts[16]));
+					currentProcedureObject->color = new btVector4(std::stof(parts[13 + waterCompensation]), std::stof(parts[14 + waterCompensation]), std::stof(parts[15 + waterCompensation]), std::stof(parts[16 + waterCompensation]));
 				}
 			}
 			else

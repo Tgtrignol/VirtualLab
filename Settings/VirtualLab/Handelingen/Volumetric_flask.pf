@@ -16,7 +16,8 @@ Control Joystick-Z GrabRelease
 Control Joystick Move
 Control Joystick-1 Attach
 
-Item Volumetric_flask Maatkolf.obj Table 0 0 -0.2 0 0 0 0.010 0.010 0.010 0.1 0.2 0.3 0.8
+//TODO: Remove example water
+Item Volumetric_flask Maatkolf.obj 0 0 0 0 10 0 Table 0 0 -0.2 0 0 0 0.010 0.010 0.010 0.1 0.2 0.3 0.8
 Control Joystick-Z GrabRelease
 Control Joystick Move
 Control Joystick-1 Swerve
@@ -58,10 +59,10 @@ Procedure Release_Weighing_boat GrabRelease Weighing_boat
 Procedure Detach_the_funnel_from_the_flask Detach_Funnel Volumetric_flask_with_Funnel Volumetric_flask
 Procedure Release_Volumetric_flask GrabRelease Volumetric_flask
 Procedure Grab_Bottle_of_demineralized_water GrabRelease Bottle_of_demineralized_water
-Procedure Rinse_the_Funnel_with_demineralized_water Rinse Bottle_of_demineralized_water Funnel
+Procedure Rinse_the_Funnel_with_demineralized_water Rinse Bottle_of_demineralized_water //Rinsing the funnel
 Procedure Release_Funnel GrabRelease Funnel
 Procedure Grab_Weighing_boat GrabRelease Weighing_boat
-Procedure Rinse_the_Weighing_Boat_with_demineralized_water Rinse Bottle_of_demineralized_water Weighing_boat 
+Procedure Rinse_the_Weighing_Boat_with_demineralized_water Rinse Bottle_of_demineralized_water 
 Procedure Release_Weighing_boat GrabRelease Weighing_boat
 
 //Fill the Volumetric flask halfway the scoop

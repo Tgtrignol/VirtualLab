@@ -27,6 +27,9 @@ void StaticLabEnvironment::draw()
 
 	GLint uniform = 0;
 
+	uniform = glGetUniformLocation(shaderID, "useWater");
+	glUniform1i(uniform, false);
+
 	uniform = glGetUniformLocation(shaderID, "useTexture");
 	glUniform1i(uniform, true);
 

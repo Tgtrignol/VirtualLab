@@ -17,6 +17,8 @@ std::string originAnchorToString(OriginAnchor originAnchor)
 		return "Room";
 	case OriginAnchor::Table:
 		return "Table";
+	case OriginAnchor::Error:
+		return "Error";
 	}
 }
 
@@ -26,6 +28,8 @@ OriginAnchor stringToOriginAnchor(std::string str)
 		return OriginAnchor::Room;
 	else if (str == "Table")
 		return OriginAnchor::Table;
+	else
+		return OriginAnchor::Error;
 }
 
 void ProcedureObject::applyOriginAnchorTranslation()
@@ -80,12 +84,24 @@ void ProcedureObject::draw()
 	GLint uniform = 0;
 
 	uniform = glGetUniformLocation(shaderID, "useTexture");
-	glUniform1i(uniform, !useColorInsteadOfTexture); 
+	glUniform1i(uniform, !useColorInsteadOfTexture);
 
 	if (useColorInsteadOfTexture)
 	{
 		uniform = glGetUniformLocation(shaderID, "color");
 		glUniform4f(uniform, color->x(), color->y(), color->z(), color->w());
+	}
+
+	uniform = glGetUniformLocation(shaderID, "useWater");
+	glUniform1i(uniform, useWaterOverlay);
+
+	if (useWaterOverlay)
+	{
+		uniform = glGetUniformLocation(shaderID, "waterVertMin");
+		glUniform3f(uniform, waterDirectionMin->x(), waterDirectionMin->y(), waterDirectionMin->z());
+
+		uniform = glGetUniformLocation(shaderID, "waterVertMax");
+		glUniform3f(uniform, waterDirectionMax->x(), waterDirectionMax->y(), waterDirectionMax->z());
 	}
 
 	uniform = glGetUniformLocation(shaderID, "materialShininess");

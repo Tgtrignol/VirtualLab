@@ -13,7 +13,8 @@ class btVector4;
 
 enum OriginAnchor{
 	Table,
-	Room
+	Room,
+	Error
 };
 
 std::string originAnchorToString(OriginAnchor originAnchor);
@@ -40,6 +41,9 @@ public:
 	btVector4 *color;
 	bool useColorInsteadOfTexture = false;
 	OriginAnchor originAnchor;
+	btVector3 *waterDirectionMin;
+	btVector3 *waterDirectionMax;
+	bool useWaterOverlay;
 
 	ProcedureObject::ProcedureObject(std::string fileName, std::string name) : fileName(fileName), name(name) { }
 	void init();
