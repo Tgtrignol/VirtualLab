@@ -5,6 +5,11 @@
 uniform vec4 color;
 uniform bool useTexture;
 
+//A blue overlay along this vector from the center of the object.
+uniform vec3 waterVertMin;
+uniform vec3 waterVertMax;
+uniform bool useWater;
+
 uniform sampler2D texture;
 uniform float materialShininess;
 uniform vec3 materialSpecularColor;
@@ -39,6 +44,16 @@ void main()
 	else
 	{
 		surfaceColor = color;
+	}
+
+	if(useWater)
+	{
+		if((fragVert.x < waterVertMax.x && fragVert.x > waterVertMin.x) || 
+		   (fragVert.y < waterVertMax.y && fragVert.y > waterVertMin.y) || 
+		   (fragVert.z < waterVertMax.z && fragVert.z > waterVertMin.z) )
+		{
+			surfaceColor *= vec4(0.3, 0.3, 0.8, 1.0);
+		}
 	}
 	 
 	vec3 surfaceToLight = normalize(light.position - surfacePos);
