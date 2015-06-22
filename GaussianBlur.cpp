@@ -71,9 +71,9 @@ void GaussianBlur::draw()
 	GLint viewport[4];
 	glGetIntegerv(GL_VIEWPORT, viewport);
 
-	drawToFBO(oldFbo, viewport);
-
 	glPushMatrix();
+
+	drawToFBO(oldFbo, viewport);
 
 	glUseProgram(pixelShader);
 	//GLint loc1 = glGetUniformLocation(pixelShader, "time");
