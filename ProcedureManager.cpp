@@ -279,8 +279,24 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed && changingObject != NULL)
 				{
-					keyPoint->m_isSuccessTriggered = true;
 					//TODO: Change appliedObject into changingObject and dont show the Funnel anymore
+					
+					changingObject->changeObject = false;
+					changingObject->origin = appliedObject->origin;
+					changingObject->LeftRight = appliedObject->LeftRight;
+					changingObject->grabbed = true;
+
+					//Funnel
+					contextObject->changeObject = true;
+					contextObject->grabbed = false;
+					contextObject->LeftRight = "None";
+
+					appliedObject->changeObject = true;
+					appliedObject->grabbed = false;
+					appliedObject->LeftRight = "None";
+
+
+					keyPoint->m_isSuccessTriggered = true;
 				}
 				else
 				{
@@ -355,8 +371,45 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed && changingObject != NULL)
 				{
-					keyPoint->m_isSuccessTriggered = true;
-					//TODO: Change contextObject back into 2 object, the funnel and changingObject
+					//Check if other hand is empty
+					string pickedRightOrLeft = contextObject->LeftRight;
+					bool otherHandEmpty = true;
+					string checkOtherHand = "";
+
+					if (pickedRightOrLeft == "Left")
+						checkOtherHand = "Right";
+					else if (pickedRightOrLeft == "Right")
+						checkOtherHand = "Left";
+
+					for each (ProcedureObject* prob in currentProcedureInformation->m_procedureObjects)
+					{
+						if (prob->LeftRight == checkOtherHand)
+							otherHandEmpty = false;
+					}
+
+					if (otherHandEmpty)
+					{
+						//TODO: Change contextObject back into 2 object, the funnel and changingObject
+						contextObject->changeObject = true;
+						contextObject->grabbed = false;
+						contextObject->LeftRight = "None";
+
+						//Funnel
+						appliedObject->changeObject = false;
+						appliedObject->grabbed = true;
+						appliedObject->LeftRight = checkOtherHand;
+
+						changingObject->changeObject = false;
+						changingObject->origin = appliedObject->origin;
+						changingObject->LeftRight = appliedObject->LeftRight;
+						changingObject->grabbed = true;
+
+						keyPoint->m_isSuccessTriggered = true;
+					}
+					else
+					{
+						//TODO: Show error sign
+					}
 				}
 				else
 				{
@@ -376,8 +429,25 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
+					//TODO: Change flask into corked flask and dont display cork anymore
+
+					//Corked Flask
+					changingObject->changeObject = false;
+					changingObject->origin = appliedObject->origin;
+					changingObject->LeftRight = appliedObject->LeftRight;
+					changingObject->grabbed = true;
+
+					//Cork
+					contextObject->changeObject = true;
+					contextObject->grabbed = false;
+					contextObject->LeftRight = "None";
+
+					//Flask
+					appliedObject->changeObject = true;
+					appliedObject->grabbed = false;
+					appliedObject->LeftRight = "None";
+
 					keyPoint->m_isSuccessTriggered = true;
-					//TODO: Change contextObject back into 2 object, the funnel and changingObject
 				}
 				else
 				{
@@ -397,8 +467,23 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
-					keyPoint->m_isSuccessTriggered = true;
 					//TODO: Dump solid into appliedObject
+
+					//Empty Weighing boat
+					changingObject->changeObject = false;
+					changingObject->origin = contextObject->origin;
+					changingObject->LeftRight = contextObject->LeftRight;
+					changingObject->grabbed = true;
+
+					//Full Weighing boat
+					contextObject->changeObject = true;
+					contextObject->grabbed = false;
+					contextObject->LeftRight = "None";
+
+					//Change appliedobject
+
+
+					keyPoint->m_isSuccessTriggered = true;
 				}
 				else
 				{
