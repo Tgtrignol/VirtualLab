@@ -63,7 +63,7 @@ Procedure Release_Beaker GrabRelease Beaker
 Procedure Close_the_tap_of_the_Burette OpenCloseTap Burette_with_Funnel
 Procedure Fill_the_Burette_with_the_Beaker_of_liquid Fill Beaker_With_Liquid Burette_with_Funnel
 Procedure Release_Beaker_with_liquid GrabRelease Beaker_With_Liquid
-Procedure Deattach_the_Funnel Deattach_Funnel Burette_with_Funnel Burette
+Procedure Deattach_the_Funnel Deattach_Funnel Burette_with_Funnel Funnel Burette
 
 //Titrate
 //Grab the Erlenmeyer_flask and start titrating
