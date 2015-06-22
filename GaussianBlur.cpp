@@ -105,10 +105,10 @@ void GaussianBlur::draw()
 	glUniform1i(loc2, true);
 
 	glBegin(GL_QUADS);
-	glTexCoord2i(0, 0);	glVertex2i(-1, -1);
-	glTexCoord2i(1, 0);	glVertex2i(1, -1);
-	glTexCoord2i(1, 1);	glVertex2i(1, 1);
-	glTexCoord2i(0, 1);	glVertex2i(-1, 1);
+	glTexCoord2i(0, 0);     glVertex2i(-1, -1);
+	glTexCoord2i(1, 0);     glVertex2i(1, -1);
+	glTexCoord2i(1, 1);     glVertex2i(1, 1);
+	glTexCoord2i(0, 1);     glVertex2i(-1, 1);
 	glEnd();
 
 	glViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
@@ -121,10 +121,10 @@ void GaussianBlur::draw()
 	glUniform1i(loc2, false);
 
 	glBegin(GL_QUADS);
-	glTexCoord2i(0, 0);	glVertex2i(-1, -1);
-	glTexCoord2i(1, 0);	glVertex2i(1, -1);
-	glTexCoord2i(1, 1);	glVertex2i(1, 1);
-	glTexCoord2i(0, 1);	glVertex2i(-1, 1);
+	glTexCoord2i(0, 0);     glVertex2i(-1, -1);
+	glTexCoord2i(1, 0);     glVertex2i(1, -1);
+	glTexCoord2i(1, 1);     glVertex2i(1, 1);
+	glTexCoord2i(0, 1);     glVertex2i(-1, 1);
 	glEnd();
 
 	glBindTexture(GL_TEXTURE_2D, 0);
