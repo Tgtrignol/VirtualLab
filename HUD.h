@@ -2,16 +2,19 @@
 #define HUD_H
 
 #include <iostream>
+#include "PostProcessing.h"
 
 using namespace std;
 
-class HUD{
+class HUD {
 
 public:
 	HUD();
+	~HUD();
 	void init();
 	void draw();
 	string buttonText;
+	PostProcessing* postProcessing;
 
 };
 

@@ -1,13 +1,23 @@
 #include "HUD.h"
 #include "Hydra.h"
 #include "ProcedureManager.h"
+#include "ProcedureObject.h"
 #include "GameManager.h"
 #include "Scene.h"
 #include "Notes.h"
-#include "ProcedureObject.h"
+#include "GaussianBlur.h"
 #include "Control.h"
 
 HUD::HUD() {
+
+	postProcessing = new GaussianBlur(true);
+	postProcessing->init();
+
+}
+
+HUD::~HUD() {
+
+	delete postProcessing;
 
 }
 
@@ -32,6 +42,8 @@ void HUD::draw() {
 	GameManager::getInstance()->scene->notes->drawNotes(text.data(), text.length(), 200, 300, 0);
 
 	//GameManager::getInstance()->scene->notes->drawNotes(buttonText.data(), buttonText.length(), 200, 300, 0);
+
+	//postProcessing->draw();
 
 }
 

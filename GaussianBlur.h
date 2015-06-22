@@ -2,8 +2,10 @@
 #define GAUSSIAN_BLUR_H
 
 #include "PostProcessing.h"
+#include <glut\glut.h>
 
-class GaussianBlur : public PostProcessing{
+class GaussianBlur : public PostProcessing {
+
 public:
 	GLuint pixelShader = 0;
 	GLuint framebufferID = 0;
