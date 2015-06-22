@@ -1,6 +1,6 @@
 Name Rinse_Erlenmeyer_Flask
 //				  changeObject anchorpoint location rotation scale optionalColor
-Item Erlenmeyer_flask Erlenmeyer.obj 0 Table 0 0 0 0 90 0 0.010 0.010 0.010 0.1 0.3 0.4 0.2
+Item Erlenmeyer_flask Erlenmeyer.obj 0 0 0 0 0 6 0 Table 0 0 0 0 90 0 0.010 0.010 0.010 0.1 0.3 0.4 0.8
 Control Joystick-Z GrabRelease
 Control Joystick Move
 

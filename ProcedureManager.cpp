@@ -15,7 +15,7 @@ void ProcedureManager::init()
 	procedureFileLocations = DSLReader().readProcedureLocationFromFile();
 	if (procedureFileLocations.size() > 0)//Test: instead of menu.
 	{
-		currentProcedureInformation = DSLReader().readProcedureFromFile(procedureFileLocations[6]);
+		currentProcedureInformation = DSLReader().readProcedureFromFile(procedureFileLocations[0]);
 	}
 
 	for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
@@ -171,6 +171,8 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
+					appliedObject->useWaterOverlay = true;
+					
 					keyPoint->m_isSuccessTriggered = true;
 					//TODO: Rinse water in appliedObject
 				}
@@ -216,9 +218,10 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		{
 			if (contextControl->m_control == controlEnum)
 			{
-				if (contextObject->grabbed)
+				if (appliedObject->grabbed)
 				{
 					//TODO Check if hydra is near sink
+					appliedObject->useWaterOverlay = false;
 					keyPoint->m_isSuccessTriggered = true;
 				}
 				else
