@@ -1,11 +1,11 @@
 Name Titrate
 
-Item Burette Buret.obj 0 0 0 60 0 0 100 0 Table 0 0 -0.5 0 0 0 0.003 0.003 0.003 0.1 0.3 0.4 0.8
+Item Burette Buret.obj 0 0 0 60 0 0 240 0 Table 0 0 -0.5 0 0 0 0.003 0.003 0.003 0.1 0.3 0.4 0.8
 Control Joystick-1 OpenCloseTap
 Control Joystick-2 Titrate1Ml
 Control Joystick-3 ReadAmount
 
-Item Burette_with_Funnel Buret_en_Trechter.obj 1 0 0 39 0 0 79 0 Table 0 0 -0.5 0 0 0 0.003 0.003 0.003 0.1 0.3 0.4 0.8
+Item Burette_with_Funnel Buret_en_Trechter.obj 1 0 0 39 0 0 219 0 Table 0 0 -0.5 0 0 0 0.003 0.003 0.003 0.1 0.3 0.4 0.8
 Control Joystick-1 OpenCloseTap
 Control Joystick-2 Deattach_Funnel
 
@@ -53,10 +53,14 @@ Procedure Release_Bottle_of_demineralized_water GrabRelease Bottle_of_deminerali
 //Rinse the burette twice with the titrate liquid
 Procedure Grab_the_empty_Beaker GrabRelease Beaker 
 Procedure Grab_the_Beaker_with_liquid GrabRelease Beaker_With_Liquid
+Procedure Close_the_tap_of_the_Burette OpenCloseTap Burette_with_Funnel
 Procedure Pour_10_milliliter_into_the_empty_Beaker Pour10Ml Beaker_With_Liquid Beaker
 Procedure Rinse_the_Burette_by_pouring_the_liquid_from_the_10_milliliter_Beaker Rinse Beaker Burette_with_Funnel
+Procedure Open_the_tap_of_the_Burette OpenCloseTap Burette_with_Funnel
+Procedure Close_the_tap_of_the_Burette OpenCloseTap Burette_with_Funnel
 Procedure Pour_10_milliliter_into_the_empty_Beaker Pour10Ml Beaker_With_Liquid Beaker
 Procedure Rinse_the_Burette_by_pouring_the_liquid_from_the_10_milliliter_Beaker Rinse Beaker Burette_with_Funnel
+Procedure Open_the_tap_of_the_Burette OpenCloseTap Burette_with_Funnel
 Procedure Release_Beaker GrabRelease Beaker
 
 //Fill the burette with the titrate liquid

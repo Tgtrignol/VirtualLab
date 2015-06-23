@@ -28,7 +28,7 @@ void ProcedureManager::draw()
 {
 	for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
 	{
-		if (!procedureObject->changeObject)
+		if (!procedureObject->isChangeObject)
 			procedureObject->draw();
 	}
 }
@@ -37,7 +37,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 {
 	for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
 	{
-		if (!procedureObject->changeObject)
+		if (!procedureObject->isChangeObject)
 			procedureObject->update();
 	}
 
@@ -243,7 +243,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
 					appliedObject->useWaterOverlay = true;
-					//Change watermax height
+					appliedObject->waterDirectionMax->setY(appliedObject->waterDirectionMax->y() / 2);
 
 					keyPoint->m_isSuccessTriggered = true;
 					//TODO: Indicate volumetric flask is halfway full
@@ -267,7 +267,9 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
 					appliedObject->useWaterOverlay = true;
-					//Change watermax height
+
+					//With 14 is looks like the water is at the mark
+					appliedObject->waterDirectionMax->setY(14);
 
 					keyPoint->m_isSuccessTriggered = true;
 					//TODO: Indicate volumetric flask is full
@@ -291,6 +293,9 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
 					appliedObject->useWaterOverlay = true;
+
+					//Make the water a little bit higher
+					appliedObject->waterDirectionMax->setY(appliedObject->waterDirectionMax->y() + 1);
 					keyPoint->m_isSuccessTriggered = true;
 					//TODO: Indicate flask with some liquid in it
 				}
@@ -314,18 +319,18 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				{
 					//TODO: Change appliedObject into changingObject and dont show the Funnel anymore
 					
-					changingObject->changeObject = false;
+					changingObject->isChangeObject = false;
 					changingObject->origin = appliedObject->origin;
 					changingObject->LeftRight = appliedObject->LeftRight;
 					changingObject->grabbed = true;
 
 					//Funnel
-					contextObject->changeObject = true;
+					contextObject->isChangeObject = true;
 					contextObject->grabbed = false;
 					contextObject->LeftRight = "None";
 					contextObject->deleteRigidBodyFromWorld();
 
-					appliedObject->changeObject = true;
+					appliedObject->isChangeObject = true;
 					appliedObject->grabbed = false;
 					appliedObject->LeftRight = "None";
 					appliedObject->deleteRigidBodyFromWorld();
@@ -432,17 +437,17 @@ void ProcedureManager::update(ControlEnum controlEnum)
 						}
 						
 						//TODO: Change contextObject back into 2 object, the funnel and changingObject
-						changingObject->changeObject = false;
+						changingObject->isChangeObject = false;
 						changingObject->origin = contextObject->origin;
 						changingObject->LeftRight = contextObject->LeftRight;
 						changingObject->grabbed = true;						
 
 						//Funnel
-						appliedObject->changeObject = false;
+						appliedObject->isChangeObject = false;
 						appliedObject->grabbed = true;
 						appliedObject->LeftRight = checkOtherHand;
 
-						contextObject->changeObject = true;
+						contextObject->isChangeObject = true;
 						contextObject->grabbed = false;
 						contextObject->LeftRight = "None";
 						contextObject->deleteRigidBodyFromWorld();
@@ -475,19 +480,19 @@ void ProcedureManager::update(ControlEnum controlEnum)
 					//TODO: Change flask into corked flask and dont display cork anymore
 
 					//Corked Flask
-					changingObject->changeObject = false;
+					changingObject->isChangeObject = false;
 					changingObject->origin = appliedObject->origin;
 					changingObject->LeftRight = appliedObject->LeftRight;
 					changingObject->grabbed = true;
 
 					//Cork
-					contextObject->changeObject = true;
+					contextObject->isChangeObject = true;
 					contextObject->grabbed = false;
 					contextObject->LeftRight = "None";
 					contextObject->deleteRigidBodyFromWorld();
 
 					//Flask
-					appliedObject->changeObject = true;
+					appliedObject->isChangeObject = true;
 					appliedObject->grabbed = false;
 					appliedObject->LeftRight = "None";
 					appliedObject->deleteRigidBodyFromWorld();
@@ -515,13 +520,13 @@ void ProcedureManager::update(ControlEnum controlEnum)
 					//TODO: Dump solid into appliedObject
 
 					//Empty Weighing boat
-					changingObject->changeObject = false;
+					changingObject->isChangeObject = false;
 					changingObject->origin = contextObject->origin;
 					changingObject->LeftRight = contextObject->LeftRight;
 					changingObject->grabbed = true;
 
 					//Full Weighing boat
-					contextObject->changeObject = true;
+					contextObject->isChangeObject = true;
 					contextObject->grabbed = false;
 					contextObject->LeftRight = "None";
 					contextObject->deleteRigidBodyFromWorld();
@@ -549,7 +554,21 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed)
 				{
-					appliedObject->useWaterOverlay = true;
+					contextObject->useWaterOverlay = true;
+
+					switch (contextObject->controlStep)
+					{
+					case 0:
+						//Half: 5.3
+						contextObject->waterDirectionMax->setY(contextObject->waterDirectionMax->y() - 4);
+						contextObject->controlStep++;
+						break;
+					case 1 :
+						//Until mark = 9.3
+						contextObject->waterDirectionMax->setY(contextObject->waterDirectionMax->y() + 4);
+						contextObject->controlStep++;
+						break;
+					}
 					keyPoint->m_isSuccessTriggered = true;
 					//TODO: Suck liquid from appliedObject and show liquid in contextObject
 				}
@@ -597,6 +616,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		}
 		else if ((keyPoint->m_primitive == "PourWithLiquid" && procedure) || contextControl->m_primitive == "PourWithLiquid")
 		{
+			//CONTROL NOT USED
 			if (contextControl->m_control == controlEnum)
 			{
 				if (contextObject->grabbed)
@@ -691,17 +711,21 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				//TODO: Check if hydra is near burette
 				keyPoint->m_isSuccessTriggered = true;
-				if (contextObject->closed)
+				
+				switch (contextObject->controlStep)
 				{
-					//if buret is closed, open it
-					contextObject->closed = false;
+				case 0:
+					//Open the buret
+					contextObject->controlStep = 1;
+					contextObject->useWaterOverlay = false;
 					//TODO: Liquid goes out of burette
-				}
-				else
-				{
-					//if buret is open, close it
-					contextObject->closed = true;
+					break;
+				case 1:
+					//Close the buret
+					contextObject->controlStep = 0;
+					contextObject->useWaterOverlay = true;
 					//TODO: Liquid stops going out of burette
+					break;
 				}
 			}
 			else
@@ -716,6 +740,9 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
+					//Add some liquid in the buret
+					appliedObject->waterDirectionMax->setY(appliedObject->waterDirectionMin->getY() + 40);
+					
 					keyPoint->m_isSuccessTriggered = true;
 					//Change watermax height
 
@@ -740,7 +767,10 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				if (contextObject->grabbed && appliedObject->grabbed && changingObject != NULL)
 				{
 					appliedObject->useWaterOverlay = true;
-					//appliedObject->waterDirectionMax->setY(16);
+					//Max height buret: 240 - 60 = 180
+					//Max height buret with funnel: 219- 39 = 180
+
+					appliedObject->waterDirectionMax->setY(219);
 					//Change watermax height
 
 					keyPoint->m_isSuccessTriggered = true;
@@ -764,6 +794,9 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (appliedObject->grabbed)
 				{
+					appliedObject->useWaterOverlay = true;
+					appliedObject->waterDirectionMax->setY(appliedObject->waterDirectionMax->y() - 20);
+
 					keyPoint->m_isSuccessTriggered = true;
 					//Change watermax height
 
@@ -786,6 +819,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (contextControl->m_control == controlEnum)
 			{
 				keyPoint->m_isSuccessTriggered = true;
+				int amount = (appliedObject->waterDirectionMax->getY() - appliedObject->waterDirectionMin->getY());
 				//Get watermax height
 
 				//TODO: Show amount of liquid in sign

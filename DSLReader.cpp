@@ -98,7 +98,7 @@ ProcedureInformation *DSLReader::readProcedureFromFile(std::string procedureFile
 
 				currentProcedureObject = new ProcedureObject(parts[2], parts[1]);
 
-				currentProcedureObject->changeObject = parts[3] == "1" ? true : false;
+				currentProcedureObject->isChangeObject = parts[3] == "1" ? true : false;
 
 				currentProcedureObject->originAnchor = stringToOriginAnchor(parts[4]);
 

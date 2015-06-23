@@ -29,7 +29,7 @@ Control Joystick Move
 Control Joystick-1 Swerve
 Control Joystick-2 Rotate
 
-Item Volumetric_flask_with_Funnel Maatkolf_en_Trechter.obj 1 Table 0.1 0 0 0 0 0 0.010 0.010 0.010 0.1 0.2 0.3 0.8
+Item Volumetric_flask_with_Funnel Maatkolf_en_Trechter.obj 1 0 0 0 0 0 14 0 Table 0.1 0 0 0 0 0 0.010 0.010 0.010 0.1 0.2 0.3 0.8
 Control Joystick-Z GrabRelease
 Control Joystick Move
 Control Joystick-1 Detach_Funnel

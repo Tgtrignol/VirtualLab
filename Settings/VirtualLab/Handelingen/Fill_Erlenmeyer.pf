@@ -1,6 +1,6 @@
 Name Fill_Erlenmeyer_with_Volume_pipette
 
-Item Volume_Pipette Volume_pipet.obj 0 0 0 0 0 0 6 0 Table 0 0 -0.4 0 0 0 0.050 0.050 0.050 0.1 0.3 0.4 0.8
+Item Volume_Pipette Volume_pipet.obj 0 0 0 0 0 0 9.3 0 Table 0 0 -0.4 0 0 0 0.050 0.050 0.050 0.1 0.3 0.4 0.8
 Control Joystick-Z GrabRelease
 Control Joystick Move
 Control Joystick-1 SuckLiquid 
