@@ -105,10 +105,10 @@ ProcedureInformation *DSLReader::readProcedureFromFile(std::string procedureFile
 				int waterCompensation = 0;
 				if (currentProcedureObject->originAnchor == OriginAnchor::Error)
 				{
-					waterCompensation = 6;
-					currentProcedureObject->useWaterOverlay = true;
-					currentProcedureObject->waterDirectionMin = new btVector3(std::stof(parts[4]), std::stof(parts[5]), std::stof(parts[6]));
-					currentProcedureObject->waterDirectionMax = new btVector3(std::stof(parts[7]), std::stof(parts[8]), std::stof(parts[9]));
+					waterCompensation = 7;
+					currentProcedureObject->useWaterOverlay = parts[4] == "1" ? true : false;
+					currentProcedureObject->waterDirectionMin = new btVector3(std::stof(parts[5]), std::stof(parts[6]), std::stof(parts[7]));
+					currentProcedureObject->waterDirectionMax = new btVector3(std::stof(parts[8]), std::stof(parts[9]), std::stof(parts[10]));
 					currentProcedureObject->originAnchor = stringToOriginAnchor(parts[4 + waterCompensation]);
 				}
 

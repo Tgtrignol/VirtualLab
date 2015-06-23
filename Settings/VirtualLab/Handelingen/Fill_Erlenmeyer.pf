@@ -1,6 +1,6 @@
 Name Fill_Erlenmeyer_with_Volume_pipette
 
-Item Volume_Pipette Volume_pipet.obj 0 Table 0 0 -0.4 0 0 0 0.050 0.050 0.050 0.1 0.3 0.4 0.2
+Item Volume_Pipette Volume_pipet.obj 0 0 0 0 0 0 6 0 Table 0 0 -0.4 0 0 0 0.050 0.050 0.050 0.1 0.3 0.4 0.8
 Control Joystick-Z GrabRelease
 Control Joystick Move
 Control Joystick-1 SuckLiquid 
@@ -12,12 +12,12 @@ Control Joystick-C LowerLiquid
 Item Sink Wasbak.obj 0 Room -0.75 0.45 -1.7 0 315 0 0.011 0.011 0.011 0.8 0.8 0.8 1.0
 Control Joystick-1 FlushLiquid 
 
-Item Beaker_with_Liquid Bekerglas.obj 0 Table 0 0 0.4 0 0 0 0.010 0.010 0.010 0.1 0.3 0.4 0.2
+Item Beaker_with_Liquid Bekerglas.obj 0 1 0 0 0 0 6 0 Table 0 0 0.4 0 0 0 0.010 0.010 0.010 0.1 0.3 0.4 0.8
 Control Joystick-Z GrabRelease
 Control Joystick Move
 //Control Joystick-1 PourWithLiquid
 
-Item Erlenmeyer_flask Erlenmeyer.obj 0 Table 0 0 0.2 0 0 0 0.010 0.010 0.010 0.1 0.3 0.4 0.2
+Item Erlenmeyer_flask Erlenmeyer.obj 0 0 0 0 0 0 6 0 Table 0 0 0.2 0 0 0 0.010 0.010 0.010 0.1 0.3 0.4 0.8
 Control Joystick-Z GrabRelease
 Control Joystick Move
 

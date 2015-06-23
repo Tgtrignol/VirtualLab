@@ -15,13 +15,12 @@ void ProcedureManager::init()
 	procedureFileLocations = DSLReader().readProcedureLocationFromFile();
 	if (procedureFileLocations.size() > 0)//Test: instead of menu.
 	{
-		currentProcedureInformation = DSLReader().readProcedureFromFile(procedureFileLocations[0]);
+		currentProcedureInformation = DSLReader().readProcedureFromFile(procedureFileLocations[1]);
 	}
 
 	for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
 	{
 			procedureObject->init();
-			procedureObject->useWaterOverlay = false;
 	}
 }
 
@@ -142,6 +141,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		}
 		else
 		{
+			//Code for testing code for changing 2 objects into 1
 			string appliedName;
 			string changingName;
 			if (!changingObjectTest)
@@ -242,6 +242,9 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
+					appliedObject->useWaterOverlay = true;
+					//Change watermax height
+
 					keyPoint->m_isSuccessTriggered = true;
 					//TODO: Indicate volumetric flask is halfway full
 				}
@@ -263,6 +266,9 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
+					appliedObject->useWaterOverlay = true;
+					//Change watermax height
+
 					keyPoint->m_isSuccessTriggered = true;
 					//TODO: Indicate volumetric flask is full
 				}
@@ -284,6 +290,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
+					appliedObject->useWaterOverlay = true;
 					keyPoint->m_isSuccessTriggered = true;
 					//TODO: Indicate flask with some liquid in it
 				}
@@ -542,6 +549,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed)
 				{
+					appliedObject->useWaterOverlay = true;
 					keyPoint->m_isSuccessTriggered = true;
 					//TODO: Suck liquid from appliedObject and show liquid in contextObject
 				}
@@ -661,6 +669,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
+					appliedObject->useWaterOverlay = false;
 					keyPoint->m_isSuccessTriggered = true;
 					//TODO: Liquid goes out of volume pipette
 				}
@@ -708,6 +717,8 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
 					keyPoint->m_isSuccessTriggered = true;
+					//Change watermax height
+
 					//TODO: Liquid goes into appliedObject
 				}
 				else
@@ -728,6 +739,10 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed && changingObject != NULL)
 				{
+					appliedObject->useWaterOverlay = true;
+					//appliedObject->waterDirectionMax->setY(16);
+					//Change watermax height
+
 					keyPoint->m_isSuccessTriggered = true;
 					//TODO: Fill burette with liquid and detach the funnel form burette
 				}
@@ -750,6 +765,8 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				if (appliedObject->grabbed)
 				{
 					keyPoint->m_isSuccessTriggered = true;
+					//Change watermax height
+
 					//TODO: Titrate liquid into the erlenmeyer
 				}
 				else
@@ -769,6 +786,8 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (contextControl->m_control == controlEnum)
 			{
 				keyPoint->m_isSuccessTriggered = true;
+				//Get watermax height
+
 				//TODO: Show amount of liquid in sign
 			}
 			else
