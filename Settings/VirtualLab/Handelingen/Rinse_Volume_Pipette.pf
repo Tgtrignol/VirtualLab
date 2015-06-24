@@ -15,7 +15,7 @@ Control Joystick-Z GrabRelease
 Control Joystick Move
 //Control Joystick-1 PourWithLiquid
 
-Item Tissue Tissue.obj 0 Table 0 0 -0.1 0 0 0 1.010 1.010 1.010
+Item Tissue Tissue.obj 0 Table 0 0 -0.1 0 0 0 0.5 0.5 0.5 1.0 1.0 1.0 1.0
 Control Joystick-Z GrabRelease
 Control Joystick Move
 Control Joystick-1 Dry
