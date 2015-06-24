@@ -1,6 +1,6 @@
 Name Rinse_Erlenmeyer_Flask
 //				  changeObject waterFromStart watermin watermax anchorpoint location rotation scale optionalColor
-Item Erlenmeyer_flask Erlenmeyer.obj 0 1 0 0 0 0 6 0 Table 0 0 0 0 90 0 0.010 0.010 0.010 0.1 0.3 0.4 0.8
+Item Erlenmeyer_flask Erlenmeyer.obj 0 0 0 0 0 0 6 0 Table 0 0 0 0 90 0 0.010 0.010 0.010 0.1 0.3 0.4 0.8
 Control Joystick-Z GrabRelease
 Control Joystick Move
 
@@ -16,8 +16,8 @@ Control Joystick Move
 Control Joystick-1 Rinse
 
 //Rinse the Erlenmeyer twice with demineralized water
-Procedure Grab_Erlenmeyer GrabRelease Erlenmeyer_flask
-Procedure Grab_Bottle_of_demineralized_water GrabRelease Bottle_of_demineralized_water
+//Procedure Grab_Erlenmeyer GrabRelease Erlenmeyer_flask
+//Procedure Grab_Bottle_of_demineralized_water GrabRelease Bottle_of_demineralized_water
 Procedure Rinse_Erlenmeyer Rinse Bottle_of_demineralized_water Erlenmeyer_flask
 Procedure Empty_Erlenmeyer_in_Sink FlushLiquid Sink Erlenmeyer_flask
 Procedure Rinse_Erlenmeyer Rinse Bottle_of_demineralized_water Erlenmeyer_flask

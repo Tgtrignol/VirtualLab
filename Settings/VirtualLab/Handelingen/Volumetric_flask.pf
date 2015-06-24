@@ -20,8 +20,7 @@ Control Joystick-1 Attach
 Item Volumetric_flask_with_Kurk Maatkolf.obj 1 0 0 0 0 0 14 0 Table 0 0 -0.2 0 0 0 0.010 0.010 0.010 0.1 0.2 0.3 0.8
 Control Joystick-Z GrabRelease
 Control Joystick Move
-Control Joystick-1 Swerve
-Control Joystick-2 Rotate
+Control Joystick-1 Rotate
 
 Item Volumetric_flask MaatkolfNoKurk.obj 0 0 0 0 0 0 14 0 Table 0 0 -0.2 0 0 0 0.010 0.010 0.010 0.1 0.2 0.3 0.8
 Control Joystick-Z GrabRelease
@@ -50,52 +49,54 @@ Control Joystick Move
 Control Joystick-1 Dump
 
 //Rinse the volumetric flask twice with demineralized water
-Procedure Grab_Volumetric_flask GrabRelease Volumetric_flask 
-Procedure Grab_Bottle_of_demineralized_water GrabRelease Bottle_of_demineralized_water 
+//Procedure Grab_Volumetric_flask GrabRelease Volumetric_flask 
+//Procedure Grab_Bottle_of_demineralized_water GrabRelease Bottle_of_demineralized_water 
 Procedure Rinse_Volumetric_flask_with_demineralized_water Rinse Bottle_of_demineralized_water Volumetric_flask
 Procedure Dump_water_in_flask_in_Sink FlushLiquid Sink Volumetric_flask
 Procedure Rinse_Volumetric_flask_with_demineralized_water Rinse Bottle_of_demineralized_water Volumetric_flask
-Procedure Dump_water_in_flask_in_Sink FlushLiquid Volumetric_flask
-Procedure Release_Bottle_of_demineralized_water GrabRelease Bottle_of_demineralized_water
+Procedure Dump_water_in_flask_in_Sink FlushLiquid Sink Volumetric_flask
+//Procedure Release_Bottle_of_demineralized_water GrabRelease Bottle_of_demineralized_water
 
 //Place the funnel on the volumetric flask and 
 //dump the solid from the weighing boat in the volumetric flask
-Procedure Grab_Funnel GrabRelease Funnel
+//Procedure Grab_Funnel GrabRelease Funnel
 Procedure Attach_the_Funnel_on_Volumetric_flask Attach Funnel Volumetric_flask Volumetric_flask_with_Funnel
-Procedure Grab_Weighing_boat GrabRelease Weighing_boat
-Procedure Dump_the_solid_of_the_weighing_boat_into_the_flask Dump Weighing_boat_solid Volumetric_flask Weighing_boat
+//Procedure Grab_Weighing_boat GrabRelease Weighing_boat_solid
+Procedure Dump_the_solid_of_the_weighing_boat_into_the_flask Dump Weighing_boat_solid Volumetric_flask_with_Funnel Weighing_boat
 
 //Rinse the weighing boat and the funnel with demineralized water
-Procedure Release_Weighing_boat GrabRelease Weighing_boat
+//Procedure Release_Weighing_boat GrabRelease Weighing_boat
 Procedure Detach_the_funnel_from_the_flask Detach_Funnel Volumetric_flask_with_Funnel Funnel Volumetric_flask
-Procedure Release_Volumetric_flask GrabRelease Volumetric_flask
-Procedure Grab_Bottle_of_demineralized_water GrabRelease Bottle_of_demineralized_water
+//Procedure Release_Volumetric_flask GrabRelease Volumetric_flask
+//Procedure Grab_Bottle_of_demineralized_water GrabRelease Bottle_of_demineralized_water
 Procedure Rinse_the_Funnel_with_demineralized_water Rinse Bottle_of_demineralized_water Funnel
-Procedure Release_Funnel GrabRelease Funnel
-Procedure Grab_Weighing_boat GrabRelease Weighing_boat
+//Procedure Release_Funnel GrabRelease Funnel
+//Procedure Grab_Weighing_boat GrabRelease Weighing_boat
 Procedure Rinse_the_Weighing_Boat_with_demineralized_water Rinse Bottle_of_demineralized_water Weighing_boat 
-Procedure Release_Weighing_boat GrabRelease Weighing_boat
+//Procedure Release_Weighing_boat GrabRelease Weighing_boat
 
 //Fill the Volumetric flask halfway the scoop
-Procedure Grab_Volumetric_flask GrabRelease Volumetric_flask
+//Procedure Grab_Volumetric_flask GrabRelease Volumetric_flask
 Procedure Fill_the_Volumetric_flask_halfway_the_scoop FillHalfway Bottle_of_demineralized_water Volumetric_flask
 
 //Liquefy the solid until it is liquefied and swerve the Volumetric flask
-Procedure Add_more_water_to_liquefe_the_solid Liquefy Bottle_of_demineralized_water Volumetric_flask
+//Procedure Add_more_water_to_liquefe_the_solid Liquefy Bottle_of_demineralized_water Volumetric_flask
+Procedure Swerve_the_Volumetric_flask Swerve Volumetric_flask
+Procedure Swerve_the_Volumetric_flask Swerve Volumetric_flask
+Procedure Swerve_the_Volumetric_flask Swerve Volumetric_flask
 Procedure Swerve_the_Volumetric_flask Swerve Volumetric_flask
 
 //Fill flask until mark, place a cork and turn the flask 10 times.
 Procedure Fill_the_Volumetric_flask_until_the_mark FillUntilMark Bottle_of_demineralized_water Volumetric_flask
-Procedure Release_Bottle_of_demineralized_water GrabRelease Bottle_of_demineralized_water
-Procedure Grab_Flask_Cork GrabRelease Flask_Cork
-Procedure Place_the_Cork_on_the_Volumetric_flask Cork Volumetric_flask Flask_Cork
-Procedure Rotate_the_Flask Rotate Volumetric_flask
-Procedure Rotate_the_Flask Rotate Volumetric_flask
-Procedure Rotate_the_Flask Rotate Volumetric_flask
-Procedure Rotate_the_Flask Rotate Volumetric_flask
-Procedure Rotate_the_Flask Rotate Volumetric_flask
-Procedure Rotate_the_Flask Rotate Volumetric_flask
-Procedure Rotate_the_Flask Rotate Volumetric_flask
-Procedure Rotate_the_Flask Rotate Volumetric_flask
-Procedure Rotate_the_Flask Rotate Volumetric_flask
-Procedure Rotate_the_Flask Rotate Volumetric_flask
+//Procedure Release_Bottle_of_demineralized_water GrabRelease Bottle_of_demineralized_water
+//Procedure Grab_Flask_Cork GrabRelease Flask_Cork
+Procedure Place_the_Cork_on_the_Volumetric_flask Cork Flask_Cork Volumetric_flask Volumetric_flask_with_Kurk
+Procedure Rotate_the_Flask Rotate Volumetric_flask_with_Kurk
+Procedure Rotate_the_Flask Rotate Volumetric_flask_with_Kurk
+Procedure Rotate_the_Flask Rotate Volumetric_flask_with_Kurk
+Procedure Rotate_the_Flask Rotate Volumetric_flask_with_Kurk
+Procedure Rotate_the_Flask Rotate Volumetric_flask_with_Kurk
+Procedure Rotate_the_Flask Rotate Volumetric_flask_with_Kurk
+Procedure Rotate_the_Flask Rotate Volumetric_flask_with_Kurk
+Procedure Rotate_the_Flask Rotate Volumetric_flask_with_Kurk
+Procedure Rotate_the_Flask Rotate Volumetric_flask_with_Kurk

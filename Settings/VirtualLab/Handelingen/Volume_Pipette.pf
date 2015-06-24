@@ -28,13 +28,13 @@ Control Joystick Move
 
 //Rinsing Volume pipette
 //Take a Beaker and pour it with some liquid
-Procedure Grab_Beaker GrabRelease Beaker
+//Procedure Grab_Beaker GrabRelease Beaker
 //Procedure Pour_Liquid_in_the_Beaker PourWithLiquid Beaker
 
 //Suck the liquid halfway in the Volume Pipette
-Procedure Grab_Volume_Pipette GrabRelease Volume_Pipette
+//Procedure Grab_Volume_Pipette GrabRelease Volume_Pipette
 Procedure Suck_liquid_from_Beaker_with_Volume_Pipette_until_the_pipette_is_half_full SuckLiquid Volume_Pipette Beaker
-Procedure GrabRelease Beaker
+//Procedure GrabRelease Beaker
 
 //Rinse by turning the Volume_Pipette horizontal and rotate a couple of times
 Procedure Turn_the_Volume_pipette_horizontal TurnSideWay Volume_Pipette
@@ -47,14 +47,14 @@ Procedure Turn_the_Volume_pipette_vertical TurnSideWay Volume_Pipette
 Procedure Dump_Liquid_in_Volume_Pipette_in_the_sink FlushLiquid Sink Volume_Pipette
 
 //Dry the volume pipette with a tissue
-Procedure Grab_Tissue GrabRelease Tissue
+//Procedure Grab_Tissue GrabRelease Tissue
 Procedure Dry_the_Volume_pipette_with_the_Tissue Dry Tissue Volume_Pipette
-Procedure Release_Tissue GrabRelease Tissue
+//Procedure Release_Tissue GrabRelease Tissue
 
 //Repeat rinsing one more time
-Procedure Grab_Volume_pipette GrabRelease Volume_Pipette
+//Procedure Grab_Volume_pipette GrabRelease Volume_Pipette
 Procedure Suck_liquid_from_Beaker_with_Volume_Pipette_until_the_pipette_is_half_full SuckLiquid Volume_Pipette Beaker
-Procedure Release_Beaker GrabRelease Beaker
+//Procedure Release_Beaker GrabRelease Beaker
 
 Procedure Turn_the_Volume_pipette_horizontal TurnSideWay Volume_Pipette
 Procedure Rotate_Volume_Pipette Rotate Volume_Pipette
@@ -64,22 +64,22 @@ Procedure Turn_the_Volume_pipette_vertical TurnSideWay Volume_Pipette
 
 Procedure Dump_Liquid_in_Volume_Pipette_in_the_sink FlushLiquid Sink Volume_Pipette
 
-Procedure Grab_Tissue GrabRelease Tissue
+//Procedure Grab_Tissue GrabRelease Tissue
 Procedure Dry_the_Volume_pipette_with_the_Tissue Dry Tissue Volume_Pipette
-Procedure Release_Tissue GrabRelease Tissue
+//Procedure Release_Tissue GrabRelease Tissue
 
 //Real Pipette Procedure
 //Suck liquid above the mark
-Procedure Grab_Beaker GrabRelease Beaker
+//Procedure Grab_Beaker GrabRelease Beaker
 Procedure Suck_liquid_from_Beaker_with_Volume_Pipette_until_the_pipette_is_full SuckLiquid Volume_Pipette Beaker
-Procedure Release_Beaker GrabRelease Beaker
+//Procedure Release_Beaker GrabRelease Beaker
 
 //Dry the Pipette
-Procedure Grab_Tissue GrabRelease Tissue
+//Procedure Grab_Tissue GrabRelease Tissue
 Procedure Dry_the_Volume_pipette_with_the_Tissue Dry Tissue Volume_Pipette
-Procedure Release_Tissue GrabRelease Tissue
+//Procedure Release_Tissue GrabRelease Tissue
 
 //Turn the pipette 45 degrees on the Beaker and flush the liquid until the mark
-Procedure Grab_Beaker GrabRelease Beaker
+//Procedure Grab_Beaker GrabRelease Beaker
 Procedure Turn_the_Volume_pipette_45_Degrees_on_the_beaker Turn45Degree Volume_Pipette
 Procedure Empty_the_Volume_pipette_until_the_mark LowerLiquidUntilMark Volume_Pipette

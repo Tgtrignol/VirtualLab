@@ -15,7 +15,7 @@ void ProcedureManager::init()
 	procedureFileLocations = DSLReader().readProcedureLocationFromFile();
 	if (procedureFileLocations.size() > 0)//Test: instead of menu.
 	{
-		currentProcedureInformation = DSLReader().readProcedureFromFile(procedureFileLocations[1]);
+		currentProcedureInformation = DSLReader().readProcedureFromFile(procedureFileLocations[6]);
 	}
 
 	for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
@@ -84,9 +84,17 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				bool isBreakCalled = false;
 				if (procedure)
-				{
+				{	
 					for each (Control *control in procedureObject->controls)
-					{
+					{			
+						if (control->m_primitive == "GrabRelease" && control->m_control == controlEnum)
+						{
+							contextObject = procedureObject;
+							contextControl = control;
+
+							isBreakCalled = true;
+							break;
+						}
 						if (control->m_primitive == keyPoint->m_primitive)
 						{
 							contextObject = procedureObject;
@@ -139,7 +147,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				}
 			}
 		}
-		else
+		else if (!procedure)
 		{
 			//Code for testing code for changing 2 objects into 1
 			string appliedName;
@@ -165,35 +173,37 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		}
 
 		//Checking and performing control
-		if ((keyPoint->m_primitive == "Rinse" && procedure) || contextControl->m_primitive == "Rinse")
-		{
-			if (contextControl->m_control == controlEnum && appliedObject != NULL)
-			{
-				if (contextObject->grabbed && appliedObject->grabbed)
-				{
-					appliedObject->useWaterOverlay = true;
-					
-					keyPoint->m_isSuccessTriggered = true;
-					//TODO: Rinse water in appliedObject
-				}
-				else
-				{
-					keyPoint->m_isSuccessTriggered = false;
-					//TODO: Show error sign
-				}
-			}
-			else
-			{
-				keyPoint->m_isSuccessTriggered = false;
-				//TODO: Show error sign
-			}
-		}
-		else if ((keyPoint->m_primitive == "GrabRelease" && procedure) || contextControl->m_primitive == "GrabRelease")
+		if (contextControl->m_primitive == "GrabRelease")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
-				keyPoint->m_isSuccessTriggered = true;
-				if (!contextObject->grabbed)
+				bool canPickup = false;
+				//Check if a hand is empty
+				bool leftHandEmpty = true;
+				bool rightHandEmpty = true;
+				for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
+				{
+					if (procedureObject->grabbed)
+					{
+						if (procedureObject->LeftRight == "Right")
+							rightHandEmpty = false;
+						else if (procedureObject->LeftRight == "Left")
+							leftHandEmpty = false;
+					}
+				}
+				
+				if (RightLeft == "Right")
+				{
+					if (rightHandEmpty)
+						canPickup = true;
+				}
+				else if (RightLeft == "Left")
+				{
+					if (leftHandEmpty)
+						canPickup = true;
+				}
+
+				if (!contextObject->grabbed && canPickup)
 				{
 					contextObject->grabbed = true;
 					if (selectedHydraLeft)
@@ -214,13 +224,51 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
+		else if ((keyPoint->m_primitive == "Rinse" && procedure) || contextControl->m_primitive == "Rinse")
+		{
+			if (contextControl->m_control == controlEnum && appliedObject != NULL)
+			{
+				if (contextObject->grabbed && appliedObject->grabbed)
+				{
+					
+					//ContextObjects: Bottle_of_demineralized_water, Beaker
+					//AppliedObjects: Volumetric_flask, Funnel(Not visible), Weighing_Boat(Not visible), Erlenmeyer_flask, Burette_with_Funnel
+					if (contextObject->name == "Bottle_of_demineralized_water")
+					{
+						appliedObject->useWaterOverlay = true;
+					}
+					else if (contextObject->name == "Beaker")
+					{
+						appliedObject->useWaterOverlay = true;
+					}
+					
+					if (appliedObject->name == "Funnel" || appliedObject->name == "Weighing_boat")
+					{
+						appliedObject->useWaterOverlay = false;
+					}
+					
+					
+					keyPoint->m_isSuccessTriggered = true;
+					//TODO: Rinse water in appliedObject
+				}
+				else
+				{
+					keyPoint->m_isSuccessTriggered = false;
+					//TODO: Show error sign
+				}
+			}
+			else
+			{
+				keyPoint->m_isSuccessTriggered = false;
+				//TODO: Show error sign
+			}
+		}
 		else if ((keyPoint->m_primitive == "FlushLiquid" && procedure) || contextControl->m_primitive == "FlushLiquid")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
 				if (appliedObject->grabbed)
 				{
-					//TODO Check if hydra is near sink
 					appliedObject->useWaterOverlay = false;
 					keyPoint->m_isSuccessTriggered = true;
 				}
@@ -242,11 +290,14 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
+					//AppliedObject: Volumetric_flask
+					//Max height = 14
+					//Half = 7
+
 					appliedObject->useWaterOverlay = true;
 					appliedObject->waterDirectionMax->setY(appliedObject->waterDirectionMax->y() / 2);
 
 					keyPoint->m_isSuccessTriggered = true;
-					//TODO: Indicate volumetric flask is halfway full
 				}
 				else
 				{
@@ -266,13 +317,15 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
+					//AppliedObject: Volumetric_flask
+					//Max height = 14
+
 					appliedObject->useWaterOverlay = true;
 
 					//With 14 is looks like the water is at the mark
 					appliedObject->waterDirectionMax->setY(14);
 
 					keyPoint->m_isSuccessTriggered = true;
-					//TODO: Indicate volumetric flask is full
 				}
 				else
 				{
@@ -288,14 +341,16 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		}
 		else if ((keyPoint->m_primitive == "Liquefy"&& procedure) || contextControl->m_primitive == "Liquefy")
 		{
+			//CONTROL NOT USED
 			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
-					appliedObject->useWaterOverlay = true;
+					//AppliedObject: Volumetric_flask
+					//appliedObject->useWaterOverlay = true;
 
 					//Make the water a little bit higher
-					appliedObject->waterDirectionMax->setY(appliedObject->waterDirectionMax->y() + 1);
+					//appliedObject->waterDirectionMax->setY(appliedObject->waterDirectionMax->y() + 1);
 					keyPoint->m_isSuccessTriggered = true;
 					//TODO: Indicate flask with some liquid in it
 				}
@@ -357,6 +412,8 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed)
 				{
+					//ContextObject: Volumetric_flask
+					
 					contextObject->rotate("Y", 90);
 					if (contextObject->rotation->x() == 45)
 						anglePositive = false;
@@ -389,6 +446,8 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed)
 				{
+					//ContextObject: Volume_pipette, Volumetric_flask
+
 					//contextObject->rotate("X", 90);
 					contextObject->rotate("X", 120);
 					//Rotate object vertical 360 degrees: Perform 3 times for 360
@@ -424,7 +483,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 
 					for each (ProcedureObject* prob in currentProcedureInformation->m_procedureObjects)
 					{
-						if (prob->LeftRight == checkOtherHand)
+						if (prob->grabbed && prob->LeftRight == checkOtherHand)
 							otherHandEmpty = false;
 					}
 
@@ -483,6 +542,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 					changingObject->isChangeObject = false;
 					changingObject->origin = appliedObject->origin;
 					changingObject->LeftRight = appliedObject->LeftRight;
+					changingObject->useWaterOverlay = appliedObject->useWaterOverlay;
 					changingObject->grabbed = true;
 
 					//Cork
@@ -554,6 +614,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed)
 				{
+					//ContextObject: Volume_Pipette
 					contextObject->useWaterOverlay = true;
 
 					switch (contextObject->controlStep)
@@ -709,9 +770,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		{
 			if (contextControl->m_control == controlEnum)
 			{
-				//TODO: Check if hydra is near burette
-				keyPoint->m_isSuccessTriggered = true;
-				
 				switch (contextObject->controlStep)
 				{
 				case 0:
@@ -727,6 +785,8 @@ void ProcedureManager::update(ControlEnum controlEnum)
 					//TODO: Liquid stops going out of burette
 					break;
 				}
+
+				keyPoint->m_isSuccessTriggered = true;
 			}
 			else
 			{
@@ -740,6 +800,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
+					//AppliedObject: Burette
 					//Add some liquid in the buret
 					appliedObject->waterDirectionMax->setY(appliedObject->waterDirectionMin->getY() + 40);
 					
@@ -766,6 +827,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed && changingObject != NULL)
 				{
+					//AppliedObject: Burette
 					appliedObject->useWaterOverlay = true;
 					//Max height buret: 240 - 60 = 180
 					//Max height buret with funnel: 219- 39 = 180
@@ -794,6 +856,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (appliedObject->grabbed)
 				{
+					//ContextObject: Burette
 					appliedObject->useWaterOverlay = true;
 					appliedObject->waterDirectionMax->setY(appliedObject->waterDirectionMax->y() - 20);
 
@@ -818,11 +881,11 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		{
 			if (contextControl->m_control == controlEnum)
 			{
-				keyPoint->m_isSuccessTriggered = true;
+				//ContextObject: Burette
 				int amount = (appliedObject->waterDirectionMax->getY() - appliedObject->waterDirectionMin->getY());
-				//Get watermax height
 
-				//TODO: Show amount of liquid in sign
+				//Get watermax height
+				keyPoint->m_isSuccessTriggered = true;
 			}
 			else
 			{
