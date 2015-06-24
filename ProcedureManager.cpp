@@ -15,7 +15,7 @@ void ProcedureManager::init()
 	procedureFileLocations = DSLReader().readProcedureLocationFromFile();
 	if (procedureFileLocations.size() > 0)//Test: instead of menu.
 	{
-		currentProcedureInformation = DSLReader().readProcedureFromFile(procedureFileLocations[3]);
+		currentProcedureInformation = DSLReader().readProcedureFromFile(procedureFileLocations[2]);
 	}
 
 	for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
@@ -86,7 +86,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				if (procedure)
 				{	
 					for each (Control *control in procedureObject->controls)
-					{			
+					{
 						if (control->m_primitive == "GrabRelease" && control->m_control == controlEnum)
 						{
 							contextObject = procedureObject;
@@ -95,13 +95,22 @@ void ProcedureManager::update(ControlEnum controlEnum)
 							isBreakCalled = true;
 							break;
 						}
-						if (control->m_primitive == keyPoint->m_primitive)
-						{
-							contextObject = procedureObject;
-							contextControl = control;
 
-							isBreakCalled = true;
-							break;
+						else
+						{
+							bool isKeyObject = false;
+							std::string objectName = *keyPoint->m_params[0];
+							if (objectName == procedureObject->name)
+								isKeyObject = true;
+
+							if (control->m_primitive == keyPoint->m_primitive && isKeyObject)
+							{
+								contextObject = procedureObject;
+								contextControl = control;
+
+								isBreakCalled = true;
+								break;
+							}
 						}
 					}
 				}
@@ -242,11 +251,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 						appliedObject->useWaterOverlay = true;
 					}
 					
-					if (appliedObject->name == "Funnel" || appliedObject->name == "Weighing_boat")
-					{
-						appliedObject->useWaterOverlay = false;
-					}
-					
 					
 					keyPoint->m_isSuccessTriggered = true;
 					//TODO: Rinse water in appliedObject
@@ -265,7 +269,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		}
 		else if ((keyPoint->m_primitive == "FlushLiquid" && procedure) || contextControl->m_primitive == "FlushLiquid")
 		{
-			if (contextControl->m_control == controlEnum)
+			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
 				if (appliedObject->grabbed)
 				{
@@ -625,9 +629,12 @@ void ProcedureManager::update(ControlEnum controlEnum)
 						contextObject->controlStep++;
 						break;
 					case 1 :
+						contextObject->controlStep++;
+						break;
+					case 2:
 						//Until mark = 9.3
 						contextObject->waterDirectionMax->setY(contextObject->waterDirectionMax->y() + 4);
-						contextObject->controlStep++;
+						contextObject->controlStep = 0;
 						break;
 					}
 					keyPoint->m_isSuccessTriggered = true;
@@ -704,8 +711,21 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed && appliedObject-> grabbed)
 				{
+					//Make tissue wet
+					switch (contextObject->controlStep)
+					{
+					case 0:
+						contextObject->controlStep++;
+						contextObject->useWaterOverlay = true;
+						break;
+					case 1:
+						contextObject->waterDirectionMax->setY(contextObject->waterDirectionMax->y() + 0.02);
+						break;
+					case 2:
+						contextObject->controlStep++;
+						break;
+					}
 					keyPoint->m_isSuccessTriggered = true;
-					//TODO: Dry appliedObject with contextObject
 				}
 				else
 				{
@@ -750,7 +770,16 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
-					appliedObject->useWaterOverlay = false;
+					if (contextObject->controlStep == 0)
+					{
+						contextObject->controlStep++;
+						contextObject->waterDirectionMax->setY(contextObject->waterDirectionMax->y() - 1);
+					}
+					else if (contextObject->controlStep == 1)
+					{
+						contextObject->useWaterOverlay = false;
+						appliedObject->useWaterOverlay = true;
+					}
 					keyPoint->m_isSuccessTriggered = true;
 					//TODO: Liquid goes out of volume pipette
 				}

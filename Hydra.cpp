@@ -542,7 +542,7 @@ std::string Hydra::checkButtons()
 		{
 			hydraPressed = true;
 			GameManager::getInstance()->scene->procedureManager->RightLeft = "Right";
-			return "Joystick-C|Right";
+			return "Joystick-C";
 		}
 	}
 	else if (hydraLeftTrigger.getData() == DigitalState::TOGGLE_ON || hydraLeftTrigger.getData() == DigitalState::ON)
