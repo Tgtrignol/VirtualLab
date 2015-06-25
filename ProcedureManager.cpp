@@ -15,7 +15,7 @@ void ProcedureManager::init()
 	procedureFileLocations = DSLReader().readProcedureLocationFromFile();
 	if (procedureFileLocations.size() > 0)//Test: instead of menu.
 	{
-		currentProcedureInformation = DSLReader().readProcedureFromFile(procedureFileLocations[2]);
+		currentProcedureInformation = DSLReader().readProcedureFromFile(procedureFileLocations[4]);
 	}
 
 	for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
@@ -242,18 +242,19 @@ void ProcedureManager::update(ControlEnum controlEnum)
 					
 					//ContextObjects: Bottle_of_demineralized_water, Beaker
 					//AppliedObjects: Volumetric_flask, Funnel(Not visible), Weighing_Boat(Not visible), Erlenmeyer_flask, Burette_with_Funnel
-					if (contextObject->name == "Bottle_of_demineralized_water")
-					{
-						appliedObject->useWaterOverlay = true;
-					}
-					else if (contextObject->name == "Beaker")
-					{
-						appliedObject->useWaterOverlay = true;
-					}
+					appliedObject->useWaterOverlay = true;
 					
 					
 					keyPoint->m_isSuccessTriggered = true;
 					//TODO: Rinse water in appliedObject
+				}
+				else if (contextObject->grabbed && appliedObject->name == "Burette_with_Funnel")
+				{				
+					appliedObject->useWaterOverlay = true;
+					appliedObject->waterDirectionMax->setY(appliedObject->waterDirectionMax->y() + 20);
+					contextObject->useWaterOverlay = false;
+
+					keyPoint->m_isSuccessTriggered = true;
 				}
 				else
 				{
@@ -394,7 +395,26 @@ void ProcedureManager::update(ControlEnum controlEnum)
 					appliedObject->LeftRight = "None";
 					appliedObject->deleteRigidBodyFromWorld();
 
-					changingObjectTest = true;
+					//changingObjectTest = true;
+
+					keyPoint->m_isSuccessTriggered = true;
+				}
+				else if (contextObject->grabbed && appliedObject->name == "Burette" && changingObject != NULL)
+				{
+					//TODO: Change appliedObject into changingObject and dont show the Funnel anymore
+
+					changingObject->isChangeObject = false;
+
+					//Funnel
+					contextObject->isChangeObject = true;
+					contextObject->grabbed = false;
+					contextObject->LeftRight = "None";
+					contextObject->deleteRigidBodyFromWorld();
+
+					appliedObject->isChangeObject = true;
+					appliedObject->deleteRigidBodyFromWorld();
+
+					//changingObjectTest = true;
 
 					keyPoint->m_isSuccessTriggered = true;
 				}
@@ -499,7 +519,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 								appliedObject = procedureObject;
 						}
 						
-						//TODO: Change contextObject back into 2 object, the funnel and changingObject
 						changingObject->isChangeObject = false;
 						changingObject->origin = contextObject->origin;
 						changingObject->LeftRight = contextObject->LeftRight;
@@ -520,6 +539,48 @@ void ProcedureManager::update(ControlEnum controlEnum)
 					else
 					{
 						//TODO: Show error sign
+					}
+				}
+				else if (contextObject->name == "Burette_with_Funnel" && changingObject != NULL)
+				{
+					bool rightEmpty = true;
+					bool leftEmpty = true;
+					for each (ProcedureObject* prob in currentProcedureInformation->m_procedureObjects)
+					{
+						if (prob->grabbed && prob->LeftRight == "Right")
+							rightEmpty = false;
+						else if (prob->grabbed && prob->LeftRight == "Left")
+							leftEmpty = false;
+					}
+
+					if (rightEmpty || leftEmpty)
+					{
+						for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
+						{
+							if (procedureObject->name == "Funnel")
+								appliedObject = procedureObject;
+						}
+
+						changingObject->isChangeObject = false;
+						changingObject->origin = contextObject->origin;
+						changingObject->useWaterOverlay = true;
+
+						contextObject->isChangeObject = true;
+						contextObject->deleteRigidBodyFromWorld();
+
+						appliedObject->isChangeObject = false;
+						appliedObject->grabbed = true;
+
+						if (rightEmpty)
+						{
+							appliedObject->LeftRight = "Right";
+						}
+						else if (leftEmpty)
+						{
+							appliedObject->LeftRight = "Left";
+						}
+
+						keyPoint->m_isSuccessTriggered = true;
 					}
 				}
 				else
@@ -797,21 +858,24 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		}
 		else if ((keyPoint->m_primitive == "OpenCloseTap"&& procedure) || contextControl->m_primitive == "OpenCloseTap")
 		{
-			if (contextControl->m_control == controlEnum)
+			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
 				switch (contextObject->controlStep)
 				{
 				case 0:
-					//Open the buret
+					//Open the buret, liquid goes out into wastebeaker
 					contextObject->controlStep = 1;
 					contextObject->useWaterOverlay = false;
-					//TODO: Liquid goes out of burette
+					appliedObject->useWaterOverlay = true;
+					if (contextObject->waterDirectionMax->y() > 39)
+						appliedObject->waterDirectionMax->setY(appliedObject->waterDirectionMax->y() + 2);
 					break;
 				case 1:
 					//Close the buret
 					contextObject->controlStep = 0;
+
+					contextObject->waterDirectionMax->setY(contextObject->waterDirectionMin->y());
 					contextObject->useWaterOverlay = true;
-					//TODO: Liquid stops going out of burette
 					break;
 				}
 
@@ -829,14 +893,10 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
-					//AppliedObject: Burette
-					//Add some liquid in the buret
-					appliedObject->waterDirectionMax->setY(appliedObject->waterDirectionMin->getY() + 40);
-					
+					//AppliedObject: Beaker
+					//Add some liquid in the beaker
+					appliedObject->useWaterOverlay = true;		
 					keyPoint->m_isSuccessTriggered = true;
-					//Change watermax height
-
-					//TODO: Liquid goes into appliedObject
 				}
 				else
 				{
@@ -854,14 +914,14 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		{
 			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
-				if (contextObject->grabbed && appliedObject->grabbed && changingObject != NULL)
+				if (contextObject->grabbed)
 				{
 					//AppliedObject: Burette
 					appliedObject->useWaterOverlay = true;
 					//Max height buret: 240 - 60 = 180
-					//Max height buret with funnel: 219- 39 = 180
+					//Max height buret with funnel: 159- 39 = 120
 
-					appliedObject->waterDirectionMax->setY(219);
+					appliedObject->waterDirectionMax->setY(159);
 					//Change watermax height
 
 					keyPoint->m_isSuccessTriggered = true;
@@ -886,9 +946,11 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				if (appliedObject->grabbed)
 				{
 					//ContextObject: Burette
-					appliedObject->useWaterOverlay = true;
-					appliedObject->waterDirectionMax->setY(appliedObject->waterDirectionMax->y() - 20);
+					contextObject->useWaterOverlay = true;
+					contextObject->waterDirectionMax->setY(contextObject->waterDirectionMax->y() - 20);
 
+					appliedObject->useWaterOverlay = true;
+					appliedObject->waterDirectionMax->setY(appliedObject->waterDirectionMax->y() + 0.5);
 					keyPoint->m_isSuccessTriggered = true;
 					//Change watermax height
 
@@ -911,7 +973,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (contextControl->m_control == controlEnum)
 			{
 				//ContextObject: Burette
-				int amount = (appliedObject->waterDirectionMax->getY() - appliedObject->waterDirectionMin->getY());
+				int amount = (contextObject->waterDirectionMax->getY() - contextObject->waterDirectionMin->getY());
 
 				//Get watermax height
 				keyPoint->m_isSuccessTriggered = true;
