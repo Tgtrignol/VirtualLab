@@ -18,6 +18,7 @@ class StaticLabEnvironment;
 class ProcedureManager;
 class Notes;
 class HUD;
+class Menu;
 
 enum CollisionState
 {
@@ -76,6 +77,7 @@ public:
 	ProcedureManager *procedureManager;
 	Notes *notes;
 	HUD *hud;
+	Menu *menu;
 
 	Scene();
 	~Scene();

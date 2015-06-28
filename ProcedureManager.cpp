@@ -1,6 +1,5 @@
 #include "ProcedureManager.h"
 #include "ControlEnum.h"
-#include "DSLReader.h"
 #include "KeyPoint.h"
 #include "ProcedureInformation.h"
 #include "ProcedureObject.h"
@@ -10,12 +9,18 @@
 #include "hud.h"
 #include <iostream>
 
+ProcedureManager* ProcedureManager::getInstance()
+{
+	static ProcedureManager* pProcedureManager = new ProcedureManager();
+	return pProcedureManager;
+}
+
 void ProcedureManager::init()
 {
-	procedureFileLocations = DSLReader().readProcedureLocationFromFile();
+	procedureFileLocations = dslReader->readProcedureLocationFromFile();
 	if (procedureFileLocations.size() > 0)//Test: instead of menu.
 	{
-		currentProcedureInformation = DSLReader().readProcedureFromFile(procedureFileLocations[6]);
+		currentProcedureInformation = dslReader->readProcedureFromFile(procedureFileLocations[6]);
 	}
 
 	for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)

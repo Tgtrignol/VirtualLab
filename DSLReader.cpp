@@ -89,6 +89,9 @@ ProcedureInformation *DSLReader::readProcedureFromFile(std::string procedureFile
 			{
 				std::replace(parts[1].begin(), parts[1].end(), '_', ' ');
 				procedureName = parts[1];
+
+				menuItem = parts[1];
+
 			}
 			else
 			if (parts[0] == "Item")

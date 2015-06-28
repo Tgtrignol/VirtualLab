@@ -5,6 +5,7 @@
 #include <string>
 #include <btBulletCollisionCommon.h>
 #include <btBulletDynamicsCommon.h>
+#include "DSLReader.h"
 
 enum ControlEnum;
 struct ProcedureInformation;
@@ -15,15 +16,18 @@ public:
 	void init();
 	void draw();
 	void update(ControlEnum controlEnum);
+	static ProcedureManager* getInstance();
+
+	ProcedureObject *righternSelectedProcedureObject;
+	ProcedureObject *lefternSelectedProcedureObject;
+	std::string RightLeft = "None";
+	DSLReader* dslReader = new DSLReader();
+
 private:
 	std::vector<std::string> procedureFileLocations;
 	ProcedureInformation *currentProcedureInformation;
 	bool procedure = false;
 	bool anglePositive = true;
-public:
-	ProcedureObject *righternSelectedProcedureObject;
-	ProcedureObject *lefternSelectedProcedureObject;
-	std::string RightLeft = "None";
 };
 
 #endif

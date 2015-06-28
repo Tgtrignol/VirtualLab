@@ -2,7 +2,6 @@
 #define MENU_H
 
 #include <glut\glut.h>
-#include "Notes.h"
 
 class Menu {
 
@@ -13,10 +12,8 @@ public:
 
 	void draw();
 	void init();
-	void drawButtons();
+	void drawButtons(int, int, int);
 	void selectMenuItem();
-
-	Notes* notes = new Notes();
 
 };
 

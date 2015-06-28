@@ -12,6 +12,8 @@ class DSLReader{
 public:
 	std::vector<std::string> readProcedureLocationFromFile();
 	ProcedureInformation *readProcedureFromFile(std::string procedureFileLocation);
+	std::string menuItem;
+
 };
 
 #endif

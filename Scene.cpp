@@ -14,6 +14,7 @@
 #include "ProcedureManager.h"
 #include "ControlEnum.h"
 #include "HUD.h"
+#include "Menu.h"
 
 #include <iostream>
 #include <VrLib\Application.h>
@@ -233,6 +234,10 @@ void Scene::draw(DrawMode drawMode)
 		notes->draw();
 	if (hud != nullptr)
 		hud->draw();
+	//if (menu != nullptr)
+
+		menu->draw();
+
 	procedureManager->draw();
 
 	glPopMatrix();
