@@ -60,8 +60,3 @@ void GameManager::stop()
 	delete menu;
 	Logger::destroyLogger();
 }
-
-void startScene(int procedure)
-{
-	//Start the scene with the chosen procedure from the menu
-}

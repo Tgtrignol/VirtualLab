@@ -27,7 +27,6 @@ public:
 	
 	void stop();
 
-	void startScene(int procedure);
 };
 
 #endif

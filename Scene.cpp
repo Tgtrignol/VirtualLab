@@ -239,3 +239,8 @@ void Scene::draw(DrawMode drawMode)
 
 	glDisable(GL_MULTISAMPLE_ARB);
 }
+
+void Scene::startProcedure()
+{
+	//Do init for ProcedureManager here and enable its update
+}

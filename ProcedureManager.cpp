@@ -13,7 +13,7 @@
 
 void ProcedureManager::init()
 {
-	procedureFileLocations = DSLReader().readProcedureLocationFromFile();
+	procedureFileLocations = DSLReader().readProcedureLocationFromFile(); //Move this to menu
 	if (procedureFileLocations.size() > 0)//Test: instead of menu.
 	{
 		currentProcedureInformation = DSLReader().readProcedureFromFile(procedureFileLocations[6]);

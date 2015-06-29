@@ -1,6 +1,9 @@
 #include <iostream>
 #include "Menu.h"
 #include "DSLReader.h"
+#include "Gamemanager.h"
+#include "Scene.h"
+#include "ProcedureManager.h"
 
 Menu::Menu() {
 
@@ -25,7 +28,7 @@ void Menu::drawButtons() {
 
 void Menu::selectMenuItem() {
 
-
+	//GameManager::getInstance()->scene->procedureManager->procedureFile = chosenFile;
 
 }
 

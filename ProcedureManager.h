@@ -25,6 +25,7 @@ public:
 	ProcedureObject *righternSelectedProcedureObject;
 	ProcedureObject *lefternSelectedProcedureObject;
 	std::string RightLeft = "None";
+	std::string procedureFile = "";
 };
 
 #endif
