@@ -9,7 +9,6 @@ class Menu {
 
 private:
 	std::vector<std::string> procedureFileLocations;
-	std::vector<std::string> procedureNames;
 public:
 	Menu();
 
@@ -21,6 +20,7 @@ public:
 	void selectMenuItem();
 
 	Notes* notes = new Notes();
+	std::vector<std::string> procedureNames;
 
 };
 

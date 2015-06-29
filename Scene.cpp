@@ -14,6 +14,7 @@
 #include "ProcedureManager.h"
 #include "ControlEnum.h"
 #include "HUD.h"
+#include "Menu.h"
 
 #include <iostream>
 #include <VrLib\Application.h>
@@ -230,7 +231,10 @@ void Scene::draw(DrawMode drawMode)
 	//f->draw();
 	lab->draw();
 	if (notes != nullptr)
+	{
 		notes->draw();
+		//notes->drawList(GameManager::getInstance()->menu->procedureNames);
+	}
 	if (hud != nullptr)
 		hud->draw();
 	procedureManager->draw();
