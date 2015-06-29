@@ -1,9 +1,9 @@
 Name Rinse_Burette
 
-Item Burette Buret.obj 0 Table 0 0 -0.4 0 0 0 0.003 0.003 0.003 0.1 0.3 0.4 0.2
+Item Burette Buret.obj 0 0 0 60 0 0 240 0 Table 0 0 -0.4 0 0 0 0.003 0.003 0.003 0.1 0.3 0.4 0.8
 Control Joystick-1 OpenCloseTap
 
-Item Burette_with_Funnel Buret_en_Trechter.obj 1 Table 0 0 -0.4 0 0 0 0.003 0.003 0.003 0.1 0.3 0.4 0.2
+Item Burette_with_Funnel Buret_en_Trechter.obj 1 0 0 39 0 0 59 0 Table -0.055 0 -0.53 0 0 0 0.0045 0.0045 0.0045 0.1 0.3 0.4 0.8
 Control Joystick-1 OpenCloseTap
 
 Item Funnel Trechter.obj 0 Table 0 0 0.6 0 0 0 0.2 0.2 0.2 1.0 1.0 1.0 1.0
@@ -16,41 +16,43 @@ Control Joystick-Z GrabRelease
 Control Joystick Move
 Control Joystick-1 Rinse
 
-Item Beaker_With_Liquid Bekerglas.obj 0 Table 0 0 0.4 0 0 0 0.010 0.010 0.010 0.1 0.3 0.4 0.2
+Item Beaker_With_Liquid Bekerglas.obj 0 1 0 0 0 0 6 0 Table 0 0 0.4 0 90 0 0.010 0.010 0.010 0.1 0.3 0.4 0.8
 Control Joystick-Z GrabRelease
 Control Joystick Move
 Control Joystick-1 Pour10Ml 
 Control Joystick-2 Fill
 
-Item Beaker Bekerglas.obj 0 Table 0 0 0.2 0 0 0 0.010 0.010 0.010 0.1 0.3 0.4 0.2
+Item Beaker Bekerglas.obj 0 0 0 0 0 0 4 0 Table 0 0 0.2 0 90 0 0.010 0.010 0.010 0.1 0.3 0.4 0.8
 Control Joystick-Z GrabRelease
 Control Joystick Move
 Control Joystick-1 Rinse 
 
-Item WasteBeaker Bekerglas.obj 0 Table 0 0 0.0 0 0 0 0.010 0.010 0.010 0.1 0.3 0.4 0.2
-Control Joystick-Z GrabRelease
-Control Joystick Move
+Item WasteBeaker Bekerglas.obj 0 0 0 0 0 0 1 0 Table 0.06 0 -0.57 0 90 0 0.010 0.010 0.010 0.1 0.3 0.4 0.8
+//Control Joystick-Z GrabRelease
+//Control Joystick Move
 
 //Rinse the burette twice with demineralized water
-Procedure Grab_the_Waste_Beaker GrabRelease WasteBeaker
-Procedure Release_Beaker_beneath_the_tap_of_the_Burette GrabRelease WasteBeaker
-Procedure Grab_Funnel GrabRelease Funnel
+//Procedure Grab_the_Waste_Beaker GrabRelease WasteBeaker
+//Procedure Release_Beaker_beneath_the_tap_of_the_Burette GrabRelease WasteBeaker
+//Procedure Grab_Funnel GrabRelease Funnel
 Procedure Attach_the_Funnel_to_the_Burette Attach Funnel Burette Burette_with_Funnel
-Procedure Grab_Bottle_of_demineralized_water GrabRelease Bottle_of_demineralized_water
-Procedure Open_the_tap OpenCloseTap Burette_with_Funnel
+//Procedure Grab_Bottle_of_demineralized_water GrabRelease Bottle_of_demineralized_water
 Procedure Rinse_theBurette_with_demineralized_water Rinse Bottle_of_demineralized_water Burette_with_Funnel
 Procedure Rinse_theBurette_with_demineralized_water Rinse Bottle_of_demineralized_water Burette_with_Funnel
-Procedure Release_Bottle_of_demineralized_water GrabRelease Bottle_of_demineralized_water
+Procedure Open_the_tap OpenCloseTap Burette_with_Funnel WasteBeaker
+Procedure Close_the_tap_of_the_Burette OpenCloseTap Burette_with_Funnel WasteBeaker
+//Procedure Release_Bottle_of_demineralized_water GrabRelease Bottle_of_demineralized_water
 
 //Rinse the burette twice with the titrate liquid
-Procedure Grab_the_empty_Beaker GrabRelease Beaker 
-Procedure Grab_the_Beaker_with_liquid GrabRelease Beaker_With_Liquid
+//Procedure Grab_the_empty_Beaker GrabRelease Beaker 
+//Procedure Grab_the_Beaker_with_liquid GrabRelease Beaker_With_Liquid
 Procedure Pour_10_milliliter_into_the_empty_Beaker Pour10Ml Beaker_With_Liquid Beaker
 Procedure Rinse_the_Burette_by_pouring_the_liquid_from_the_10_milliliter_Beaker Rinse Beaker Burette_with_Funnel
 Procedure Pour_10_milliliter_into_the_empty_Beaker Pour10Ml Beaker_With_Liquid Beaker
 Procedure Rinse_the_Burette_by_pouring_the_liquid_from_the_10_milliliter_Beaker Rinse Beaker Burette_with_Funnel
-Procedure Release_Beaker GrabRelease Beaker
+Procedure Open_the_tap OpenCloseTap Burette_with_Funnel WasteBeaker
+//Procedure Release_Beaker GrabRelease Beaker
 
 //Fill the burette with the titrate liquid
-Procedure Close_the_tap_of_the_Burette OpenCloseTap Burette_with_Funnel
-Procedure Fill_the_Burette_with_the_Beaker_of_liquid Fill Beaker_With_Liquid Burette_with_Funnel Burette
+Procedure Close_the_tap_of_the_Burette OpenCloseTap Burette_with_Funnel WasteBeaker
+Procedure Fill_the_Burette_with_the_Beaker_of_liquid Fill Beaker_With_Liquid Burette_with_Funnel

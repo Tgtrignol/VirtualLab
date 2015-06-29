@@ -31,15 +31,19 @@ public:
 	std::vector<Control *> controls;
 	std::string fileName;
 	std::string name;
+
+	//ItemInfo
 	bool grabbed = false;
 	std::string LeftRight = "None";
-	bool closed = true;
+	int controlStep = 0;
+
+	//ObjectInfo
 	btVector3 *origin;
 	bool initRigidbodies = false;
 	btVector3 *rotation;
 	btVector3 *scale;
 	btVector4 *color;
-	bool changeObject;
+	bool isChangeObject;
 	bool useColorInsteadOfTexture = false;
 	OriginAnchor originAnchor;
 	btVector3 *waterDirectionMin;
@@ -51,6 +55,7 @@ public:
 	void draw();
 	void update();
 	void rotate(std::string direction, int degrees);
+	void deleteRigidBodyFromWorld();
 };
 
 #endif

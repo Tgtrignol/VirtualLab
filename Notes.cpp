@@ -54,7 +54,8 @@ void Notes::drawBoardTxt() {
 
 void Notes::draw()
 {
-
+	if (errorText != "")
+		drawNotes(errorText.data(), errorText.length(), 200, 300, 0);
 }
 
 void Notes::init()

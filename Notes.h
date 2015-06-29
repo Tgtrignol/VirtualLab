@@ -14,6 +14,7 @@ public:
 	void drawBoardTxt();
 	void drawButtonTxt();
 	std::string buttonText;
+	std::string errorText = "";
 
 private:
 	ProcedureInformation *m_pProcedureInformation;

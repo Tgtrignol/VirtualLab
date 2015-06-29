@@ -197,3 +197,9 @@ void ProcedureObject::rotate(std::string direction, int degrees)
 	pObjModel->rigidBody->setCenterOfMassTransform(transRig);
 	pObjModel->rigidBody->getMotionState()->setWorldTransform(transOb);
 }
+
+void ProcedureObject::deleteRigidBodyFromWorld()
+{
+	GameManager::getInstance()->scene->world->removeRigidBody(pObjModel->rigidBody);
+	initRigidbodies = false;
+}

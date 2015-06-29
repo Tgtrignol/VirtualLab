@@ -226,8 +226,8 @@ void Hydra::update()
 	{
 		if ((!initRigidbodies) && hydraEnabled)
 		{
-			GameManager::getInstance()->scene->world->addRigidBody(rightModel->rigidBody);
-			GameManager::getInstance()->scene->world->addRigidBody(leftModel->rigidBody);
+			//GameManager::getInstance()->scene->world->addRigidBody(rightModel->rigidBody);
+			//GameManager::getInstance()->scene->world->addRigidBody(leftModel->rigidBody);
 			initRigidbodies = true;
 		}
 
@@ -542,7 +542,7 @@ std::string Hydra::checkButtons()
 		{
 			hydraPressed = true;
 			GameManager::getInstance()->scene->procedureManager->RightLeft = "Right";
-			return "Joystick-C|Right";
+			return "Joystick-C";
 		}
 	}
 	else if (hydraLeftTrigger.getData() == DigitalState::TOGGLE_ON || hydraLeftTrigger.getData() == DigitalState::ON)

@@ -26,8 +26,10 @@ public:
 private:
 	std::vector<std::string> procedureFileLocations;
 	ProcedureInformation *currentProcedureInformation;
-	bool procedure = false;
+	bool procedure = true;
 	bool anglePositive = true;
+	bool changingObjectTest = false;
+
 };
 
 #endif

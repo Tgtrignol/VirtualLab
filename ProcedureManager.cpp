@@ -6,6 +6,7 @@
 #include "Control.h"
 #include "GameManager.h"
 #include "Scene.h"
+#include "Notes.h"
 #include "hud.h"
 #include <iostream>
 
@@ -25,7 +26,6 @@ void ProcedureManager::init()
 
 	for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
 	{
-		if (!procedureObject->changeObject)
 			procedureObject->init();
 	}
 }
@@ -34,7 +34,7 @@ void ProcedureManager::draw()
 {
 	for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
 	{
-		if (!procedureObject->changeObject)
+		if (!procedureObject->isChangeObject)
 			procedureObject->draw();
 	}
 }
@@ -43,7 +43,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 {
 	for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
 	{
-		if (!procedureObject->changeObject)
+		if (!procedureObject->isChangeObject)
 			procedureObject->update();
 	}
 
@@ -86,21 +86,46 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				objectSelected = true;
 			}
 
+			bool pressedRight = false;
 			if (objectSelected)
 			{
 				bool isBreakCalled = false;
 				if (procedure)
-				{
+				{	
 					for each (Control *control in procedureObject->controls)
 					{
-						if (control->m_primitive == keyPoint->m_primitive)
+						if (control->m_primitive == "GrabRelease" && control->m_control == controlEnum)
 						{
 							contextObject = procedureObject;
 							contextControl = control;
 
+							pressedRight = true;
 							isBreakCalled = true;
 							break;
 						}
+
+						else
+						{
+							bool isKeyObject = false;
+							std::string objectName = *keyPoint->m_params[0];
+							if (objectName == procedureObject->name)
+								isKeyObject = true;
+
+							if (control->m_primitive == keyPoint->m_primitive && isKeyObject)
+							{
+								contextObject = procedureObject;
+								contextControl = control;
+
+								pressedRight = true;
+								isBreakCalled = true;
+								break;
+							}
+						}
+					}
+					if (!pressedRight)
+					{
+						GameManager::getInstance()->scene->notes->errorText = "Wrong control";
+						//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 					}
 				}
 				else
@@ -128,7 +153,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		ProcedureObject* appliedObject = 0;
 		ProcedureObject* changingObject = 0;
 
-		if (keyPoint->m_params.size() > 1)
+		if (keyPoint->m_params.size() > 1 && procedure)
 		{
 			for (int i = 1; i < keyPoint->m_params.size(); i++)
 			{
@@ -145,35 +170,63 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				}
 			}
 		}
-
-		//Checking and performing control
-		if ((keyPoint->m_primitive == "Rinse" && procedure) || contextControl->m_primitive == "Rinse")
+		else if (!procedure)
 		{
-			if (contextControl->m_control == controlEnum && appliedObject != NULL)
+			//Code for testing code for changing 2 objects into 1
+			string appliedName;
+			string changingName;
+			if (!changingObjectTest)
 			{
-				if (contextObject->grabbed && appliedObject->grabbed)
-				{
-					keyPoint->m_isSuccessTriggered = true;
-					//TODO: Rinse water in appliedObject
-				}
-				else
-				{
-					keyPoint->m_isSuccessTriggered = false;
-					//TODO: Show error sign
-				}
+				appliedName = "Volumetric_flask";
+				changingName = "Volumetric_flask_with_Funnel";
 			}
 			else
 			{
-				keyPoint->m_isSuccessTriggered = false;
-				//TODO: Show error sign
+				appliedName = "";
+				changingName = "Volumetric_flask";
+			}
+
+			for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
+			{
+				if (appliedName == procedureObject->name)
+					appliedObject = procedureObject;
+				else if (changingName == procedureObject->name)
+					changingObject = procedureObject;
 			}
 		}
-		else if ((keyPoint->m_primitive == "GrabRelease" && procedure) || contextControl->m_primitive == "GrabRelease")
+
+		//Checking and performing control
+		if (contextControl->m_primitive == "GrabRelease")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
-				keyPoint->m_isSuccessTriggered = true;
-				if (!contextObject->grabbed)
+				bool canPickup = false;
+				//Check if a hand is empty
+				bool leftHandEmpty = true;
+				bool rightHandEmpty = true;
+				for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
+				{
+					if (procedureObject->grabbed)
+					{
+						if (procedureObject->LeftRight == "Right")
+							rightHandEmpty = false;
+						else if (procedureObject->LeftRight == "Left")
+							leftHandEmpty = false;
+					}
+				}
+				
+				if (RightLeft == "Right")
+				{
+					if (rightHandEmpty)
+						canPickup = true;
+				}
+				else if (RightLeft == "Left")
+				{
+					if (leftHandEmpty)
+						canPickup = true;
+				}
+
+				if (!contextObject->grabbed && canPickup)
 				{
 					contextObject->grabbed = true;
 					if (selectedHydraLeft)
@@ -194,25 +247,64 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if ((keyPoint->m_primitive == "FlushLiquid" && procedure) || contextControl->m_primitive == "FlushLiquid")
+		else if ((keyPoint->m_primitive == "Rinse" && procedure) || contextControl->m_primitive == "Rinse")
 		{
-			if (contextControl->m_control == controlEnum)
+			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
-				if (contextObject->grabbed)
+				if (contextObject->grabbed && appliedObject->grabbed)
 				{
-					//TODO Check if hydra is near sink
+					
+					//ContextObjects: Bottle_of_demineralized_water, Beaker
+					//AppliedObjects: Volumetric_flask, Funnel(Not visible), Weighing_Boat(Not visible), Erlenmeyer_flask, Burette_with_Funnel
+					appliedObject->useWaterOverlay = true;
+					
+					
+					keyPoint->m_isSuccessTriggered = true;
+					//TODO: Rinse water in appliedObject
+				}
+				else if (contextObject->grabbed && appliedObject->name == "Burette_with_Funnel")
+				{				
+					appliedObject->useWaterOverlay = true;
+					appliedObject->waterDirectionMax->setY(appliedObject->waterDirectionMax->y() + 20);
+					contextObject->useWaterOverlay = false;
+
 					keyPoint->m_isSuccessTriggered = true;
 				}
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					//TODO: Show error sign
+					GameManager::getInstance()->scene->notes->errorText = "You need another item";
+					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
 			else
 			{
 				keyPoint->m_isSuccessTriggered = false;
-				//TODO: Show error sign
+				GameManager::getInstance()->scene->notes->errorText = "You need another item";
+				//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
+			}
+		}
+		else if ((keyPoint->m_primitive == "FlushLiquid" && procedure) || contextControl->m_primitive == "FlushLiquid")
+		{
+			if (contextControl->m_control == controlEnum && appliedObject != NULL)
+			{
+				if (appliedObject->grabbed)
+				{
+					appliedObject->useWaterOverlay = false;
+					keyPoint->m_isSuccessTriggered = true;
+				}
+				else
+				{
+					keyPoint->m_isSuccessTriggered = false;
+					GameManager::getInstance()->scene->notes->errorText = "You dont have a item with liquid to flush";
+					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
+				}
+			}
+			else
+			{
+				keyPoint->m_isSuccessTriggered = false;
+				GameManager::getInstance()->scene->notes->errorText = "You dont have a item with liquid to flush";
+				//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 			}
 		}
 		else if ((keyPoint->m_primitive == "FillHalfway"&& procedure) || contextControl->m_primitive == "FillHalfway")
@@ -221,19 +313,27 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
+					//AppliedObject: Volumetric_flask
+					//Max height = 14
+					//Half = 7
+
+					appliedObject->useWaterOverlay = true;
+					appliedObject->waterDirectionMax->setY(appliedObject->waterDirectionMax->y() / 2);
+
 					keyPoint->m_isSuccessTriggered = true;
-					//TODO: Indicate volumetric flask is halfway full
 				}
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					//TODO: Show error sign
+					GameManager::getInstance()->scene->notes->errorText = "You dont have a item to fill";
+					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
 			else
 			{
 				keyPoint->m_isSuccessTriggered = false;
-				//TODO: Show error sign
+				GameManager::getInstance()->scene->notes->errorText = "You dont have a item to fill";
+				//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 			}
 		}
 		else if ((keyPoint->m_primitive == "FillUntilMark" && procedure) || contextControl->m_primitive == "FillUntilMark")
@@ -242,27 +342,42 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
+					//AppliedObject: Volumetric_flask
+					//Max height = 14
+
+					appliedObject->useWaterOverlay = true;
+
+					//With 14 is looks like the water is at the mark
+					appliedObject->waterDirectionMax->setY(14);
+
 					keyPoint->m_isSuccessTriggered = true;
-					//TODO: Indicate volumetric flask is full
 				}
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					//TODO: Show error sign
+					GameManager::getInstance()->scene->notes->errorText = "You dont have a item to fill";
+					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
 			else
 			{
 				keyPoint->m_isSuccessTriggered = false;
-				//TODO: Show error sign
+				GameManager::getInstance()->scene->notes->errorText = "You dont have a item to fill";
+				//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 			}
 		}
 		else if ((keyPoint->m_primitive == "Liquefy"&& procedure) || contextControl->m_primitive == "Liquefy")
 		{
+			//CONTROL NOT USED
 			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
+					//AppliedObject: Volumetric_flask
+					//appliedObject->useWaterOverlay = true;
+
+					//Make the water a little bit higher
+					//appliedObject->waterDirectionMax->setY(appliedObject->waterDirectionMax->y() + 1);
 					keyPoint->m_isSuccessTriggered = true;
 					//TODO: Indicate flask with some liquid in it
 				}
@@ -286,33 +401,57 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				{
 					//TODO: Change appliedObject into changingObject and dont show the Funnel anymore
 					
-					changingObject->changeObject = false;
+					changingObject->isChangeObject = false;
 					changingObject->origin = appliedObject->origin;
 					changingObject->LeftRight = appliedObject->LeftRight;
 					changingObject->grabbed = true;
 
 					//Funnel
-					contextObject->changeObject = true;
+					contextObject->isChangeObject = true;
 					contextObject->grabbed = false;
 					contextObject->LeftRight = "None";
+					contextObject->deleteRigidBodyFromWorld();
 
-					appliedObject->changeObject = true;
+					appliedObject->isChangeObject = true;
 					appliedObject->grabbed = false;
 					appliedObject->LeftRight = "None";
+					appliedObject->deleteRigidBodyFromWorld();
 
+					//changingObjectTest = true;
+
+					keyPoint->m_isSuccessTriggered = true;
+				}
+				else if (contextObject->grabbed && appliedObject->name == "Burette" && changingObject != NULL)
+				{
+					//TODO: Change appliedObject into changingObject and dont show the Funnel anymore
+
+					changingObject->isChangeObject = false;
+
+					//Funnel
+					contextObject->isChangeObject = true;
+					contextObject->grabbed = false;
+					contextObject->LeftRight = "None";
+					contextObject->deleteRigidBodyFromWorld();
+
+					appliedObject->isChangeObject = true;
+					appliedObject->deleteRigidBodyFromWorld();
+
+					//changingObjectTest = true;
 
 					keyPoint->m_isSuccessTriggered = true;
 				}
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					//TODO: Show error sign
+					GameManager::getInstance()->scene->notes->errorText = "You dont have a item to attach to";
+					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
 			else
 			{
 				keyPoint->m_isSuccessTriggered = false;
-				//TODO: Show error sign
+				GameManager::getInstance()->scene->notes->errorText = "You dont have a item to attach to";
+				//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 			}
 		}
 		else if ((keyPoint->m_primitive == "Swerve"&& procedure) || contextControl->m_primitive == "Swerve")
@@ -321,6 +460,8 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed)
 				{
+					//ContextObject: Volumetric_flask
+					
 					contextObject->rotate("Y", 90);
 					if (contextObject->rotation->x() == 45)
 						anglePositive = false;
@@ -338,7 +479,8 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					//TODO: Show error sign
+					GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
 			else
@@ -353,6 +495,8 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed)
 				{
+					//ContextObject: Volume_pipette, Volumetric_flask
+
 					//contextObject->rotate("X", 90);
 					contextObject->rotate("X", 120);
 					//Rotate object vertical 360 degrees: Perform 3 times for 360
@@ -361,7 +505,8 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					//TODO: Show error sign
+					GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
 			else
@@ -370,7 +515,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if ((keyPoint->m_primitive == "DetachFunnel"&& procedure) || contextControl->m_primitive == "DetachFunnel")
+		else if ((keyPoint->m_primitive == "Detach_Funnel"&& procedure) || contextControl->m_primitive == "Detach_Funnel")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -388,26 +533,32 @@ void ProcedureManager::update(ControlEnum controlEnum)
 
 					for each (ProcedureObject* prob in currentProcedureInformation->m_procedureObjects)
 					{
-						if (prob->LeftRight == checkOtherHand)
+						if (prob->grabbed && prob->LeftRight == checkOtherHand)
 							otherHandEmpty = false;
 					}
 
 					if (otherHandEmpty)
 					{
-						//TODO: Change contextObject back into 2 object, the funnel and changingObject
-						contextObject->changeObject = true;
-						contextObject->grabbed = false;
-						contextObject->LeftRight = "None";
+						for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
+						{
+							if (procedureObject->name == "Funnel")
+								appliedObject = procedureObject;
+						}
+						
+						changingObject->isChangeObject = false;
+						changingObject->origin = contextObject->origin;
+						changingObject->LeftRight = contextObject->LeftRight;
+						changingObject->grabbed = true;						
 
 						//Funnel
-						appliedObject->changeObject = false;
+						appliedObject->isChangeObject = false;
 						appliedObject->grabbed = true;
 						appliedObject->LeftRight = checkOtherHand;
 
-						changingObject->changeObject = false;
-						changingObject->origin = appliedObject->origin;
-						changingObject->LeftRight = appliedObject->LeftRight;
-						changingObject->grabbed = true;
+						contextObject->isChangeObject = true;
+						contextObject->grabbed = false;
+						contextObject->LeftRight = "None";
+						contextObject->deleteRigidBodyFromWorld();
 
 						keyPoint->m_isSuccessTriggered = true;
 					}
@@ -416,10 +567,53 @@ void ProcedureManager::update(ControlEnum controlEnum)
 						//TODO: Show error sign
 					}
 				}
+				else if (contextObject->name == "Burette_with_Funnel" && changingObject != NULL)
+				{
+					bool rightEmpty = true;
+					bool leftEmpty = true;
+					for each (ProcedureObject* prob in currentProcedureInformation->m_procedureObjects)
+					{
+						if (prob->grabbed && prob->LeftRight == "Right")
+							rightEmpty = false;
+						else if (prob->grabbed && prob->LeftRight == "Left")
+							leftEmpty = false;
+					}
+
+					if (rightEmpty || leftEmpty)
+					{
+						for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
+						{
+							if (procedureObject->name == "Funnel")
+								appliedObject = procedureObject;
+						}
+
+						changingObject->isChangeObject = false;
+						changingObject->origin = contextObject->origin;
+						changingObject->useWaterOverlay = true;
+
+						contextObject->isChangeObject = true;
+						contextObject->deleteRigidBodyFromWorld();
+
+						appliedObject->isChangeObject = false;
+						appliedObject->grabbed = true;
+
+						if (rightEmpty)
+						{
+							appliedObject->LeftRight = "Right";
+						}
+						else if (leftEmpty)
+						{
+							appliedObject->LeftRight = "Left";
+						}
+
+						keyPoint->m_isSuccessTriggered = true;
+					}
+				}
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					//TODO: Show error sign
+					GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
 			else
@@ -437,27 +631,31 @@ void ProcedureManager::update(ControlEnum controlEnum)
 					//TODO: Change flask into corked flask and dont display cork anymore
 
 					//Corked Flask
-					changingObject->changeObject = false;
+					changingObject->isChangeObject = false;
 					changingObject->origin = appliedObject->origin;
 					changingObject->LeftRight = appliedObject->LeftRight;
+					changingObject->useWaterOverlay = appliedObject->useWaterOverlay;
 					changingObject->grabbed = true;
 
 					//Cork
-					contextObject->changeObject = true;
+					contextObject->isChangeObject = true;
 					contextObject->grabbed = false;
 					contextObject->LeftRight = "None";
+					contextObject->deleteRigidBodyFromWorld();
 
 					//Flask
-					appliedObject->changeObject = true;
+					appliedObject->isChangeObject = true;
 					appliedObject->grabbed = false;
 					appliedObject->LeftRight = "None";
+					appliedObject->deleteRigidBodyFromWorld();
 
 					keyPoint->m_isSuccessTriggered = true;
 				}
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					//TODO: Show error sign
+					GameManager::getInstance()->scene->notes->errorText = "You dont have a item to cork";
+					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
 			else
@@ -475,15 +673,16 @@ void ProcedureManager::update(ControlEnum controlEnum)
 					//TODO: Dump solid into appliedObject
 
 					//Empty Weighing boat
-					changingObject->changeObject = false;
+					changingObject->isChangeObject = false;
 					changingObject->origin = contextObject->origin;
 					changingObject->LeftRight = contextObject->LeftRight;
 					changingObject->grabbed = true;
 
 					//Full Weighing boat
-					contextObject->changeObject = true;
+					contextObject->isChangeObject = true;
 					contextObject->grabbed = false;
 					contextObject->LeftRight = "None";
+					contextObject->deleteRigidBodyFromWorld();
 
 					//Change appliedobject
 
@@ -493,7 +692,8 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					//TODO: Show error sign
+					GameManager::getInstance()->scene->notes->errorText = "You dont have a item to dump solid in";
+					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
 			else
@@ -508,13 +708,33 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed)
 				{
+					//ContextObject: Volume_Pipette
+					contextObject->useWaterOverlay = true;
+
+					switch (contextObject->controlStep)
+					{
+					case 0:
+						//Half: 5.3
+						contextObject->waterDirectionMax->setY(contextObject->waterDirectionMax->y() - 4);
+						contextObject->controlStep++;
+						break;
+					case 1 :
+						contextObject->controlStep++;
+						break;
+					case 2:
+						//Until mark = 9.3
+						contextObject->waterDirectionMax->setY(contextObject->waterDirectionMax->y() + 4);
+						contextObject->controlStep = 0;
+						break;
+					}
 					keyPoint->m_isSuccessTriggered = true;
 					//TODO: Suck liquid from appliedObject and show liquid in contextObject
 				}
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					//TODO: Show error sign
+					GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
 			else
@@ -544,7 +764,8 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					//TODO: Show error sign
+					GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
 			else
@@ -555,6 +776,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		}
 		else if ((keyPoint->m_primitive == "PourWithLiquid" && procedure) || contextControl->m_primitive == "PourWithLiquid")
 		{
+			//CONTROL NOT USED
 			if (contextControl->m_control == controlEnum)
 			{
 				if (contextObject->grabbed)
@@ -581,13 +803,27 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed && appliedObject-> grabbed)
 				{
+					//Make tissue wet
+					switch (contextObject->controlStep)
+					{
+					case 0:
+						contextObject->controlStep++;
+						contextObject->useWaterOverlay = true;
+						break;
+					case 1:
+						contextObject->waterDirectionMax->setY(contextObject->waterDirectionMax->y() + 0.02);
+						break;
+					case 2:
+						contextObject->controlStep++;
+						break;
+					}
 					keyPoint->m_isSuccessTriggered = true;
-					//TODO: Dry appliedObject with contextObject
 				}
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					//TODO: Show error sign
+					GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
 			else
@@ -612,7 +848,8 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					//TODO: Show error sign
+					GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
 			else
@@ -627,13 +864,24 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
+					if (contextObject->controlStep == 0)
+					{
+						contextObject->controlStep++;
+						contextObject->waterDirectionMax->setY(contextObject->waterDirectionMax->y() - 1);
+					}
+					else if (contextObject->controlStep == 1)
+					{
+						contextObject->useWaterOverlay = false;
+						appliedObject->useWaterOverlay = true;
+					}
 					keyPoint->m_isSuccessTriggered = true;
 					//TODO: Liquid goes out of volume pipette
 				}
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					//TODO: Show error sign
+					GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
 			else
@@ -644,22 +892,28 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		}
 		else if ((keyPoint->m_primitive == "OpenCloseTap"&& procedure) || contextControl->m_primitive == "OpenCloseTap")
 		{
-			if (contextControl->m_control == controlEnum)
+			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
-				//TODO: Check if hydra is near burette
+				switch (contextObject->controlStep)
+				{
+				case 0:
+					//Open the buret, liquid goes out into wastebeaker
+					contextObject->controlStep = 1;
+					contextObject->useWaterOverlay = false;
+					appliedObject->useWaterOverlay = true;
+					if (contextObject->waterDirectionMax->y() > 39)
+						appliedObject->waterDirectionMax->setY(appliedObject->waterDirectionMax->y() + 2);
+					break;
+				case 1:
+					//Close the buret
+					contextObject->controlStep = 0;
+
+					contextObject->waterDirectionMax->setY(contextObject->waterDirectionMin->y());
+					contextObject->useWaterOverlay = true;
+					break;
+				}
+
 				keyPoint->m_isSuccessTriggered = true;
-				if (contextObject->closed)
-				{
-					//if buret is closed, open it
-					contextObject->closed = false;
-					//TODO: Liquid goes out of burette
-				}
-				else
-				{
-					//if buret is open, close it
-					contextObject->closed = true;
-					//TODO: Liquid stops going out of burette
-				}
 			}
 			else
 			{
@@ -673,40 +927,54 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (contextObject->grabbed && appliedObject->grabbed)
 				{
+					//AppliedObject: Beaker
+					//Add some liquid in the beaker
+					appliedObject->useWaterOverlay = true;		
 					keyPoint->m_isSuccessTriggered = true;
-					//TODO: Liquid goes into appliedObject
 				}
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					//TODO: Show error sign
+					GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
 			else
 			{
 				keyPoint->m_isSuccessTriggered = false;
-				//TODO: Show error sign
+				GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+				//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 			}
 		}
 		else if ((keyPoint->m_primitive == "Fill"&& procedure) || contextControl->m_primitive == "Fill")
 		{
 			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
-				if (contextObject->grabbed && appliedObject->grabbed && changingObject != NULL)
+				if (contextObject->grabbed)
 				{
+					//AppliedObject: Burette
+					appliedObject->useWaterOverlay = true;
+					//Max height buret: 240 - 60 = 180
+					//Max height buret with funnel: 159- 39 = 120
+
+					appliedObject->waterDirectionMax->setY(159);
+					//Change watermax height
+
 					keyPoint->m_isSuccessTriggered = true;
 					//TODO: Fill burette with liquid and detach the funnel form burette
 				}
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					//TODO: Show error sign
+					GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
 			else
 			{
 				keyPoint->m_isSuccessTriggered = false;
-				//TODO: Show error sign
+				GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+				//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 			}
 		}
 		else if ((keyPoint->m_primitive == "Titrate1Ml"&& procedure) || contextControl->m_primitive == "Titrate1Ml")
@@ -715,27 +983,40 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			{
 				if (appliedObject->grabbed)
 				{
+					//ContextObject: Burette
+					contextObject->useWaterOverlay = true;
+					contextObject->waterDirectionMax->setY(contextObject->waterDirectionMax->y() - 20);
+
+					appliedObject->useWaterOverlay = true;
+					appliedObject->waterDirectionMax->setY(appliedObject->waterDirectionMax->y() + 0.5);
 					keyPoint->m_isSuccessTriggered = true;
+					//Change watermax height
+
 					//TODO: Titrate liquid into the erlenmeyer
 				}
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					//TODO: Show error sign
+					GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
 			else
 			{
 				keyPoint->m_isSuccessTriggered = false;
-				//TODO: Show error sign
+				GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+				//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 			}
 		}
 		else if ((keyPoint->m_primitive == "ReadAmount"&& procedure) || contextControl->m_primitive == "ReadAmount")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
+				//ContextObject: Burette
+				int amount = (contextObject->waterDirectionMax->getY() - contextObject->waterDirectionMin->getY());
+
+				//Get watermax height
 				keyPoint->m_isSuccessTriggered = true;
-				//TODO: Show amount of liquid in sign
 			}
 			else
 			{
@@ -743,6 +1024,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
+
 		break;
 	}
 
