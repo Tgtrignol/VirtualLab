@@ -2,9 +2,13 @@
 #define MENU_H
 
 #include <glut\glut.h>
+#include <vector>
+#include "Notes.h"
 
 class Menu {
 
+private:
+	std::vector<std::string> procedureFileLocations;
 public:
 	Menu();
 
@@ -14,6 +18,9 @@ public:
 	void init();
 	void drawButtons(int, int, int);
 	void selectMenuItem();
+
+	Notes* notes = new Notes();
+	std::vector<std::string> procedureNames;
 
 };
 

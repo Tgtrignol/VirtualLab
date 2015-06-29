@@ -84,6 +84,7 @@ public:
 	void draw(DrawMode drawMode);
 	void update();
 	void update(double frameTime, double totalTime);
+	void startProcedure();
 	unsigned int textureID = 0;
 };
 

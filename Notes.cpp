@@ -58,6 +58,14 @@ void Notes::draw()
 		drawNotes(errorText.data(), errorText.length(), 200, 300, 0);
 }
 
+void Notes::drawList(std::vector<std::string> list)
+{
+	for (int i = 0; i < list.size(); i++)
+	{
+		drawNotes(list[i].data(), list[i].length(), 200, 300 + (i * 10), 0);
+	}
+}
+
 void Notes::init()
 {
 

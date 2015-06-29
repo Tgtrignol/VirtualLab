@@ -231,7 +231,10 @@ void Scene::draw(DrawMode drawMode)
 	//f->draw();
 	lab->draw();
 	if (notes != nullptr)
+	{
 		notes->draw();
+		//notes->drawList(GameManager::getInstance()->menu->procedureNames);
+	}
 	if (hud != nullptr)
 		hud->draw();
 	//if (menu != nullptr)
@@ -243,4 +246,9 @@ void Scene::draw(DrawMode drawMode)
 	glPopMatrix();
 
 	glDisable(GL_MULTISAMPLE_ARB);
+}
+
+void Scene::startProcedure()
+{
+	//Do init for ProcedureManager here and enable its update
 }

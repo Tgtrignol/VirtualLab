@@ -33,6 +33,8 @@ void Menu::drawButtons(int x, int y, int z) {
 void Menu::selectMenuItem() {
 
 
+	//GameManager::getInstance()->scene->procedureManager->procedureFile = chosenFile;
+
 }
 
 void Menu::draw() {
@@ -55,5 +57,13 @@ void Menu::draw() {
 }
 
 void Menu::init() {
+	procedureFileLocations = DSLReader().readProcedureLocationFromFile();
 
+	//Getting names from files
+	for each (std::string file in procedureFileLocations)
+	{
+		std::string name = DSLReader().getProcedureName(file);
+		if (name != "")
+			procedureNames.push_back(name);
+	}
 }
