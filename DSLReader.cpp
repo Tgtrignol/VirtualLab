@@ -160,3 +160,31 @@ ProcedureInformation *DSLReader::readProcedureFromFile(std::string procedureFile
 	Logger::logToFile("~DSLReader::readProcedureFromFile, name: ", procedureName);
 	return new ProcedureInformation(keyPoints, objects, procedureName);
 }
+
+std::string DSLReader::getProcedureName(std::string procedureFileLocation)
+{
+	std::string line;
+	std::ifstream myfile(procedureFileLocation);
+	if (myfile.is_open())
+	{
+		while (getline(myfile, line))
+		{
+			if (line.size() < 2)
+				continue;
+
+			if (line.substr(0, 2) == "//")
+				continue;
+
+			std::vector<std::string> parts = split(line, ' ');
+
+			if (parts[0] == "Name")
+			{
+				std::replace(parts[1].begin(), parts[1].end(), '_', ' ');
+				return parts[1];
+			}
+		}
+	}
+
+	else
+		return "";
+}

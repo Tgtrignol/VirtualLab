@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Menu.h"
+#include "DSLReader.h"
 
 Menu::Menu() {
 
@@ -40,5 +41,13 @@ void Menu::draw() {
 }
 
 void Menu::init() {
+	procedureFileLocations = DSLReader().readProcedureLocationFromFile();
 
+	//Getting names from files
+	for each (std::string file in procedureFileLocations)
+	{
+		std::string name = DSLReader().getProcedureName(file);
+		if (name != "")
+			procedureNames.push_back(name);
+	}
 }

@@ -7,12 +7,14 @@
 
 class RenderManager;
 class Scene;
+class Menu;
 
 class GameManager : public Application
 {
 public:
 	RenderManager *renderManager;
 	Scene *scene;
+	Menu *menu;
 	float fpTime = 0;
 	float fpTimeUntillUpdate = 0;
 
@@ -24,6 +26,8 @@ public:
 	void latePreFrame();
 	
 	void stop();
+
+	void startScene(int procedure);
 };
 
 #endif

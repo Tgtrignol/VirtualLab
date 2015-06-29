@@ -15,6 +15,7 @@
 
 #include "DSLReader.h"
 #include "ProcedureObject.h"
+#include "Menu.h"
 
 GameManager* GameManager::getInstance()
 {
@@ -26,6 +27,8 @@ void GameManager::init()
 {
 	scene = new Scene();
 	renderManager = new RenderManager();
+	menu = new Menu();
+	menu->init();
 	Logger::initLogger();
 }
 
@@ -54,5 +57,11 @@ void GameManager::stop()
 {
 	delete scene;
 	delete renderManager;
+	delete menu;
 	Logger::destroyLogger();
+}
+
+void startScene(int procedure)
+{
+	//Start the scene with the chosen procedure from the menu
 }
