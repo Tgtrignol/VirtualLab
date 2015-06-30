@@ -1,7 +1,7 @@
 # File produced by Open Asset Import Library (http://www.assimp.sf.net)
 # (assimp v3.1.187496374)
 
-mtllib LeftHand.obj.mtl
+mtllib LeftHand.mtl
 
 # 257 vertex positions
 v  -0.166558 1.78769 0.0786619
