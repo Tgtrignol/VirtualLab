@@ -384,15 +384,15 @@ void Hydra::update()
 		if (!((joystickData[0] <= -900) && (joystickData[1] <= -900)))
 		{
 			hydraEnabled = true;
-			if (joystickData[0] - 0.1f > 0.0f)
-				MoveRight();
-			else if (joystickData[0] + 0.1f < 0.0f)
-				MoveLeft();
+			//if (joystickData[0] - 0.1f > 0.0f)
+			//	MoveRight();
+			//else if (joystickData[0] + 0.1f < 0.0f)
+			//	MoveLeft();
 
-			if (joystickData[1] - 0.1f > 0.0f)
-				MoveForward();
-			else if (joystickData[1] + 0.1f < 0.0f)
-				MoveBackward();
+			//if (joystickData[1] - 0.1f > 0.0f)
+			//	MoveForward();
+			//else if (joystickData[1] + 0.1f < 0.0f)
+			//	MoveBackward();
 		}
 
 		//Activate Left

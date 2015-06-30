@@ -7,11 +7,11 @@
 
 using namespace std;
 
-float fpXAngle = 0.0;
+float fpXAngle = 90.0;
 float fpYAngle = 0.0;
 float fpCameraXCoordinate = 0.0;
 float fpCameraYCoordinate = DISTANCE_OF_HEAD_FROM_FLOOR -14.0;
-float fpCameraZCoordinate = 2.0;
+float fpCameraZCoordinate = -0.3;
 
 /*
 * 	Function:  InitCamera

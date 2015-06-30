@@ -55,7 +55,7 @@ void Notes::drawBoardTxt() {
 void Notes::draw()
 {
 	if (errorText != "")
-		drawNotes(errorText.data(), errorText.length(), 200, 300, 0);
+		drawNotes(errorText.data(), errorText.length(), 200, 340, 0);
 }
 
 void Notes::drawList(std::vector<std::string> list)
