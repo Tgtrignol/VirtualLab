@@ -1040,6 +1040,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 	if (procedureCompleted)
 	{
 		//TODO: Do something for procedure completion.
+		GameManager::getInstance()->scene->notes->errorText = "You completed the procedure";
 	}
 }
 
