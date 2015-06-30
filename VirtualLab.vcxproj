@@ -28,6 +28,7 @@
     <ClInclude Include="ProcedureObject.h" />
     <ClInclude Include="GaussianBlur.h" />
     <ClInclude Include="Hydra.h" />
+    <ClInclude Include="RepresentationTxt.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="NoPostProcessing.h" />
@@ -35,6 +36,7 @@
     <ClInclude Include="PostProcessing.h" />
     <ClInclude Include="RenderManager.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="StaticBoard.h" />
     <ClInclude Include="StaticEnvironment.h" />
     <ClInclude Include="StaticLabEnvironment.h" />
     <ClInclude Include="stb_image.h" />
@@ -54,6 +56,7 @@
     <ClCompile Include="ProcedureObject.cpp" />
     <ClCompile Include="GaussianBlur.cpp" />
     <ClCompile Include="Hydra.cpp" />
+    <ClCompile Include="RepresentationTxt.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="NoPostProcessing.cpp" />
@@ -61,6 +64,7 @@
     <ClCompile Include="PostProcessing.cpp" />
     <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="StaticBoard.cpp" />
     <ClCompile Include="StaticEnvironment.cpp" />
     <ClCompile Include="StaticLabEnvironment.cpp" />
     <ClCompile Include="stb_image.c" />

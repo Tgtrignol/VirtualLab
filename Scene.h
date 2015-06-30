@@ -15,6 +15,7 @@ class btRigidBody;
 class Hydra;
 class CameraCharacter;
 class StaticLabEnvironment;
+class StaticBoard;
 class ProcedureManager;
 class Notes;
 class HUD;
@@ -73,6 +74,7 @@ public:
 	Floor *f;
 	Hydra *hydra;
 	StaticLabEnvironment *lab;
+	StaticBoard *board;
 	btDiscreteDynamicsWorld *world;
 	ProcedureManager *procedureManager;
 	Notes *notes;

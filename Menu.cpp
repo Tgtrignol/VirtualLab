@@ -9,7 +9,7 @@
 using namespace std;
 
 Menu::Menu() {
-
+	init();
 }
 
 Menu::~Menu() {
@@ -33,7 +33,7 @@ void Menu::drawButtons(int x, int y, int z) {
 void Menu::selectMenuItem() {
 
 
-	//GameManager::getInstance()->scene->procedureManager->procedureFile = chosenFile;
+	
 
 }
 
@@ -41,16 +41,14 @@ void Menu::draw() {
 
 	glPushMatrix();
 
-	//for (int i = 0; i < ProcedureManager::getInstance()->dslReader->menuItem.size(); i++) {
+	for (int i = 0; i < ProcedureManager::getInstance()->dslReader->menuItem.size(); i++) {
 
-	GameManager::getInstance()->scene->notes->drawNotes(ProcedureManager::getInstance()->dslReader->menuItem.data(),
-		ProcedureManager::getInstance()->dslReader->menuItem.length(), 200.0f, 300.0f, 0.0f);
+//	GameManager::getInstance()->scene->notes->drawNotes(ProcedureManager::getInstance()->dslReader->menuItem.data(),
+	//	ProcedureManager::getInstance()->dslReader->menuItem.length(), 200.0f, 300.0f, 0.0f);
+		
 		drawButtons(200.0f, 300.0f, 0.0f);
 
-	//}
-
-	//std::string text = "Exit program";
-	//GameManager::getInstance()->scene->notes->drawNotes(text.data(), text.length(), 470.0f, 300.0f, 0.0f);
+	}
 
 	glPopMatrix();
 

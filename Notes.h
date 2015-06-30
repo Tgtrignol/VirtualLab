@@ -12,6 +12,7 @@ public:
 	void draw();
 	void init();
 	void drawNotes(const char*, int, int, int, int);
+	void drawStaticTxt(const char*, int);
 	void drawBoardTxt();
 	void drawButtonTxt();
 	void drawList(std::vector<std::string>);

@@ -15,6 +15,7 @@
 #include "ControlEnum.h"
 #include "HUD.h"
 #include "Menu.h"
+#include "StaticBoard.h"
 
 #include <iostream>
 #include <VrLib\Application.h>
@@ -78,6 +79,9 @@ Scene::Scene()
 
 	lab = new StaticLabEnvironment();
 	lab->init();
+
+	board = new StaticBoard();
+	board->init();
 
 	broadphase = new btDbvtBroadphase();
 	collisionConfiguration = new btDefaultCollisionConfiguration();
@@ -233,13 +237,14 @@ void Scene::draw(DrawMode drawMode)
 	if (notes != nullptr)
 	{
 		notes->draw();
-		//notes->drawList(GameManager::getInstance()->menu->procedureNames);
+		notes->drawList(GameManager::getInstance()->menu->procedureNames);
 	}
 	if (hud != nullptr)
 		hud->draw();
 	//if (menu != nullptr)
-
 		menu->draw();
+
+	board->draw();
 
 	procedureManager->draw();
 
