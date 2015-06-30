@@ -16,6 +16,8 @@ public:
 	void init();
 	void draw();
 	void update(ControlEnum controlEnum);
+	ProcedureObject* getLeftGrabbedObject();
+	ProcedureObject* getRightGrabbedObject();
 	static ProcedureManager* getInstance();
 
 	ProcedureObject *righternSelectedProcedureObject;
@@ -26,6 +28,7 @@ public:
 private:
 	std::vector<std::string> procedureFileLocations;
 	ProcedureInformation *currentProcedureInformation;
+	ProcedureObject* getGrabbedObject(string Side);
 	bool procedure = true;
 	bool anglePositive = true;
 	bool changingObjectTest = false;

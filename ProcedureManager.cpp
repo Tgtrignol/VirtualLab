@@ -1040,3 +1040,26 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		//TODO: Do something for procedure completion.
 	}
 }
+
+ProcedureObject* ProcedureManager::getLeftGrabbedObject()
+{
+	return getGrabbedObject("Left");
+}
+
+ProcedureObject* ProcedureManager::getRightGrabbedObject()
+{
+	return getGrabbedObject("Right");
+}
+
+ProcedureObject* ProcedureManager::getGrabbedObject(string Side)
+{
+	for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
+	{
+		if (procedureObject->grabbed && procedureObject->LeftRight == Side)
+		{
+			return procedureObject;
+		}
+	}
+
+	return NULL;
+}
