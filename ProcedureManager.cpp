@@ -56,7 +56,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 
 	for each (KeyPoint *keyPoint in currentProcedureInformation->m_keyPoints)
 	{
-		if (keyPoint->m_isSuccessTriggered && procedure)
+		if (keyPoint->m_isSuccessTriggered && doingProcedure)
 			continue;
 
 		bool selectedHydraLeft = false;
@@ -68,14 +68,14 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		{
 			if (procedureObject->grabbed)
 			{
-				if (RightLeft == procedureObject->LeftRight)
+				if (pressedSide == procedureObject->LeftRight)
 					objectSelected = true;
 			}
 			else if (righternSelectedProcedureObject == procedureObject || lefternSelectedProcedureObject == procedureObject)
 			{
-				if (righternSelectedProcedureObject == procedureObject && RightLeft == "Right")
+				if (righternSelectedProcedureObject == procedureObject && pressedSide == "Right")
 					selectedHydraLeft = false;
-				else if (lefternSelectedProcedureObject == procedureObject && RightLeft == "Left")
+				else if (lefternSelectedProcedureObject == procedureObject && pressedSide == "Left")
 					selectedHydraLeft = true;
 				else
 					return;
@@ -90,7 +90,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			if (objectSelected)
 			{
 				bool isBreakCalled = false;
-				if (procedure)
+				if (doingProcedure)
 				{	
 					for each (Control *control in procedureObject->controls)
 					{
@@ -153,7 +153,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		ProcedureObject* appliedObject = 0;
 		ProcedureObject* changingObject = 0;
 
-		if (keyPoint->m_params.size() > 1 && procedure)
+		if (keyPoint->m_params.size() > 1 && doingProcedure)
 		{
 			for (int i = 1; i < keyPoint->m_params.size(); i++)
 			{
@@ -170,7 +170,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				}
 			}
 		}
-		else if (!procedure)
+		else if (!doingProcedure)
 		{
 			//Code for testing code for changing 2 objects into 1
 			string appliedName;
@@ -215,12 +215,12 @@ void ProcedureManager::update(ControlEnum controlEnum)
 					}
 				}
 				
-				if (RightLeft == "Right")
+				if (pressedSide == "Right")
 				{
 					if (rightHandEmpty)
 						canPickup = true;
 				}
-				else if (RightLeft == "Left")
+				else if (pressedSide == "Left")
 				{
 					if (leftHandEmpty)
 						canPickup = true;
@@ -247,7 +247,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if ((keyPoint->m_primitive == "Rinse" && procedure) || contextControl->m_primitive == "Rinse")
+		else if ((keyPoint->m_primitive == "Rinse" && doingProcedure) || contextControl->m_primitive == "Rinse")
 		{
 			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
@@ -284,7 +284,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 			}
 		}
-		else if ((keyPoint->m_primitive == "FlushLiquid" && procedure) || contextControl->m_primitive == "FlushLiquid")
+		else if ((keyPoint->m_primitive == "FlushLiquid" && doingProcedure) || contextControl->m_primitive == "FlushLiquid")
 		{
 			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
@@ -307,7 +307,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 			}
 		}
-		else if ((keyPoint->m_primitive == "FillHalfway"&& procedure) || contextControl->m_primitive == "FillHalfway")
+		else if ((keyPoint->m_primitive == "FillHalfway"&& doingProcedure) || contextControl->m_primitive == "FillHalfway")
 		{
 			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
@@ -336,7 +336,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 			}
 		}
-		else if ((keyPoint->m_primitive == "FillUntilMark" && procedure) || contextControl->m_primitive == "FillUntilMark")
+		else if ((keyPoint->m_primitive == "FillUntilMark" && doingProcedure) || contextControl->m_primitive == "FillUntilMark")
 		{
 			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
@@ -366,7 +366,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 			}
 		}
-		else if ((keyPoint->m_primitive == "Liquefy"&& procedure) || contextControl->m_primitive == "Liquefy")
+		else if ((keyPoint->m_primitive == "Liquefy"&& doingProcedure) || contextControl->m_primitive == "Liquefy")
 		{
 			//CONTROL NOT USED
 			if (contextControl->m_control == controlEnum && appliedObject != NULL)
@@ -393,7 +393,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if ((keyPoint->m_primitive == "Attach"&& procedure) || contextControl->m_primitive == "Attach")
+		else if ((keyPoint->m_primitive == "Attach"&& doingProcedure) || contextControl->m_primitive == "Attach")
 		{
 			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
@@ -454,7 +454,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 			}
 		}
-		else if ((keyPoint->m_primitive == "Swerve"&& procedure) || contextControl->m_primitive == "Swerve")
+		else if ((keyPoint->m_primitive == "Swerve"&& doingProcedure) || contextControl->m_primitive == "Swerve")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -489,7 +489,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if ((keyPoint->m_primitive == "Rotate"&& procedure) || contextControl->m_primitive == "Rotate")
+		else if ((keyPoint->m_primitive == "Rotate"&& doingProcedure) || contextControl->m_primitive == "Rotate")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -515,7 +515,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if ((keyPoint->m_primitive == "Detach_Funnel"&& procedure) || contextControl->m_primitive == "Detach_Funnel")
+		else if ((keyPoint->m_primitive == "Detach_Funnel"&& doingProcedure) || contextControl->m_primitive == "Detach_Funnel")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -622,7 +622,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if ((keyPoint->m_primitive == "Cork" && procedure) || contextControl->m_primitive == "Cork")
+		else if ((keyPoint->m_primitive == "Cork" && doingProcedure) || contextControl->m_primitive == "Cork")
 		{
 			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
@@ -664,7 +664,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if ((keyPoint->m_primitive == "Dump" && procedure) || contextControl->m_primitive == "Dump")
+		else if ((keyPoint->m_primitive == "Dump" && doingProcedure) || contextControl->m_primitive == "Dump")
 		{
 			if (contextControl->m_control == controlEnum && appliedObject != NULL && changingObject != NULL)
 			{
@@ -702,7 +702,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if ((keyPoint->m_primitive == "SuckLiquid" && procedure) || contextControl->m_primitive == "SuckLiquid")
+		else if ((keyPoint->m_primitive == "SuckLiquid" && doingProcedure) || contextControl->m_primitive == "SuckLiquid")
 		{
 			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
@@ -743,7 +743,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if ((keyPoint->m_primitive == "TurnSideWay" && procedure) || contextControl->m_primitive == "TurnSideWay")
+		else if ((keyPoint->m_primitive == "TurnSideWay" && doingProcedure) || contextControl->m_primitive == "TurnSideWay")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -774,7 +774,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if ((keyPoint->m_primitive == "PourWithLiquid" && procedure) || contextControl->m_primitive == "PourWithLiquid")
+		else if ((keyPoint->m_primitive == "PourWithLiquid" && doingProcedure) || contextControl->m_primitive == "PourWithLiquid")
 		{
 			//CONTROL NOT USED
 			if (contextControl->m_control == controlEnum)
@@ -797,7 +797,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if ((keyPoint->m_primitive == "Dry" && procedure) || contextControl->m_primitive == "Dry")
+		else if ((keyPoint->m_primitive == "Dry" && doingProcedure) || contextControl->m_primitive == "Dry")
 		{
 			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
@@ -832,7 +832,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if ((keyPoint->m_primitive == "Turn45Degree" && procedure) || contextControl->m_primitive == "Turn45Degree")
+		else if ((keyPoint->m_primitive == "Turn45Degree" && doingProcedure) || contextControl->m_primitive == "Turn45Degree")
 		{
 			if (contextControl->m_control == controlEnum )//&& appliedObject != NULL)
 			{
@@ -858,7 +858,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if ((keyPoint->m_primitive == "LowerLiquid"&& procedure) || contextControl->m_primitive == "LowerLiquid")
+		else if ((keyPoint->m_primitive == "LowerLiquid"&& doingProcedure) || contextControl->m_primitive == "LowerLiquid")
 		{
 			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
@@ -890,7 +890,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if ((keyPoint->m_primitive == "OpenCloseTap"&& procedure) || contextControl->m_primitive == "OpenCloseTap")
+		else if ((keyPoint->m_primitive == "OpenCloseTap"&& doingProcedure) || contextControl->m_primitive == "OpenCloseTap")
 		{
 			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
@@ -921,7 +921,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//TODO: Show error sign
 			}
 		}
-		else if ((keyPoint->m_primitive == "Pour10Ml"&& procedure) || contextControl->m_primitive == "Pour10Ml")
+		else if ((keyPoint->m_primitive == "Pour10Ml"&& doingProcedure) || contextControl->m_primitive == "Pour10Ml")
 		{
 			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
@@ -946,7 +946,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 			}
 		}
-		else if ((keyPoint->m_primitive == "Fill"&& procedure) || contextControl->m_primitive == "Fill")
+		else if ((keyPoint->m_primitive == "Fill"&& doingProcedure) || contextControl->m_primitive == "Fill")
 		{
 			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
@@ -977,7 +977,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 			}
 		}
-		else if ((keyPoint->m_primitive == "Titrate1Ml"&& procedure) || contextControl->m_primitive == "Titrate1Ml")
+		else if ((keyPoint->m_primitive == "Titrate1Ml"&& doingProcedure) || contextControl->m_primitive == "Titrate1Ml")
 		{
 			if (contextControl->m_control == controlEnum && appliedObject != NULL)
 			{
@@ -1008,7 +1008,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 			}
 		}
-		else if ((keyPoint->m_primitive == "ReadAmount"&& procedure) || contextControl->m_primitive == "ReadAmount")
+		else if ((keyPoint->m_primitive == "ReadAmount"&& doingProcedure) || contextControl->m_primitive == "ReadAmount")
 		{
 			if (contextControl->m_control == controlEnum)
 			{
@@ -1051,7 +1051,7 @@ ProcedureObject* ProcedureManager::getRightGrabbedObject()
 	return getGrabbedObject("Right");
 }
 
-ProcedureObject* ProcedureManager::getGrabbedObject(string Side)
+ProcedureObject* ProcedureManager::getGrabbedObject(std::string Side)
 {
 	for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
 	{

@@ -22,14 +22,14 @@ public:
 
 	ProcedureObject *righternSelectedProcedureObject;
 	ProcedureObject *lefternSelectedProcedureObject;
-	std::string RightLeft = "None";
+	std::string pressedSide = "None";
 	DSLReader* dslReader = new DSLReader();
 
 private:
 	std::vector<std::string> procedureFileLocations;
 	ProcedureInformation *currentProcedureInformation;
-	ProcedureObject* getGrabbedObject(string Side);
-	bool procedure = true;
+	ProcedureObject* getGrabbedObject(std::string Side);
+	bool doingProcedure = true;
 	bool anglePositive = true;
 	bool changingObjectTest = false;
 

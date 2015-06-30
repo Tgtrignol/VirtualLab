@@ -460,7 +460,7 @@ std::string Hydra::checkButtons()
 		if (!hydraPressed)
 		{
 			hydraPressed = true;
-			GameManager::getInstance()->scene->procedureManager->RightLeft = "Left";
+			GameManager::getInstance()->scene->procedureManager->pressedSide = "Left";
 			return "Joystick-1"; 
 		}
 	}
@@ -469,7 +469,7 @@ std::string Hydra::checkButtons()
 		if (!hydraPressed)
 		{
 			hydraPressed = true;
-			GameManager::getInstance()->scene->procedureManager->RightLeft = "Right";
+			GameManager::getInstance()->scene->procedureManager->pressedSide = "Right";
 			return "Joystick-1";
 		}
 	}
@@ -478,7 +478,7 @@ std::string Hydra::checkButtons()
 		if (!hydraPressed)
 		{
 			hydraPressed = true;
-			GameManager::getInstance()->scene->procedureManager->RightLeft = "Left";
+			GameManager::getInstance()->scene->procedureManager->pressedSide = "Left";
 			return "Joystick-2";
 		}
 	}
@@ -487,7 +487,7 @@ std::string Hydra::checkButtons()
 		if (!hydraPressed)
 		{
 			hydraPressed = true;
-			GameManager::getInstance()->scene->procedureManager->RightLeft = "Right";
+			GameManager::getInstance()->scene->procedureManager->pressedSide = "Right";
 			return "Joystick-2";
 		}
 	}
@@ -496,7 +496,7 @@ std::string Hydra::checkButtons()
 		if (!hydraPressed)
 		{
 			hydraPressed = true;
-			GameManager::getInstance()->scene->procedureManager->RightLeft = "Left";
+			GameManager::getInstance()->scene->procedureManager->pressedSide = "Left";
 			return "Joystick-3";
 		}
 	}
@@ -505,7 +505,7 @@ std::string Hydra::checkButtons()
 		if (!hydraPressed)
 		{
 			hydraPressed = true;
-			GameManager::getInstance()->scene->procedureManager->RightLeft = "Right";
+			GameManager::getInstance()->scene->procedureManager->pressedSide = "Right";
 			return "Joystick-3";
 		}
 	}
@@ -514,7 +514,7 @@ std::string Hydra::checkButtons()
 		if (!hydraPressed)
 		{
 			hydraPressed = true;
-			GameManager::getInstance()->scene->procedureManager->RightLeft = "Left";
+			GameManager::getInstance()->scene->procedureManager->pressedSide = "Left";
 			return "Joystick-4";
 		}
 	}
@@ -523,7 +523,7 @@ std::string Hydra::checkButtons()
 		if (!hydraPressed)
 		{
 			hydraPressed = true;
-			GameManager::getInstance()->scene->procedureManager->RightLeft = "Right";
+			GameManager::getInstance()->scene->procedureManager->pressedSide = "Right";
 			return "Joystick-4";
 		}
 	}
@@ -532,7 +532,7 @@ std::string Hydra::checkButtons()
 		if (!hydraPressed)
 		{
 			hydraPressed = true;
-			GameManager::getInstance()->scene->procedureManager->RightLeft = "Left";
+			GameManager::getInstance()->scene->procedureManager->pressedSide = "Left";
 			return "Joystick-C";
 		}
 	}
@@ -541,7 +541,7 @@ std::string Hydra::checkButtons()
 		if (!hydraPressed)
 		{
 			hydraPressed = true;
-			GameManager::getInstance()->scene->procedureManager->RightLeft = "Right";
+			GameManager::getInstance()->scene->procedureManager->pressedSide = "Right";
 			return "Joystick-C";
 		}
 	}
@@ -550,7 +550,7 @@ std::string Hydra::checkButtons()
 		if (!hydraPressed)
 		{
 			hydraPressed = true;
-			GameManager::getInstance()->scene->procedureManager->RightLeft = "Left";
+			GameManager::getInstance()->scene->procedureManager->pressedSide = "Left";
 			return "Joystick-Z";
 		}
 	}
@@ -559,7 +559,7 @@ std::string Hydra::checkButtons()
 		if (!hydraPressed)
 		{
 			hydraPressed = true;
-			GameManager::getInstance()->scene->procedureManager->RightLeft = "Right";
+			GameManager::getInstance()->scene->procedureManager->pressedSide = "Right";
 			return "Joystick-Z";
 		}
 	}
@@ -567,7 +567,7 @@ std::string Hydra::checkButtons()
 	{
 		if (hydraPressed)
 		{
-			GameManager::getInstance()->scene->procedureManager->RightLeft = "None";
+			GameManager::getInstance()->scene->procedureManager->pressedSide = "None";
 			hydraPressed = false;
 		}
 	}
