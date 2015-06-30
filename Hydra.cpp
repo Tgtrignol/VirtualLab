@@ -127,6 +127,12 @@ void Hydra::draw(float InitialModelView[16])
 	GLfloat projMatrix[16];
 	GLfloat modelViewMatrix[16];
 
+	uniform = glGetUniformLocation(shaderID, "noTexture");
+	glUniform1i(uniform, 1);
+
+	uniform = glGetUniformLocation(shaderID, "inputColor");
+	glUniform4f(uniform, 0.98, 0.87, 0.69, 1.0);
+
 	uniform = glGetUniformLocation(shaderID, "materialShininess");
 	glUniform1f(uniform, 80.0f);
 
@@ -169,7 +175,7 @@ void Hydra::draw(float InitialModelView[16])
 
 		glTranslatef(0.0f, SWORD_Y_OFFSET, 0.0f);
 
-		glScalef(0.0018f, 0.0018f, 0.0018f);
+		glScalef(0.2f, 0.2f, 0.2f);
 
 
 		uniform = glGetUniformLocation(shaderID, "projection");
@@ -200,7 +206,7 @@ void Hydra::draw(float InitialModelView[16])
 
 		glTranslatef(0.0f, SWORD_Y_OFFSET, 0.0f);
 
-		glScalef(0.0018f, 0.0018f, 0.0018f);
+		glScalef(0.2f, 0.2f, 0.2f);
 
 
 		uniform = glGetUniformLocation(shaderID, "projection");
@@ -428,9 +434,9 @@ void Hydra::update()
 
 void Hydra::initHydraModels()
 {
-	rightModel = new ObjModel("c:\\VrCave\\Development\\VirtualLab\\Data\\Sword01\\rusword.obj", 0, btVector3(0, -100, 0), btVector3(0.0018, 0.0018, 0.0018)); //TODO: Adjust scale
+	rightModel = new ObjModel("c:\\VrCave\\Development\\VirtualLab\\Data\\RightHand.obj", 0, btVector3(0, -100, 0), btVector3(0.0018, 0.0018, 0.0018)); //TODO: Adjust scale
 	rightModel->rigidBody->setUserPointer(this);
-	leftModel = new ObjModel("c:\\VrCave\\Development\\VirtualLab\\Data\\Sword02\\rusword.obj", 0, btVector3(0, -100, 0), btVector3(0.0018, 0.0018, 0.0018));
+	leftModel = new ObjModel("c:\\VrCave\\Development\\VirtualLab\\Data\\LeftHand.obj", 0, btVector3(0, -100, 0), btVector3(0.0018, 0.0018, 0.0018));
 	leftModel->rigidBody->setUserPointer(this);
 }
 

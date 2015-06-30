@@ -2,6 +2,9 @@
 
 // material settings
 uniform sampler2D texture;
+uniform bool noTexture;
+uniform vec4 inputColor;
+
 uniform float materialShininess;
 uniform vec3 materialSpecularColor;
 uniform vec3 cameraPosition;
@@ -26,7 +29,17 @@ void main()
 {
 	vec3 normal = normalize(transpose(inverse(mat3(modelView))) * fragNormal);
 	vec3 surfacePos = vec3(modelView * fragVert);
-	vec4 surfaceColor = texture2D(texture, fragTexCoord);
+	vec4 surfaceColor;
+	
+	if(noTexture)
+	{
+		surfaceColor = inputColor;
+	}
+	else
+	{
+		surfaceColor = texture2D(texture, fragTexCoord);
+	}
+
 	vec3 surfaceToLight = normalize(light.position - surfacePos);
 	vec3 surfaceToCamera = normalize(cameraPosition - surfacePos);
 	
