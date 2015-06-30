@@ -21,7 +21,7 @@ void ProcedureManager::init()
 	procedureFileLocations = dslReader->readProcedureLocationFromFile();
 	if (procedureFileLocations.size() > 0)//Test: instead of menu.
 	{
-		currentProcedureInformation = dslReader->readProcedureFromFile(procedureFileLocations[6]);
+		currentProcedureInformation = dslReader->readProcedureFromFile(procedureFileLocations[0]);
 	}
 
 	for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)
@@ -53,6 +53,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 	}
 
 	GameManager::getInstance()->scene->hud->buttonText = std::string(ControlEnumToString(controlEnum));
+	GameManager::getInstance()->scene->notes->errorText = "";
 
 	for each (KeyPoint *keyPoint in currentProcedureInformation->m_keyPoints)
 	{
@@ -149,6 +150,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		if (contextControl == 0 || contextObject == 0)
 			return;
 	
+		GameManager::getInstance()->scene->notes->errorText = "";
 		//Getting appliedObject and changingObject
 		ProcedureObject* appliedObject = 0;
 		ProcedureObject* changingObject = 0;
@@ -1038,6 +1040,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 	if (procedureCompleted)
 	{
 		//TODO: Do something for procedure completion.
+		GameManager::getInstance()->scene->notes->errorText = "You completed the procedure";
 	}
 }
 

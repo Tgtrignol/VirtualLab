@@ -70,7 +70,7 @@ void Notes::draw()
 {
 
 	if (errorText != "")
-		drawNotes(errorText.data(), errorText.length(), 200, 300, 0);
+		drawNotes(errorText.data(), errorText.length(), 200, 340, 0);
 
 }
 

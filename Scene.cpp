@@ -159,30 +159,30 @@ void Scene::update()
 	}
 
 	//Keyboard
-	if (WKey->isInitialized() && (WKey->getData() == DigitalState::ON || WKey->getData() == DigitalState::TOGGLE_ON))
-	{
-		MoveForward();
-	}
-	if (AKey->isInitialized() && (AKey->getData() == DigitalState::ON || AKey->getData() == DigitalState::TOGGLE_ON))
-	{
-		MoveLeft();
-	}
-	if (DKey->isInitialized() && (DKey->getData() == DigitalState::ON || DKey->getData() == DigitalState::TOGGLE_ON))
-	{
-		MoveRight();
-	}
-	if (SKey->isInitialized() && (SKey->getData() == DigitalState::ON || SKey->getData() == DigitalState::TOGGLE_ON))
-	{
-		MoveBackward();
-	}
-	if (QKey->isInitialized() && (QKey->getData() == DigitalState::ON || QKey->getData() == DigitalState::TOGGLE_ON))
-	{
-		MoveUpward();
-	}
-	if (EKey->isInitialized() && (EKey->getData() == DigitalState::ON || EKey->getData() == DigitalState::TOGGLE_ON))
-	{
-		MoveDownward();
-	}
+	//if (WKey->isInitialized() && (WKey->getData() == DigitalState::ON || WKey->getData() == DigitalState::TOGGLE_ON))
+	//{
+	//	MoveForward();
+	//}
+	//if (AKey->isInitialized() && (AKey->getData() == DigitalState::ON || AKey->getData() == DigitalState::TOGGLE_ON))
+	//{
+	//	MoveLeft();
+	//}
+	//if (DKey->isInitialized() && (DKey->getData() == DigitalState::ON || DKey->getData() == DigitalState::TOGGLE_ON))
+	//{
+	//	MoveRight();
+	//}
+	//if (SKey->isInitialized() && (SKey->getData() == DigitalState::ON || SKey->getData() == DigitalState::TOGGLE_ON))
+	//{
+	//	MoveBackward();
+	//}
+	//if (QKey->isInitialized() && (QKey->getData() == DigitalState::ON || QKey->getData() == DigitalState::TOGGLE_ON))
+	//{
+	//	MoveUpward();
+	//}
+	//if (EKey->isInitialized() && (EKey->getData() == DigitalState::ON || EKey->getData() == DigitalState::TOGGLE_ON))
+	//{
+	//	MoveDownward();
+	//}
 	if (UpKey->isInitialized() && (UpKey->getData() == DigitalState::ON || UpKey->getData() == DigitalState::TOGGLE_ON))
 	{
 		RotateUp();
