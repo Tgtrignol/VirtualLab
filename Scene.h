@@ -16,6 +16,7 @@ class Hydra;
 class CameraCharacter;
 class StaticLabEnvironment;
 class StaticBoard;
+class StaticMenu;
 class ProcedureManager;
 class Notes;
 class HUD;
@@ -68,7 +69,10 @@ private:
 	DigitalDevice *DownKey;
 	DigitalDevice *LeftKey;
 	DigitalDevice *RightKey;
+	DigitalDevice *SpaceKey;
 	//End Keyboard
+
+	bool asMenu = true;
 
 public:
 	Floor *f;
@@ -80,6 +84,7 @@ public:
 	Notes *notes;
 	HUD *hud;
 	Menu *menu;
+	StaticMenu *staticMenu;
 
 	Scene();
 	~Scene();

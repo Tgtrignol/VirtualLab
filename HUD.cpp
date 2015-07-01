@@ -23,6 +23,8 @@ HUD::~HUD() {
 
 void HUD::draw() {
 
+	//postProcessing->draw();
+
 	if (GameManager::getInstance()->scene->procedureManager->righternSelectedProcedureObject != NULL) {
 		for each (Control *control in GameManager::getInstance()->scene->procedureManager->righternSelectedProcedureObject->controls)
 		{
@@ -43,7 +45,7 @@ void HUD::draw() {
 
 	//GameManager::getInstance()->scene->notes->drawNotes(buttonText.data(), buttonText.length(), 200, 300, 0);
 
-	//postProcessing->draw();
+
 
 }
 
