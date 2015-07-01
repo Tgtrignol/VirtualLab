@@ -12,6 +12,7 @@ Notes::Notes() {
 	textRepresentation = new TextRepresentation();
 }
 
+
 void Notes::drawBoardTxt() {
 
 	glPopMatrix();
@@ -29,7 +30,11 @@ void Notes::drawBoardTxt() {
 void Notes::draw()
 {
 
+
+
 }
+
+
 
 void Notes::init()
 {

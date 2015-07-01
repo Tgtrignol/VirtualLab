@@ -77,7 +77,6 @@ Scene::Scene()
 	hud = new HUD();
 
 	hydra = new Hydra();
-	hydra->init();
 
 	f = new Floor();
 
@@ -222,6 +221,7 @@ void Scene::update()
 	{
 
 		if (asMenu == true) {
+			hydra->init();
 			procedureManager->procedureNumber = menuItem;
 			procedureManager->init();
 			asMenu = false;
@@ -231,9 +231,11 @@ void Scene::update()
 
 	//End of keyboard
 
-	hydra->update();
-	if (asMenu == false)
+
+	if (asMenu == false) {
+		hydra->update();
 		procedureManager->update(StringToControlEnum(hydra->checkButtons()));
+	}
 }
 
 void Scene::update(double frameTime, double totalTime)
@@ -261,24 +263,28 @@ void Scene::draw(DrawMode drawMode)
 	world->debugDrawWorld();
 #endif
 
-	hydra->draw(InitialModelView);
-
 	//f->draw();
 
 	if (menu != nullptr && asMenu == true) {
+		//staticMenu->draw();
 		menu->draw();
 		menu->drawList(GameManager::getInstance()->menu->procedureNames);
 		menu->drawCursor(menuItem);
-		//staticMenu->draw();
 	}
 	else {
+		hydra->draw(InitialModelView);
 		procedureManager->draw();
+		hud->draw();
 	}
 
 	lab->draw();
 
-	if (hud != nullptr)
-		hud->draw();
+
+	if (notes != nullptr)
+	{
+		notes->draw();
+		//notes->drawList(GameManager::getInstance()->menu->procedureNames);
+	}
 
 	board->draw();
 

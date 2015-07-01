@@ -22,8 +22,6 @@ Menu::~Menu() {
 
 void Menu::draw() {
 
-	if (errorText != "")
-		textRepresentation->drawText(errorText.data(), errorText.length(), 200, 340, 0);
 
 }
 

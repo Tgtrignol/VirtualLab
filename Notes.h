@@ -15,6 +15,7 @@ public:
 	void init();
 	void drawBoardTxt();
 
+
 private:
 	ProcedureInformation *m_pProcedureInformation;
 	TextRepresentation *textRepresentation;

@@ -20,7 +20,6 @@ public:
 	void init();
 
 	TextRepresentation* textRepresentation;
-	std::string errorText = "";
 	std::vector<std::string> procedureNames;
 
 	int numberOfProcedures = 0;
