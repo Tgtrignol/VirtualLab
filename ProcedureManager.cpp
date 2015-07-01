@@ -6,7 +6,7 @@
 #include "Control.h"
 #include "GameManager.h"
 #include "Scene.h"
-#include "Notes.h"
+#include "Menu.h"
 #include "hud.h"
 #include <iostream>
 
@@ -53,7 +53,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 	}
 
 	GameManager::getInstance()->scene->hud->buttonText = std::string(ControlEnumToString(controlEnum));
-	GameManager::getInstance()->scene->notes->errorText = "";
+	GameManager::getInstance()->scene->menu->errorText = "";
 
 	for each (KeyPoint *keyPoint in currentProcedureInformation->m_keyPoints)
 	{
@@ -125,7 +125,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 					}
 					if (!pressedRight)
 					{
-						GameManager::getInstance()->scene->notes->errorText = "Wrong control";
+						GameManager::getInstance()->scene->menu->errorText = "Wrong control";
 						//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 					}
 				}
@@ -150,7 +150,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 		if (contextControl == 0 || contextObject == 0)
 			return;
 	
-		GameManager::getInstance()->scene->notes->errorText = "";
+		GameManager::getInstance()->scene->menu->errorText = "";
 		//Getting appliedObject and changingObject
 		ProcedureObject* appliedObject = 0;
 		ProcedureObject* changingObject = 0;
@@ -275,14 +275,14 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					GameManager::getInstance()->scene->notes->errorText = "You need another item";
+					GameManager::getInstance()->scene->menu->errorText = "You need another item";
 					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
 			else
 			{
 				keyPoint->m_isSuccessTriggered = false;
-				GameManager::getInstance()->scene->notes->errorText = "You need another item";
+				GameManager::getInstance()->scene->menu->errorText = "You need another item";
 				//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 			}
 		}
@@ -298,14 +298,14 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					GameManager::getInstance()->scene->notes->errorText = "You dont have a item with liquid to flush";
+					GameManager::getInstance()->scene->menu->errorText = "You dont have a item with liquid to flush";
 					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
 			else
 			{
 				keyPoint->m_isSuccessTriggered = false;
-				GameManager::getInstance()->scene->notes->errorText = "You dont have a item with liquid to flush";
+				GameManager::getInstance()->scene->menu->errorText = "You dont have a item with liquid to flush";
 				//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 			}
 		}
@@ -327,14 +327,14 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					GameManager::getInstance()->scene->notes->errorText = "You dont have a item to fill";
+					GameManager::getInstance()->scene->menu->errorText = "You dont have a item to fill";
 					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
 			else
 			{
 				keyPoint->m_isSuccessTriggered = false;
-				GameManager::getInstance()->scene->notes->errorText = "You dont have a item to fill";
+				GameManager::getInstance()->scene->menu->errorText = "You dont have a item to fill";
 				//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 			}
 		}
@@ -357,14 +357,14 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					GameManager::getInstance()->scene->notes->errorText = "You dont have a item to fill";
+					GameManager::getInstance()->scene->menu->errorText = "You dont have a item to fill";
 					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
 			else
 			{
 				keyPoint->m_isSuccessTriggered = false;
-				GameManager::getInstance()->scene->notes->errorText = "You dont have a item to fill";
+				GameManager::getInstance()->scene->menu->errorText = "You dont have a item to fill";
 				//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 			}
 		}
@@ -445,14 +445,14 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					GameManager::getInstance()->scene->notes->errorText = "You dont have a item to attach to";
+					GameManager::getInstance()->scene->menu->errorText = "You dont have a item to attach to";
 					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
 			else
 			{
 				keyPoint->m_isSuccessTriggered = false;
-				GameManager::getInstance()->scene->notes->errorText = "You dont have a item to attach to";
+				GameManager::getInstance()->scene->menu->errorText = "You dont have a item to attach to";
 				//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 			}
 		}
@@ -481,7 +481,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+					GameManager::getInstance()->scene->menu->errorText = "You need to grab the item to do the action";
 					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
@@ -507,7 +507,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+					GameManager::getInstance()->scene->menu->errorText = "You need to grab the item to do the action";
 					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
@@ -614,7 +614,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+					GameManager::getInstance()->scene->menu->errorText = "You need to grab the item to do the action";
 					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
@@ -656,7 +656,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					GameManager::getInstance()->scene->notes->errorText = "You dont have a item to cork";
+					GameManager::getInstance()->scene->menu->errorText = "You dont have a item to cork";
 					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
@@ -694,7 +694,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					GameManager::getInstance()->scene->notes->errorText = "You dont have a item to dump solid in";
+					GameManager::getInstance()->scene->menu->errorText = "You dont have a item to dump solid in";
 					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
@@ -735,7 +735,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+					GameManager::getInstance()->scene->menu->errorText = "You need to grab the item to do the action";
 					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
@@ -766,7 +766,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+					GameManager::getInstance()->scene->menu->errorText = "You need to grab the item to do the action";
 					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
@@ -824,7 +824,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+					GameManager::getInstance()->scene->menu->errorText = "You need to grab the item to do the action";
 					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
@@ -850,7 +850,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+					GameManager::getInstance()->scene->menu->errorText = "You need to grab the item to do the action";
 					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
@@ -882,7 +882,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+					GameManager::getInstance()->scene->menu->errorText = "You need to grab the item to do the action";
 					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
@@ -937,14 +937,14 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+					GameManager::getInstance()->scene->menu->errorText = "You need to grab the item to do the action";
 					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
 			else
 			{
 				keyPoint->m_isSuccessTriggered = false;
-				GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+				GameManager::getInstance()->scene->menu->errorText = "You need to grab the item to do the action";
 				//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 			}
 		}
@@ -968,14 +968,14 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+					GameManager::getInstance()->scene->menu->errorText = "You need to grab the item to do the action";
 					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
 			else
 			{
 				keyPoint->m_isSuccessTriggered = false;
-				GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+				GameManager::getInstance()->scene->menu->errorText = "You need to grab the item to do the action";
 				//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 			}
 		}
@@ -999,14 +999,14 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				else
 				{
 					keyPoint->m_isSuccessTriggered = false;
-					GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+					GameManager::getInstance()->scene->menu->errorText = "You need to grab the item to do the action";
 					//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 				}
 			}
 			else
 			{
 				keyPoint->m_isSuccessTriggered = false;
-				GameManager::getInstance()->scene->notes->errorText = "You need to grab the item to do the action";
+				GameManager::getInstance()->scene->menu->errorText = "You need to grab the item to do the action";
 				//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 			}
 		}
@@ -1040,7 +1040,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 	if (procedureCompleted)
 	{
 		//TODO: Do something for procedure completion.
-		GameManager::getInstance()->scene->notes->errorText = "You completed the procedure";
+		GameManager::getInstance()->scene->menu->errorText = "You completed the procedure";
 	}
 }
 

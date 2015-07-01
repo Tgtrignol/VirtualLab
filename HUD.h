@@ -14,7 +14,6 @@ public:
 	void init();
 	void draw();
 	string buttonText;
-	PostProcessing* postProcessing;
 
 };
 

@@ -5,22 +5,19 @@
 
 struct ProcedureInformation;
 
+class TextRepresentation;
+
 class Notes {
 
 public:
 	Notes();
 	void draw();
 	void init();
-	void drawNotes(const char*, int, int, int, int);
-	void drawStaticTxt(const char*, int);
 	void drawBoardTxt();
-	void drawButtonTxt();
-	void drawList(std::vector<std::string>);
-	std::string buttonText;
-	std::string errorText = "";
 
 private:
 	ProcedureInformation *m_pProcedureInformation;
+	TextRepresentation *textRepresentation;
 
 };
 

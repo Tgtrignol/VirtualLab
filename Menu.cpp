@@ -6,17 +6,13 @@
 #include "DSLReader.h"
 #include "Notes.h"
 #include "StaticMenu.h"
+#include "TextRepresentation.h"
 
 using namespace std;
 
 Menu::Menu() {
-	
-	init();
 
-	notes = new Notes();
-
-	//staticMenu = new StaticMenu();
-	//staticMenu->init();
+	textRepresentation = new TextRepresentation();
 
 }
 
@@ -24,30 +20,23 @@ Menu::~Menu() {
 
 }
 
-void Menu::selectMenuItem() {
-
-	
-	
-
-}
-
 void Menu::draw() {
 
-	//staticMenu->draw();
-
-	glPushMatrix();
-
-	for (int i = 0; i < ProcedureManager::getInstance()->dslReader->menuItem.size(); i++) {
-
-//	GameManager::getInstance()->scene->notes->drawNotes(ProcedureManager::getInstance()->dslReader->menuItem.data(),
-	//	ProcedureManager::getInstance()->dslReader->menuItem.length(), 200.0f, 300.0f, 0.0f);
-		
-
-	}
-
-	glPopMatrix();
+	if (errorText != "")
+		textRepresentation->drawText(errorText.data(), errorText.length(), 200, 340, 0);
 
 }
+
+void Menu::drawList(std::vector<std::string> list)
+{
+
+	for (int i = 0; i < list.size(); i++)
+	{
+		textRepresentation->drawText(list[i].data(), list[i].length(), 200, 300 + (i * 10), 0);
+	}
+
+}
+
 
 void Menu::init() {
 	procedureFileLocations = DSLReader().readProcedureLocationFromFile();
