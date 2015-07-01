@@ -51,6 +51,34 @@ void Notes::drawNotes(const char *text, int length, int x, int y, int z) {
 
 }
 
+void Notes::drawNotes(const char *text, int length, int x, int y, int z, GLfloat r, GLfloat g, GLfloat b) {
+
+	glPushMatrix();
+	glMatrixMode(GL_PROJECTION);
+	glColor3f(r, g, b);
+
+	glPushMatrix();
+	glLoadIdentity();
+	glOrtho(0, 800, 0, 600, -5, 5);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	glPushMatrix();
+	glLoadIdentity();
+	glRasterPos3i(x, y, z);
+
+	for (int i = 0; i < length; i++) {
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, (int)text[i]);
+	}
+
+	glPopMatrix();
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+
+}
+
 void Notes::drawBoardTxt() {
 
 	glPopMatrix();
@@ -70,18 +98,27 @@ void Notes::draw()
 {
 
 	if (errorText != "")
-		drawNotes(errorText.data(), errorText.length(), 200, 340, 0);
+		drawNotes(errorText.data(), errorText.length(), 320, 360, 0);
 
 }
 
 void Notes::drawList(std::vector<std::string> list)
 {
-	/*
+	
 	for (int i = 0; i < list.size(); i++)
 	{
 		drawNotes(list[i].data(), list[i].length(), 200, 300 + (i * 10), 0);
 	}
-	*/
+	
+}
+
+void Notes::drawList(std::vector<std::string> list , int x, int y, int z)
+{
+	for (int i = 0; i < list.size(); i++)
+	{
+		drawNotes(list[i].data(), list[i].length(), x, y - (i * 10), z, 0.0f, 0.0f, 0.0f);
+	}
+
 }
 
 void Notes::init()

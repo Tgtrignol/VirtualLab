@@ -237,7 +237,7 @@ void Scene::draw(DrawMode drawMode)
 	if (notes != nullptr)
 	{
 		notes->draw();
-		notes->drawList(GameManager::getInstance()->menu->procedureNames);
+		//notes->drawList(GameManager::getInstance()->menu->procedureNames);
 	}
 	if (hud != nullptr)
 		hud->draw();
