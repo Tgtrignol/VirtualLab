@@ -195,29 +195,37 @@ void Scene::update()
 	if (UpKey->isInitialized() && (UpKey->getData() == DigitalState::ON || UpKey->getData() == DigitalState::TOGGLE_ON))
 	{
 		if (asMenu == true) {
-			//if (menuItem > 0)
-			menuItem += 1;
+			if (!buttonPressed)
+			{
+				if (menuItem < menu->numberOfProcedures-1)
+					menuItem += 1;
+				buttonPressed = true;
+
+			}
 		} else
 			RotateUp();
 	}
-	if (DownKey->isInitialized() && (DownKey->getData() == DigitalState::ON || DownKey->getData() == DigitalState::TOGGLE_ON))
+	else if (DownKey->isInitialized() && (DownKey->getData() == DigitalState::ON || DownKey->getData() == DigitalState::TOGGLE_ON))
 	{
 		if (asMenu == true) {
-			//if (menuItem < procedureManager->procedureNumber)
-			//if (menuItem > 0)
-			menuItem -= 1;
+			if (!buttonPressed)
+			{
+				if (menuItem > 0)
+					menuItem -= 1;
+				buttonPressed = true;
+			}
 		} else
 			RotateDown();
 	}
-	if (LeftKey->isInitialized() && (LeftKey->getData() == DigitalState::ON || LeftKey->getData() == DigitalState::TOGGLE_ON))
+	else if (LeftKey->isInitialized() && (LeftKey->getData() == DigitalState::ON || LeftKey->getData() == DigitalState::TOGGLE_ON))
 	{
 		RotateLeft();
 	}
-	if (RightKey->isInitialized() && (RightKey->getData() == DigitalState::ON || RightKey->getData() == DigitalState::TOGGLE_ON))
+	else if (RightKey->isInitialized() && (RightKey->getData() == DigitalState::ON || RightKey->getData() == DigitalState::TOGGLE_ON))
 	{
 		RotateRight();
 	}
-	if (SpaceKey->isInitialized() && (SpaceKey->getData() == DigitalState::ON || SpaceKey->getData() == DigitalState::TOGGLE_ON))
+	else if (SpaceKey->isInitialized() && (SpaceKey->getData() == DigitalState::ON || SpaceKey->getData() == DigitalState::TOGGLE_ON))
 	{
 
 		if (asMenu == true) {
@@ -228,7 +236,10 @@ void Scene::update()
 		}
 
 	}
-
+	else if (DownKey->getData() == DigitalState::OFF  || UpKey->getData() == DigitalState::OFF )
+	{
+		buttonPressed = false;
+	}
 	//End of keyboard
 
 

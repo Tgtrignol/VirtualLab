@@ -40,8 +40,8 @@ void Menu::drawCursor(int menuItem) {
 	string cursor = ">";
 	textRepresentation->drawText(cursor.data(), cursor.length(), 190, 300 + (menuItem * 10), 0);
 
-	string txt = "Procedure: " + std::to_string(menuItem);
-	textRepresentation->drawText(txt.data(), txt.length(), 200, 370, 0);
+	//string txt = "Procedure: " + std::to_string(menuItem);
+	//textRepresentation->drawText(txt.data(), txt.length(), 200, 370, 0);
 
 }
 

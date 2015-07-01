@@ -74,6 +74,7 @@ private:
 
 	bool asMenu = true;
 	int menuItem = 0;
+	int buttonPressed = false;
 
 public:
 	Floor *f;
