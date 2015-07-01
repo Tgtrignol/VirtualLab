@@ -534,8 +534,8 @@ void ObjModel::loadMaterialFile( std::string fileName, std::string dirName )
 			currentMaterial->bumpMapStr = dirName + "/" + params[1];
 			currentMaterial->bumpMap = textureCreate(currentMaterial->bumpMapStr);
 		}
-		else
-			std::cout<<"Didn't parse "<<params[0]<<" in material file"<<std::endl;
+		//else
+			//std::cout<<"Didn't parse "<<params[0]<<" in material file"<<std::endl;
 	}
 	if(currentMaterial != NULL)
 		objModelCore->materials.push_back(currentMaterial);
