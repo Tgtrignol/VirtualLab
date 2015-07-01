@@ -39,6 +39,7 @@
     <ClInclude Include="StaticBoard.h" />
     <ClInclude Include="StaticEnvironment.h" />
     <ClInclude Include="StaticLabEnvironment.h" />
+    <ClInclude Include="StaticMenu.h" />
     <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +68,7 @@
     <ClCompile Include="StaticBoard.cpp" />
     <ClCompile Include="StaticEnvironment.cpp" />
     <ClCompile Include="StaticLabEnvironment.cpp" />
+    <ClCompile Include="StaticMenu.cpp" />
     <ClCompile Include="stb_image.c" />
   </ItemGroup>
   <ItemGroup>

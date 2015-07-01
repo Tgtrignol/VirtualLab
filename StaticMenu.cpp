@@ -1,22 +1,35 @@
 #include <GL/glew.h>
-#include "StaticBoard.h"
+#include "StaticMenu.h"
 #include "Camera.h"
 #include <btBulletCollisionCommon.h>
 #include <glm/glm.hpp>
 #include "Shader.h"
 #include "ObjModel.h"
 
-void StaticBoard::init()
+void StaticMenu::init()
 {
 	shaderID = initShader("procedureObject");
 	btScalar mass = 0.0;
-	pObjModel = new ObjModel("c:\\VrCave\\Development\\VirtualLab\\Data\\Board.obj", mass, btVector3(0.5, 0.9, 1), btVector3(1, 1, 1));
+	pObjModel = new ObjModel("c:\\VrCave\\Development\\VirtualLab\\Data\\Menu.obj", mass, btVector3(0, 0, 0), btVector3(1, 1, 1));
 }
 
 
-void StaticBoard::draw()
+void StaticMenu::draw()
 {
+
 	glPushMatrix();
+	glMatrixMode(GL_PROJECTION);
+
+	glPushMatrix();
+	glLoadIdentity();
+	glOrtho(0, 800, 0, 600, 0, 0);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	glPushMatrix();
+	glLoadIdentity();
+	glTranslatef(-0.65f,-0.55f,0);
+
 	glUseProgram(shaderID);
 
 	btTransform trans;
@@ -27,8 +40,7 @@ void StaticBoard::draw()
 
 	GLint uniform = 0;
 
-	glRotatef(180.0f, 0, 1, 0);
-	glScalef(0.02f, 0.02f, 0.02f);
+	glScalef(0.5f, 0.4f, 0.4f);
 
 	uniform = glGetUniformLocation(shaderID, "useWater");
 	glUniform1i(uniform, false);
@@ -70,5 +82,11 @@ void StaticBoard::draw()
 	pObjModel->draw(shaderID);
 
 	glUseProgram(0);
+
 	glPopMatrix();
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+
 }

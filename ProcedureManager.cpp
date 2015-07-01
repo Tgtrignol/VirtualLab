@@ -95,7 +95,7 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				{	
 					for each (Control *control in procedureObject->controls)
 					{
-						if (control->m_primitive == "GrabRelease" && control->m_control == controlEnum)
+						if ((control->m_primitive == "GrabRelease" || control->m_primitive == "ReadAmount") && control->m_control == controlEnum)
 						{
 							contextObject = procedureObject;
 							contextControl = control;
@@ -246,6 +246,21 @@ void ProcedureManager::update(ControlEnum controlEnum)
 			else
 			{
 				keyPoint->m_isSuccessTriggered = false;
+				//TODO: Show error sign
+			}
+		}
+		else if (contextControl->m_primitive == "ReadAmount")
+		{
+			if (contextControl->m_control == controlEnum)
+			{
+				//ContextObject: Burette
+				int amount = (contextObject->waterDirectionMax->getY() - contextObject->waterDirectionMin->getY());
+				GameManager::getInstance()->scene->notes->errorText = "Amount in burette: " + std::to_string(amount);
+
+				//Get watermax height
+			}
+			else
+			{
 				//TODO: Show error sign
 			}
 		}
@@ -1065,23 +1080,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 				//GameManager::getInstance()->scene->notes->drawNotes(message.data(), message.length(), 200, 100, 0);
 			}
 		}
-		else if ((keyPoint->m_primitive == "ReadAmount"&& doingProcedure) || contextControl->m_primitive == "ReadAmount")
-		{
-			if (contextControl->m_control == controlEnum)
-			{
-				//ContextObject: Burette
-				int amount = (contextObject->waterDirectionMax->getY() - contextObject->waterDirectionMin->getY());
-				GameManager::getInstance()->scene->notes->errorText = "Amount in burette: " + amount;
-
-				//Get watermax height
-				keyPoint->m_isSuccessTriggered = true;
-			}
-			else
-			{
-				keyPoint->m_isSuccessTriggered = false;
-				//TODO: Show error sign
-			}
-		}
 
 		break;
 	}
@@ -1095,7 +1093,6 @@ void ProcedureManager::update(ControlEnum controlEnum)
 
 	if (procedureCompleted)
 	{
-		//TODO: Do something for procedure completion.
 		GameManager::getInstance()->scene->notes->errorText = "You completed the procedure";
 	}
 }

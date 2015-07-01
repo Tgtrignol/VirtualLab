@@ -16,6 +16,7 @@
 #include "HUD.h"
 #include "Menu.h"
 #include "StaticBoard.h"
+#include "StaticMenu.h"
 
 #include <iostream>
 #include <VrLib\Application.h>
@@ -56,6 +57,7 @@ Scene::Scene()
 	DownKey = new DigitalDevice();
 	LeftKey = new DigitalDevice();
 	RightKey = new DigitalDevice();
+	SpaceKey = new DigitalDevice();
 
 	head->init("MainUserHead");
 	WKey->init("WKey");
@@ -68,6 +70,7 @@ Scene::Scene()
 	DownKey->init("DownKey");
 	LeftKey->init("LeftKey");
 	RightKey->init("RightKey");
+	SpaceKey->init("SpaceKey");
 
 	notes = new Notes();
 	hud = new HUD();
@@ -82,6 +85,9 @@ Scene::Scene()
 
 	board = new StaticBoard();
 	board->init();
+
+	staticMenu = new StaticMenu();
+	staticMenu->init();
 
 	broadphase = new btDbvtBroadphase();
 	collisionConfiguration = new btDefaultCollisionConfiguration();
@@ -116,6 +122,7 @@ Scene::~Scene()
 	delete DownKey;
 	delete LeftKey;
 	delete RightKey;
+	delete SpaceKey;
 
 	delete world;
 	delete solver;
@@ -199,6 +206,11 @@ void Scene::update()
 	{
 		RotateRight();
 	}
+	if (SpaceKey->isInitialized() && (SpaceKey->getData() == DigitalState::ON || SpaceKey->getData() == DigitalState::TOGGLE_ON))
+	{
+		asMenu = false;
+	}
+
 	//End of keyboard
 
 	hydra->update();
@@ -233,7 +245,14 @@ void Scene::draw(DrawMode drawMode)
 	hydra->draw(InitialModelView);
 
 	//f->draw();
+
+	if (asMenu == true) {
+		staticMenu->draw();
+		menu->draw();
+	}
+
 	lab->draw();
+
 	if (notes != nullptr)
 	{
 		notes->draw();
@@ -241,8 +260,6 @@ void Scene::draw(DrawMode drawMode)
 	}
 	if (hud != nullptr)
 		hud->draw();
-	//if (menu != nullptr)
-		menu->draw();
 
 	board->draw();
 

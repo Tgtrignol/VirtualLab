@@ -2,8 +2,8 @@ Name Titrate
 
 Item Burette Buret.obj 0 0 0 60 0 0 240 0 Table 0 0 -0.4 0 0 0 0.003 0.003 0.003 0.1 0.3 0.4 0.8
 Control Joystick-1 OpenCloseTap
-Control Joystick-2 Titrate1Ml
-Control Joystick-3 ReadAmount
+Control Joystick-2 ReadAmount
+Control Joystick-3 Titrate1Ml
 
 Item Burette_with_Funnel Buret_en_Trechter.obj 1 0 0 39 0 0 59 0 Table -0.055 0 -0.53 0 0 0 0.0045 0.0045 0.0045 0.1 0.3 0.4 0.8
 Control Joystick-1 OpenCloseTap
@@ -68,11 +68,11 @@ Procedure Deattach_the_Funnel Detach_Funnel Burette_with_Funnel Funnel Burette
 
 //Titrate
 //Grab the Erlenmeyer_flask and start titrating
-Procedure Read_the_amount_of_liquid_in_the_burette ReadAmount Burette
+//Procedure Read_the_amount_of_liquid_in_the_burette ReadAmount Burette
 //Procedure Grab_the_Erlenmeyer_flask GrabRelease Erlenmeyer_flask
 Procedure Switch_the_tap_to_pour_1_milliliter_in_the_Erlenmeyer Titrate1Ml Burette Erlenmeyer_flask
 Procedure Switch_the_tap_to_pour_1_milliliter_in_the_Erlenmeyer Titrate1Ml Burette Erlenmeyer_flask
 Procedure Switch_the_tap_to_pour_1_milliliter_in_the_Erlenmeyer Titrate1Ml Burette Erlenmeyer_flask
 Procedure Switch_the_tap_to_pour_1_milliliter_in_the_Erlenmeyer Titrate1Ml Burette Erlenmeyer_flask
 Procedure Switch_the_tap_to_pour_1_milliliter_in_the_Erlenmeyer Titrate1Ml Burette Erlenmeyer_flask
-Procedure Read_the_amount_of_liquid_in_the_burette ReadAmount Burette
+//Procedure Read_the_amount_of_liquid_in_the_burette ReadAmount Burette
