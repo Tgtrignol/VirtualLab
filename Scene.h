@@ -73,6 +73,7 @@ private:
 	//End Keyboard
 
 	bool asMenu = true;
+	int menuItem = 0;
 
 public:
 	Floor *f;

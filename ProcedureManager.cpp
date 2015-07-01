@@ -21,7 +21,7 @@ void ProcedureManager::init()
 	procedureFileLocations = dslReader->readProcedureLocationFromFile();
 	if (procedureFileLocations.size() > 0)//Test: instead of menu.
 	{
-		currentProcedureInformation = dslReader->readProcedureFromFile(procedureFileLocations[0]);
+		currentProcedureInformation = dslReader->readProcedureFromFile(procedureFileLocations[procedureNumber]);
 	}
 
 	for each (ProcedureObject *procedureObject in currentProcedureInformation->m_procedureObjects)

@@ -15,12 +15,15 @@ public:
 	~Menu();
 
 	void draw();
+	void drawCursor(int);
 	void drawList(std::vector<std::string> list);
 	void init();
 
 	TextRepresentation* textRepresentation;
 	std::string errorText = "";
 	std::vector<std::string> procedureNames;
+
+	int numberOfProcedures = 0;
 
 };
 

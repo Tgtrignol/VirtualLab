@@ -13,7 +13,6 @@ void StaticMenu::init()
 	pObjModel = new ObjModel("c:\\VrCave\\Development\\VirtualLab\\Data\\Menu.obj", mass, btVector3(0, 0, 0), btVector3(1, 1, 1));
 }
 
-
 void StaticMenu::draw()
 {
 

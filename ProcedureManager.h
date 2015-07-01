@@ -24,6 +24,7 @@ public:
 	ProcedureObject *lefternSelectedProcedureObject;
 	std::string pressedSide = "None";
 	DSLReader* dslReader = new DSLReader();
+	int procedureNumber = 0;
 
 private:
 	std::vector<std::string> procedureFileLocations;

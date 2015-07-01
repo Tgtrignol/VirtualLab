@@ -111,7 +111,6 @@ Scene::Scene()
 	gContactProcessedCallback = &contactProcessedCallback;
 
 	procedureManager = new ProcedureManager();
-	procedureManager->init();
 }
 
 Scene::~Scene()
@@ -196,11 +195,20 @@ void Scene::update()
 	//}
 	if (UpKey->isInitialized() && (UpKey->getData() == DigitalState::ON || UpKey->getData() == DigitalState::TOGGLE_ON))
 	{
-		RotateUp();
+		if (asMenu == true) {
+			//if (menuItem > 0)
+			menuItem += 1;
+		} else
+			RotateUp();
 	}
 	if (DownKey->isInitialized() && (DownKey->getData() == DigitalState::ON || DownKey->getData() == DigitalState::TOGGLE_ON))
 	{
-		RotateDown();
+		if (asMenu == true) {
+			//if (menuItem < procedureManager->procedureNumber)
+			//if (menuItem > 0)
+			menuItem -= 1;
+		} else
+			RotateDown();
 	}
 	if (LeftKey->isInitialized() && (LeftKey->getData() == DigitalState::ON || LeftKey->getData() == DigitalState::TOGGLE_ON))
 	{
@@ -212,13 +220,20 @@ void Scene::update()
 	}
 	if (SpaceKey->isInitialized() && (SpaceKey->getData() == DigitalState::ON || SpaceKey->getData() == DigitalState::TOGGLE_ON))
 	{
-		asMenu = false;
+
+		if (asMenu == true) {
+			procedureManager->procedureNumber = menuItem;
+			procedureManager->init();
+			asMenu = false;
+		}
+
 	}
 
 	//End of keyboard
 
 	hydra->update();
-	procedureManager->update(StringToControlEnum(hydra->checkButtons()));
+	if (asMenu == false)
+		procedureManager->update(StringToControlEnum(hydra->checkButtons()));
 }
 
 void Scene::update(double frameTime, double totalTime)
@@ -253,7 +268,11 @@ void Scene::draw(DrawMode drawMode)
 	if (menu != nullptr && asMenu == true) {
 		menu->draw();
 		menu->drawList(GameManager::getInstance()->menu->procedureNames);
-		staticMenu->draw();
+		menu->drawCursor(menuItem);
+		//staticMenu->draw();
+	}
+	else {
+		procedureManager->draw();
 	}
 
 	lab->draw();
@@ -262,8 +281,6 @@ void Scene::draw(DrawMode drawMode)
 		hud->draw();
 
 	board->draw();
-
-	procedureManager->draw();
 
 	glPopMatrix();
 
