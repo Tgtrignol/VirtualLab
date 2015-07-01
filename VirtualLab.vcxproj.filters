@@ -95,13 +95,13 @@
     <ClInclude Include="Menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RepresentationTxt.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="StaticBoard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="StaticMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextRepresentation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -178,13 +178,13 @@
     <ClCompile Include="Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RepresentationTxt.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="StaticBoard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="StaticMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextRepresentation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -5,8 +5,6 @@
 #include <vector>
 #include "Notes.h"
 
-class StaticMenu;
-
 class Menu {
 
 private:
@@ -17,12 +15,10 @@ public:
 	~Menu();
 
 	void draw();
+	void drawList(std::vector<std::string> list);
 	void init();
-	void drawButtons(int, int, int);
-	void selectMenuItem();
 
-	Notes* notes;
-	//StaticMenu* staticMenu;
+	TextRepresentation* textRepresentation;
 	std::vector<std::string> procedureNames;
 
 };

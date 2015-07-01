@@ -17,6 +17,7 @@
 #include "Menu.h"
 #include "StaticBoard.h"
 #include "StaticMenu.h"
+#include "TextRepresentation.h"
 
 #include <iostream>
 #include <VrLib\Application.h>
@@ -85,6 +86,9 @@ Scene::Scene()
 
 	board = new StaticBoard();
 	board->init();
+
+	menu = new Menu();
+	menu->init();
 
 	staticMenu = new StaticMenu();
 	staticMenu->init();
@@ -246,18 +250,21 @@ void Scene::draw(DrawMode drawMode)
 
 	//f->draw();
 
-	if (asMenu == true) {
-		staticMenu->draw();
+	if (menu != nullptr && asMenu == true) {
 		menu->draw();
+		menu->drawList(GameManager::getInstance()->menu->procedureNames);
+		staticMenu->draw();
 	}
 
 	lab->draw();
+
 
 	if (notes != nullptr)
 	{
 		notes->draw();
 		//notes->drawList(GameManager::getInstance()->menu->procedureNames);
 	}
+
 	if (hud != nullptr)
 		hud->draw();
 

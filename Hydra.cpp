@@ -14,7 +14,7 @@
 #include "ProcedureManager.h"
 #include <iostream>
 #include "HUD.h"
-#include "Notes.h"
+#include "TextRepresentation.h"
 
 void Hydra::init()
 {
@@ -49,7 +49,7 @@ void Hydra::draw(float InitialModelView[16])
 	if (!hydraEnabled)
 	{
 		std::string text = "Initialize the hydra";
-		GameManager::getInstance()->scene->notes->drawNotes(text.data(), text.length(), 380, 330, 0, 0.0f, 0.0f, 0.0f);
+		GameManager::getInstance()->scene->hud->textrepresentation->drawText(text.data(), text.length(), 380, 330, 0, 0.0f, 0.0f, 0.0f);
 		return;
 	}
 

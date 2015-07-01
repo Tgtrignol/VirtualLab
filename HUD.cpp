@@ -7,17 +7,13 @@
 #include "Notes.h"
 #include "GaussianBlur.h"
 #include "Control.h"
+#include "TextRepresentation.h"
 
 HUD::HUD() {
-
-	postProcessing = new GaussianBlur(true);
-	postProcessing->init();
-
+	textrepresentation = new TextRepresentation();
 }
 
 HUD::~HUD() {
-
-	delete postProcessing;
 
 }
 
@@ -41,15 +37,17 @@ void HUD::draw() {
 			{
 				RightControlnames.push_back(ControlEnumToString(control->m_control) + "= " + control->m_primitive);
 			}
+
 		}
 	}
 
-	GameManager::getInstance()->scene->notes->drawList(RightControlnames, 480, 320, 0);
+	textrepresentation->drawList(RightControlnames, 480, 320, 0);
 
 	if (GameManager::getInstance()->scene->procedureManager->lefternSelectedProcedureObject != NULL) {
 		for each (Control *control in GameManager::getInstance()->scene->procedureManager->lefternSelectedProcedureObject->controls)
 		{
 			LeftControlnames.push_back(ControlEnumToString(control->m_control) + "= " + control->m_primitive);
+
 		}
 	}
 	else if (GameManager::getInstance()->scene->procedureManager->lefternSelectedProcedureObject == NULL)
@@ -63,7 +61,7 @@ void HUD::draw() {
 		}
 	}
 
-	GameManager::getInstance()->scene->notes->drawList(LeftControlnames, 240, 320, 0);
+	textrepresentation->drawList(LeftControlnames, 240, 320, 0);
 
 	std::string text = "";
 	if (GameManager::getInstance()->scene->procedureManager->lefternSelectedProcedureObject != nullptr)
@@ -76,11 +74,12 @@ void HUD::draw() {
 	}
 
 	//Show name of pointed object
-	GameManager::getInstance()->scene->notes->drawNotes(text.data(), text.length(), 380, 330, 0, 0.0f, 0.0f, 0.0f);
+	textrepresentation->drawText(text.data(), text.length(), 380, 330, 0, 0.0f, 0.0f, 0.0f);
 
 	//GameManager::getInstance()->scene->notes->drawNotes(buttonText.data(), buttonText.length(), 200, 300, 0);
 
-
+	if (errorText != "")
+		textrepresentation->drawText(errorText.data(), errorText.length(), 320, 360, 0);
 
 }
 

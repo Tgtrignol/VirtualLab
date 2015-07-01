@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "PostProcessing.h"
+#include "TextRepresentation.h"
 
 using namespace std;
 
@@ -14,7 +15,8 @@ public:
 	void init();
 	void draw();
 	string buttonText;
-	PostProcessing* postProcessing;
+	TextRepresentation* textrepresentation;
+	std::string errorText = "";
 
 };
 
