@@ -10,7 +10,7 @@ public:
 	TextRepresentation();
 	~TextRepresentation();
 
-	void drawNotes(const char*, int, int, int, int);
+	void drawNotes(const char *text, int length, float originX, float originY, float originZ, float yOffset);
 	void drawText(const char*, int, int, int, int);
 	void drawText(const char *text, int length, int x, int y, int z, GLfloat r, GLfloat g, GLfloat b);
 	void drawList(std::vector<std::string>);

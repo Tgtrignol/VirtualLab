@@ -4,7 +4,7 @@
 #define PI 3.14159265358979323846f
 #define CAMERA_SPEED 0.125f
 #define CAMERA_ROTATION_SPEED 2.0f
-#define DISTANCE_OF_HEAD_FROM_FLOOR 15.0f
+#define DISTANCE_OF_HEAD_FROM_FLOOR 1.35f
 
 extern void InitCameraRotation();
 extern void InitCameraTranslation();

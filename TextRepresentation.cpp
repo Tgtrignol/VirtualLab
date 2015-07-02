@@ -10,13 +10,15 @@ TextRepresentation::~TextRepresentation() {
 
 }
 
-void TextRepresentation::drawNotes(const char *text, int length, int x, int y, int z) {
+void TextRepresentation::drawNotes(const char *text, int length, float originX, float originY, float originZ, float yOffset) {
 
 	glPushMatrix();
-	glLoadIdentity();
+	glColor3f(0, 0, 0);
+	glTranslatef(originX, originY + yOffset, originZ);
+	glScalef(0.01, 0.015, 0.01);
 
 	for (int i = 0; i < length; i++) {
-		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, (int)text[i]);
+		glutStrokeCharacter(GLUT_STROKE_ROMAN, (int)text[i]);
 	}
 
 	glPopMatrix();

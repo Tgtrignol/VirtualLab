@@ -81,11 +81,15 @@ void StaticBoard::draw()
 
 	std::vector<KeyPoint*> keypoints;
 	if (GameManager::getInstance()->scene->procedureManager->currentProcedureInformation != NULL)
+	{
 		keypoints = GameManager::getInstance()->scene->procedureManager->currentProcedureInformation->m_keyPoints;
 
-	for each(KeyPoint* keypoint in keypoints) {
-		std::string txt = keypoint->m_name;
-		textRepresentation->drawNotes(txt.data(), txt.size(), 200, 300, 0);
+		float i = 0;
+		for each(KeyPoint* keypoint in keypoints) {
+			std::string txt = keypoint->m_name;
+			textRepresentation->drawNotes(txt.data(), txt.size(), 2, 45, 1, i * -2.0);
+			++i;
+		}
 	}
 	
 	glPopMatrix();
