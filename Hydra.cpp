@@ -61,7 +61,7 @@ void Hydra::draw(float InitialModelView[16])
 
 	//Left
 	{
-		glBegin(GL_LINES);
+		//glBegin(GL_LINES);
 
 		glm::mat4 tra;
 		tra = glm::translate(tra, glm::vec3(fpCameraXCoordinate, fpCameraYCoordinate, fpCameraZCoordinate));
@@ -90,7 +90,7 @@ void Hydra::draw(float InitialModelView[16])
 
 	//Right
 	{
-		glBegin(GL_LINES);
+		//glBegin(GL_LINES);
 
 		glm::mat4 tra;
 		tra = glm::translate(tra, glm::vec3(fpCameraXCoordinate, fpCameraYCoordinate, fpCameraZCoordinate));
