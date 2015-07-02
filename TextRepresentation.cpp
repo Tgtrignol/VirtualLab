@@ -10,10 +10,10 @@ TextRepresentation::~TextRepresentation() {
 
 }
 
-void TextRepresentation::drawNotes(const char *text, int length, float originX, float originY, float originZ, float yOffset) {
+void TextRepresentation::drawNotes(const char *text, int length, float originX, float originY, float originZ, float yOffset, float r, float g, float b) {
 
 	glPushMatrix();
-	glColor3f(0, 0, 0);
+	glColor3f(r, g, b);
 	glTranslatef(originX, originY + yOffset, originZ);
 	glScalef(0.01, 0.0125, 0.01);
 
