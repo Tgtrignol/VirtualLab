@@ -25,10 +25,10 @@ public:
 	std::string pressedSide = "None";
 	DSLReader* dslReader = new DSLReader();
 	int procedureNumber = 0;
+	ProcedureInformation *currentProcedureInformation;
 
 private:
 	std::vector<std::string> procedureFileLocations;
-	ProcedureInformation *currentProcedureInformation;
 	ProcedureObject* getGrabbedObject(std::string Side);
 	bool doingProcedure = true;
 	bool anglePositive = true;

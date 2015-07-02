@@ -1,5 +1,3 @@
-#include <stdlib.h>
-#include <glut\glut.h>
 #include "Notes.h"
 #include "ProcedureManager.h"
 #include "GameManager.h"
@@ -12,9 +10,24 @@ Notes::Notes() {
 	textRepresentation = new TextRepresentation();
 }
 
+/*
+void Notes::drawLabel(int x, int y, std::string string) {
+
+		glTranslatef(2, 0, 0);
+		glRotatef(-45, 0, 1, 0);
+		glTranslatef(0, -1, -1);
+		partLabel.text = string;
+		//glTranslatef(x, y, 0);
+		partLabel.x = x;
+		partLabel.y = y;
+		partLabel.render(2.0f);
+
+}
+*/
 
 void Notes::drawBoardTxt() {
 
+	/*
 	glPopMatrix();
 	int itemNr = 0;
 
@@ -24,17 +37,13 @@ void Notes::drawBoardTxt() {
 		textRepresentation->drawNotes(text.data(), text.size());
 	}
 	glPushMatrix();
-
+	*/
 }
 
 void Notes::draw()
 {
 
-
-
 }
-
-
 
 void Notes::init()
 {

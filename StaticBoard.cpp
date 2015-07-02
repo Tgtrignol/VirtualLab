@@ -1,18 +1,26 @@
 #include <GL/glew.h>
+#include <vector>
 #include "StaticBoard.h"
 #include "Camera.h"
 #include <btBulletCollisionCommon.h>
 #include <glm/glm.hpp>
 #include "Shader.h"
 #include "ObjModel.h"
+#include "TextRepresentation.h"
+#include "ProcedureManager.h"
+#include "GameManager.h"
+#include "Scene.h"
+#include "ProcedureInformation.h"
+#include "KeyPoint.h"
 
 void StaticBoard::init()
 {
+	textRepresentation = new TextRepresentation();
+
 	shaderID = initShader("procedureObject");
 	btScalar mass = 0.0;
 	pObjModel = new ObjModel("c:\\VrCave\\Development\\VirtualLab\\Data\\Board.obj", mass, btVector3(0.5, 0.9, 1), btVector3(1, 1, 1));
 }
-
 
 void StaticBoard::draw()
 {
@@ -70,5 +78,16 @@ void StaticBoard::draw()
 	pObjModel->draw(shaderID);
 
 	glUseProgram(0);
+
+	/*
+	std::vector<KeyPoint*> keypoints;
+	if (GameManager::getInstance()->scene->procedureManager->currentProcedureInformation != NULL)
+		keypoints = GameManager::getInstance()->scene->procedureManager->currentProcedureInformation->m_keyPoints;
+
+	for each(KeyPoint* keypoint in keypoints) {
+		std::string txt = keypoint->m_name;
+		textRepresentation->drawText(txt.data(), txt.size(), 200, 300, 0);
+	}
+	*/
 	glPopMatrix();
 }
