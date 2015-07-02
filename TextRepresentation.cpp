@@ -10,9 +10,10 @@ TextRepresentation::~TextRepresentation() {
 
 }
 
-void TextRepresentation::drawNotes(const char *text, int length) {
+void TextRepresentation::drawNotes(const char *text, int length, int x, int y, int z) {
 
 	glPushMatrix();
+	glLoadIdentity();
 
 	for (int i = 0; i < length; i++) {
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, (int)text[i]);

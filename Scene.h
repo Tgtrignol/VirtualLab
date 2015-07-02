@@ -18,7 +18,6 @@ class StaticLabEnvironment;
 class StaticBoard;
 class StaticMenu;
 class ProcedureManager;
-class Notes;
 class HUD;
 class Menu;
 
@@ -83,7 +82,6 @@ public:
 	StaticBoard *board;
 	btDiscreteDynamicsWorld *world;
 	ProcedureManager *procedureManager;
-	Notes *notes;
 	HUD *hud;
 	Menu *menu;
 	StaticMenu *staticMenu;

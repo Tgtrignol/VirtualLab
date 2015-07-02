@@ -65,9 +65,6 @@
     <ClInclude Include="HUD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Notes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ProcedureInformation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -155,9 +152,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="HUD.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Notes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DSLReader.cpp">

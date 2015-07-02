@@ -3,7 +3,8 @@
 
 #include <glut\glut.h>
 #include <vector>
-#include "Notes.h"
+
+class TextRepresentation;
 
 class Menu {
 

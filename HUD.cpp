@@ -4,7 +4,6 @@
 #include "ProcedureObject.h"
 #include "GameManager.h"
 #include "Scene.h"
-#include "Notes.h"
 #include "GaussianBlur.h"
 #include "Control.h"
 #include "TextRepresentation.h"

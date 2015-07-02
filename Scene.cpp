@@ -9,7 +9,6 @@
 #include "Main.h"
 #include "stb_image.h"
 #include "Camera.h"
-#include "Notes.h"
 #include "StaticLabEnvironment.h"
 #include "ProcedureManager.h"
 #include "ControlEnum.h"
@@ -73,7 +72,6 @@ Scene::Scene()
 	RightKey->init("RightKey");
 	SpaceKey->init("SpaceKey");
 
-	notes = new Notes();
 	hud = new HUD();
 
 	hydra = new Hydra();
@@ -289,13 +287,6 @@ void Scene::draw(DrawMode drawMode)
 	}
 
 	lab->draw();
-
-
-	if (notes != nullptr)
-	{
-		notes->draw();
-		//notes->drawList(GameManager::getInstance()->menu->procedureNames);
-	}
 
 	board->draw();
 

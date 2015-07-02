@@ -22,7 +22,6 @@
     <ClInclude Include="KeyPoint.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Menu.h" />
-    <ClInclude Include="Notes.h" />
     <ClInclude Include="ProcedureInformation.h" />
     <ClInclude Include="ProcedureManager.h" />
     <ClInclude Include="ProcedureObject.h" />
@@ -52,7 +51,6 @@
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="Menu.cpp" />
-    <ClCompile Include="Notes.cpp" />
     <ClCompile Include="ProcedureManager.cpp" />
     <ClCompile Include="ProcedureObject.cpp" />
     <ClCompile Include="GaussianBlur.cpp" />
