@@ -15,7 +15,7 @@ void TextRepresentation::drawNotes(const char *text, int length, float originX, 
 	glPushMatrix();
 	glColor3f(0, 0, 0);
 	glTranslatef(originX, originY + yOffset, originZ);
-	glScalef(0.01, 0.015, 0.01);
+	glScalef(0.01, 0.0125, 0.01);
 
 	for (int i = 0; i < length; i++) {
 		glutStrokeCharacter(GLUT_STROKE_ROMAN, (int)text[i]);
