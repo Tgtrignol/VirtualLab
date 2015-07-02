@@ -10,19 +10,36 @@ TextRepresentation::~TextRepresentation() {
 
 }
 
-void TextRepresentation::drawNotes(const char *text, int length, float originX, float originY, float originZ, float yOffset, float r, float g, float b) {
+int TextRepresentation::drawNotes(const char *text, int length, float originX, float originY, float originZ, float yOffset, float yHeight, float r, float g, float b) {
+	int extraNewLines = 0;
 
-	glPushMatrix();
 	glColor3f(r, g, b);
+	glPushMatrix();
 	glTranslatef(originX, originY + yOffset, originZ);
-	glScalef(0.01, 0.0125, 0.01);
+	glScalef(0.00825, 0.01125, 0.01);
 
 	for (int i = 0; i < length; i++) {
-		glutStrokeCharacter(GLUT_STROKE_ROMAN, (int)text[i]);
+		if (text[i] == '\\')
+		{
+			if (text[i + 1] == 'n')
+			{
+				glPopMatrix();
+				glPushMatrix();
+
+				extraNewLines++;
+				i++;
+
+				glTranslatef(originX, originY + yOffset + (yHeight * extraNewLines), originZ);
+				glScalef(0.00825, 0.01125, 0.01);
+				continue;
+			}
+		}
+		glutStrokeCharacter(GLUT_STROKE_MONO_ROMAN, (int)text[i]);
 	}
 
 	glPopMatrix();
 
+	return extraNewLines;
 }
 
 void TextRepresentation::drawText(const char *text, int length, int x, int y, int z) {

@@ -26,7 +26,7 @@ Control Joystick-1 Dry
 
 //Suck the liquid halfway in the Volume Pipette
 //Procedure Grab_Volume_Pipette GrabRelease Volume_Pipette
-Procedure Suck_liquid_from_Beaker_with_Volume_Pipette_until_the_pipette_is_half_full SuckLiquid Volume_Pipette Beaker_with_Liquid
+Procedure Suck_liquid_from_Beaker_with_Volume_Pipette_\nuntil_the_pipette_is_half_full SuckLiquid Volume_Pipette Beaker_with_Liquid
 //Procedure Release_Beaker GrabRelease Beaker_with_Liquid
 
 //Rinse by turning the Volume_Pipette horizontal and rotate a couple of times
@@ -46,7 +46,7 @@ Procedure Dry_Volume_Pipette_with_Tissue Dry Tissue Volume_Pipette
 
 //Repeat rinsing one more time
 //Procedure Grab_Beaker GrabRelease Beaker_with_Liquid
-Procedure Suck_liquid_from_Beaker_with_Volume_Pipette_until_the_pipette_is_half_full SuckLiquid Volume_Pipette Beaker_with_Liquid
+Procedure Suck_liquid_from_Beaker_with_Volume_Pipette_\nuntil_the_pipette_is_half_full SuckLiquid Volume_Pipette Beaker_with_Liquid
 //Procedure Release_Beaker GrabRelease Beaker_with_Liquid
 
 Procedure Turn_the_Volume_pipette_horizontal TurnSideWay Volume_Pipette

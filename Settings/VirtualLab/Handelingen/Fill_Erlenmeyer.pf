@@ -33,7 +33,7 @@ Control Joystick-1 Dry
 
 //Suck the liquid halfway in the Volume Pipette
 //Procedure Grab_Volume_Pipette GrabRelease Volume_Pipette
-Procedure Suck_liquid_from_Beaker_with_Volume_Pipette_until_the_pipette_is_half_full SuckLiquid Volume_Pipette Beaker_with_Liquid
+Procedure Suck_liquid_from_Beaker_with_Volume_Pipette_\nuntil_the_pipette_is_half_full SuckLiquid Volume_Pipette Beaker_with_Liquid
 //Procedure GrabRelease Beaker
 
 //Rinse by turning the Volume_Pipette horizontal and rotate a couple of times
@@ -53,7 +53,7 @@ Procedure Dry_the_Volume_pipette_with_the_Tissue Dry Tissue Volume_Pipette
 
 //Repeat rinsing one more time
 //Procedure Grab_Volume_pipette GrabRelease Volume_Pipette
-Procedure Suck_liquid_from_Beaker_with_Volume_Pipette_until_the_pipette_is_half_full SuckLiquid Volume_Pipette Beaker_with_Liquid
+Procedure Suck_liquid_from_Beaker_with_Volume_Pipette_\nuntil_the_pipette_is_half_full SuckLiquid Volume_Pipette Beaker_with_Liquid
 //Procedure Release_Beaker GrabRelease Beaker
 
 Procedure Turn_the_Volume_pipette_horizontal TurnSideWay Volume_Pipette
@@ -71,7 +71,7 @@ Procedure Dry_the_Volume_pipette_with_the_Tissue Dry Tissue Volume_Pipette
 //Real Pipette Procedure
 //Suck liquid above the mark
 //Procedure Grab_Beaker GrabRelease Beaker
-Procedure Suck_liquid_from_Beaker_with_Volume_Pipette_until_the_pipette_is_full SuckLiquid Volume_Pipette Beaker_with_Liquid
+Procedure Suck_liquid_from_Beaker_with_Volume_Pipette_\nuntil_the_pipette_is_full SuckLiquid Volume_Pipette Beaker_with_Liquid
 //Procedure Release_Beaker GrabRelease Beaker
 
 //Dry the Pipette
@@ -88,4 +88,4 @@ Procedure Empty_the_Volume_pipette_until_the_mark LowerLiquid Volume_Pipette Bea
 //Filling Erlenmeyer_flask
 //Turn the Volume_Pipette 45 degrees and flush the liquid into the Erlenmeyer
 //Procedure Grab_Erlenmeyer_flask Grab Erlenmeyer_flask
-Procedure Empty_the_Volume_pipette_in_the_Erlenmeyer_flask_and_wait_three_seconds LowerLiquid Volume_Pipette Erlenmeyer_flask
+Procedure Empty_the_Volume_pipette_in_the_Erlenmeyer_flask_\nand_wait_three_seconds LowerLiquid Volume_Pipette Erlenmeyer_flask

@@ -88,9 +88,13 @@ void StaticBoard::draw()
 		for each(KeyPoint* keypoint in keypoints) {
 			std::string txt = keypoint->m_name;
 			if (keypoint->m_isSuccessTriggered)
-				textRepresentation->drawNotes(txt.data(), txt.size(), 2, 45, 1, i * -1.75, 0.0f, 1.0f, 0.0f);
+			{
+				i += textRepresentation->drawNotes(txt.data(), txt.size(), 2, 45, 1, i * -1.625, -1.625, 0.0f, 1.0f, 0.0f);
+			}
 			else
-				textRepresentation->drawNotes(txt.data(), txt.size(), 2, 45, 1, i * -1.75, 0.0f, 0.0f, 0.0f);
+			{
+				i += textRepresentation->drawNotes(txt.data(), txt.size(), 2, 45, 1, i * -1.625, -1.625, 0.0f, 0.0f, 0.0f);
+			}
 			++i;
 		}
 	}
