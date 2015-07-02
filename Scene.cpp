@@ -102,7 +102,7 @@ Scene::Scene()
 
 #ifdef BULLET_DEBUG_DRAW
 	debug* debug_1 = new debug();
-	world->setDebugDrawer(debug_1);
+	//world->setDebugDrawer(debug_1);
 #endif
 
 	srand(static_cast<unsigned int>(time(NULL)));
